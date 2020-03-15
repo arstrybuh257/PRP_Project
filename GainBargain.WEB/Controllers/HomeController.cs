@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using GainBargain.DAL.EF;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -10,6 +7,7 @@ namespace GainBargain.WEB.Controllers
     {
         public ActionResult Index()
         {
+            //var db = new GainBargainContext();
             return View();
         }
 
