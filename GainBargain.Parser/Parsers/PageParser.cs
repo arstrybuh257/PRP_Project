@@ -8,11 +8,12 @@ using System.Text.RegularExpressions;
 
 namespace SalesParser.Parsers
 {
+
     /// <summary>
     /// Class designed to get sales data from Web pages
     /// via parsing their HTML content
     /// </summary>
-    public class PageParser
+    public class PageParser : IPriceParser<float>
     {
         /// <summary>
         /// Structure of the loaded HTML document
@@ -39,7 +40,27 @@ namespace SalesParser.Parsers
         {
             // Save document structure
             pageDOM = new HtmlDocument();
-            pageDOM.Load(pageHtmlCode, false);
+            pageDOM.Load(pageHtmlCode, false); 
+        }
+
+        /// <summary>
+        /// Retrieves all the price values from page using 
+        /// CSS-like selector. If content of the selected
+        /// element can't be parsed, the element will be skipped.
+        /// </summary>
+        /// <param name="querySelector">Selector to get a price</param>
+        /// <returns>Read price value.</returns>
+        public IEnumerable<float> GetAllPrices(string querySelector)
+        {
+            foreach (var priceElement in ParseWebPage(querySelector))
+            {
+                string priceElementHtml = priceElement.InnerHtml;
+                float? parsedPrice = ParsePrice(priceElementHtml);
+                if (parsedPrice.HasValue)
+                {
+                    yield return parsedPrice.Value;
+                }
+            }
         }
 
         /// <summary>
@@ -47,7 +68,7 @@ namespace SalesParser.Parsers
         /// </summary>
         /// <param name="querySelector">CSS-like selector. For example,
         /// ".className div #classId"</param>
-        public IEnumerable<HtmlNode> ParseWebPage(string querySelector)
+        protected IEnumerable<HtmlNode> ParseWebPage(string querySelector)
         {
             var document = pageDOM.DocumentNode;
             return document.QuerySelectorAll(querySelector);
@@ -60,7 +81,7 @@ namespace SalesParser.Parsers
         /// or simply any string that contains number.</param>
         /// <returns>Returns null if the argument does not match
         /// priceRegex regular expression or float valur if it does</returns>
-        public static float? ParsePrice(string elementHtml)
+        protected static float? ParsePrice(string elementHtml)
         {
             var priceSearch = priceRegex.Match(elementHtml); // find all the pieces of price
             var numberParts = priceSearch.Groups;
