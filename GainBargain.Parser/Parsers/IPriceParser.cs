@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using GainBargain.DAL.Interfaces;
 
-namespace SalesParser.Parsers
+namespace GainBargain.Parser.Parsers
 {
     /// <summary>
     /// Determines that the given class is able to retrieve
-    /// prices from its source
+    /// product's information from its source
     /// </summary>
     /// <typeparam name="T">Value-type parameter (usually number) for price.</typeparam>
-    public interface IPriceParser<T>
+    public interface IProductParser<T>
         where T : struct,
                   IComparable,
                   IComparable<T>,
@@ -16,7 +17,7 @@ namespace SalesParser.Parsers
                   IEquatable<T>,
                   IFormattable
     {
-        IEnumerable<T> GetAllPrices(string retrievalParam);
+        IEnumerable<IParserOutput<T>> ParseInformation(IParserInput<T> input);
     }
 }
 

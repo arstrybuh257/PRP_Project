@@ -2,13 +2,13 @@
 
 namespace GainBargain.DAL.Interfaces
 {
-    interface IParserOutput<T>
-        where T : struct,
-                  IComparable,
-                  IComparable<T>,
-                  IConvertible,
-                  IEquatable<T>,
-                  IFormattable
+    public interface IParserOutput<T>
+            where T : struct,
+                      IComparable,
+                      IComparable<T>,
+                      IConvertible,
+                      IEquatable<T>,
+                      IFormattable
     {
         int MarketId { set; get; }
         string Name { set; get; }

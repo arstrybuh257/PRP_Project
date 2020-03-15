@@ -11,8 +11,11 @@ namespace GainBargain.DAL.Interfaces
                   IFormattable
     {
         string Url { set; get; }
-        byte Id { set; get; }
-        int ShopId { set; get; }
+        byte ParserId { set; get; }
+
+        int MarketId { set; get; }
+        int CategoryId { set; get; }
+
         string SelPrice { set; get; }
         string SelName { set; get; }
         string SelImageUrl { set; get; }
