@@ -76,7 +76,7 @@ namespace GainBargain.Parser
 
 
             // Go through all the occurences of CSS-like selector
-            foreach (var res in parser.ParseInformation(input))
+            foreach (var res in parser.ParseInformation<Product>(input))
             {
                 // Output a parsed price
                 parsedProducts.Add($"{res.Name} - {res.Price:f2}UAH img URL: {res.ImageUrl}");

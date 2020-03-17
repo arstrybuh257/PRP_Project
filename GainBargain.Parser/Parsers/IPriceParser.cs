@@ -17,7 +17,8 @@ namespace GainBargain.Parser.Parsers
                   IEquatable<T>,
                   IFormattable
     {
-        IEnumerable<IParserOutput<T>> ParseInformation(IParserInput<T> input);
+        IEnumerable<IParserOutput<T>> ParseInformation<V>(IParserInput<T> input)
+            where V : IParserOutput<T>, new();
     }
 }
 

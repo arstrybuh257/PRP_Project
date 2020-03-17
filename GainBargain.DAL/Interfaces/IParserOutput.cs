@@ -11,6 +11,7 @@ namespace GainBargain.DAL.Interfaces
                       IFormattable
     {
         int MarketId { set; get; }
+        int CategoryId { set; get; }
         string Name { set; get; }
         DateTime UploadTime { set; get; }
 
