@@ -1,5 +1,6 @@
 ﻿using GainBargain.DAL.Entities;
 using GainBargain.Parser.Parsers;
+using GainBargain.Parser.WebAccess;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -7,54 +8,10 @@ using System.Threading.Tasks;
 
 namespace GainBargain.Parser
 {
-    //interface IParserInput<T>
-    //    where T : struct,
-    //              IComparable,
-    //              IComparable<T>,
-    //              IConvertible,
-    //              IEquatable<T>,
-    //              IFormattable
-    //{
-    //    string URL { set; get; }
-    //    byte ParserId { set; get; }
-    //    int ShopId { set; get; }
-    //    string SelPrice { set; get; }
-    //    string SelName { set; get; }
-    //    string SelImageURL { set; get; }
-    //}
-
-    //interface IParserOutput<T>
-    //    where T : struct,
-    //              IComparable,
-    //              IComparable<T>,
-    //              IConvertible,
-    //              IEquatable<T>,
-    //              IFormattable
-    //{
-    //    int ShopId { set; get; }
-    //    string Name { set; get; }
-    //    DateTime UploadTime { set; get; }
-
-    //    T Price { set; get; }
-    //    string ImageURL { set; get; }
-    //}
-
     class Program
     {
-        //const string URL = "https://www.atbmarket.com/ru/hot/akcii/7day/";
-        //const string QUERY = @"body .promo_price";
-
         static void Main(string[] args)
         {
-            TestWebPageParsing();
-            Console.Read();
-        }
-
-        private static void TestWebPageParsing()
-        {
-            List<string> parsedProducts = new List<string>();
-            Console.WriteLine($"Started testing");
-
             var input = new ParserSource
             {
                 CategoryId = 0,
@@ -67,13 +24,33 @@ namespace GainBargain.Parser
                 ParserId = 0
             };
 
-            // Ask server for a HTML page
-            HttpWebRequest oReq = (HttpWebRequest)WebRequest.Create(input.Url);
-            HttpWebResponse resp = (HttpWebResponse)oReq.GetResponse();
+            TestWebPageParsing(input);
+
+            input = new ParserSource
+            {
+                CategoryId = 0,
+                Id = 0,
+                MarketId = 0,
+                Url = "https://rost.kh.ua/catalog/produktovaya_gruppa-xlebobulochnye_izdeliya-xleb/",
+                SelName = "body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-body > h4 > a",
+                SelPrice = "body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-body > div.item-price > span.price",
+                SelImageUrl = "body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-img > a > img",
+                ParserId = 0
+            };
+
+            TestWebPageParsing(input);
+        }
+
+        private static void TestWebPageParsing(ParserSource input)
+        {
+            List<string> parsedProducts = new List<string>();
+            Console.WriteLine($"Started testing");
+
+            var downloader = new HttpDownloader(input.Url, null, null);
+            var page = downloader.GetPage();
+
             // Create price parser
-            var parser = new PageParser(resp.GetResponseStream());
-
-
+            var parser = new PageParser(page);
 
             // Go through all the occurences of CSS-like selector
             foreach (var res in parser.ParseInformation<Product>(input))
@@ -88,6 +65,7 @@ namespace GainBargain.Parser
                 Console.WriteLine(price);
             }
 
+            Console.ReadLine();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace GainBargain.Parser.Parsers
         /// <summary>
         /// Regular expression pattern for parsing pieces of prices
         /// </summary>
-        private const string PRICE_REG_EX = @"(\d+)([<>\w]*(\d\d))?";
+        private const string PRICE_REG_EX = @"\d+";//@"(\d+)([\<\>\w]*(\d\d))?";
 
         /// <summary>
         /// Regular expression patter for deleting from text
@@ -71,11 +71,13 @@ namespace GainBargain.Parser.Parsers
         /// <remarks></remarks>
         /// <param name="pageHtmlCode">Stream with HTML code of the
         /// desired page. For example, it can use System.Net.WebResponce stream.</param>
-        public PageParser(Stream pageHtmlCode)
+        public PageParser(string pageHtmlCode)
         {
             // Save document structure
             pageDOM = new HtmlDocument();
-            pageDOM.Load(pageHtmlCode, false);
+
+            //var sr = new StringReader(Encoding.UTF8.GetString(ReadFully(new StreamReader(pageHtmlCode, true).str)));
+            pageDOM.LoadHtml(pageHtmlCode);
         }
 
         #region PRODUCTS_PARSING
@@ -173,7 +175,6 @@ namespace GainBargain.Parser.Parsers
         /// <param name="selectedValues">An array of parsed elements of each property.
         /// The first dimension - an index of parsing property from productPropertiesToParse;
         /// the second dimension - how many objects have been parsed for each property.</param>
-        /// <returns></returns>
         private static object[,] ProcessParsedElements(HtmlNode[][] selectedValues, IParserInput<float> input)
         {
             int parsedObjectsCount = selectedValues[0]?.Length ?? 0;
@@ -205,7 +206,7 @@ namespace GainBargain.Parser.Parsers
                     processor = el => pageHost + "/"
                     + el.Attributes
                         .FirstOrDefault(attr => attr.Name == "src")
-                        ?.Value 
+                        ?.Value
                         ?? throw new Exception("The element does not have src attribute!");
                 }
                 // If this is text property
@@ -289,24 +290,19 @@ namespace GainBargain.Parser.Parsers
         /// priceRegex regular expression or float valur if it does</returns>
         protected static float? ParsePrice(string elementHtml)
         {
-            var priceSearch = priceRegex.Match(elementHtml); // find all the pieces of price
-            var numberParts = priceSearch.Groups;
-
-            if (numberParts.Count == 2          // found only 1) int price
-               || numberParts.Count == 4)       // found following constructions:
-                                                // 1) int price
-                                                // 2) additional part with coins
-                                                // 3) pennies
+            var priceParts = priceRegex.Matches(elementHtml); // find all the pieces of price
+            var pricePartsCount = priceParts.Count;
+            if (pricePartsCount == 1 || // Found only integer
+                pricePartsCount == 2)   // Found both integer and fraction part
             {
                 // Parsing as int 'cause we don't want it to have any kind of comas and dots
-                float price = Int32.Parse(
-                    s: numberParts[1].Value);
+                float price = Int32.Parse(s: priceParts[0].Value);
 
-                // If there is also pennies part
-                if (numberParts.Count >= 4)
+                // If there is also fraction part
+                if (pricePartsCount == 2)
                 {
-                    // Add pennies to the price
-                    price += (float)Int32.Parse(s: numberParts[3].Value) / 100;
+                    // Add fractions to the price
+                    price += (float)Int32.Parse(s: priceParts[1].Value) / 100;
                 }
 
                 return price;
@@ -319,8 +315,6 @@ namespace GainBargain.Parser.Parsers
         /// Removes from string any repeated whitespaces, html tags
         /// and different junk symbols using 
         /// </summary>
-        /// <param name="elementHtml"></param>
-        /// <returns></returns>
         protected static string ParseString(string elementHtml)
         {
             var censored = textRegex.Replace(elementHtml, string.Empty);
