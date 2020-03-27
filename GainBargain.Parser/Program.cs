@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using GainBargain.DAL.EF;
+using static GainBargain.Parser.IO.ConsoleIO;
 
 namespace GainBargain.Parser
 {
@@ -12,33 +14,89 @@ namespace GainBargain.Parser
     {
         static void Main(string[] args)
         {
-            var input = new ParserSource
+            while (true)
             {
-                CategoryId = 0,
-                Id = 0,
-                MarketId = 0,
-                Url = "https://www.atbmarket.com/ru/hot/akcii/7day/",
-                SelName = "li > div.promo_info > span",
-                SelPrice = "li > div.promo_info > div.price_box > div.promo_price",
-                SelImageUrl = ".container .promo_image_wrap img",
-                ParserId = 0
-            };
+                Console.WriteLine("Choose what you want to do");
+                Console.WriteLine("0 - Start parsing");
+                Console.WriteLine("1 - Test parsing input");
+                Console.WriteLine("2 - Edit parsing input");
+                Console.WriteLine("Smth different to EXIT");
 
-            TestWebPageParsing(input);
+                int result = AskInt();
+                switch (result)
+                {
+                    case 0:
+                        StartParsing();
+                        break;
+                    case 1:
+                        TestParsingInput();
+                        break;
+                    case 2:
+                        EditInput();
+                        break;
+                    default: return;
+                }
+            }
 
-            input = new ParserSource
+            /*
+
+RUN THE PROGRAM AND TYPE IN THE FOLLOWING TO TEST INPUT:
+1
+https://rost.kh.ua/catalog/produktovaya_gruppa-xlebobulochnye_izdeliya-xleb/
+body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-body > h4 > a
+body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-body > div.item-price > span.price
+body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-img > a > img
+
+
+WORKED EARLIER AND NOW IT DOES NOT
+1
+https://www.atbmarket.com/ru/hot/akcii/7day/
+li > div.promo_info > span
+li > div.promo_info > div.price_box > div.promo_price
+.container .promo_image_wrap img
+
+            */
+        }
+
+        private static void StartParsing()
+        {
+            // I NEED DB
+            throw new NotImplementedException();
+        }
+
+        private static void TestParsingInput()
+        {
+            // Get all the info for parsing
+            var url = AskString("Enter URL of the web-page");
+            var selName = AskString("Enter selector for product's name");
+            var selPrice = AskString("Enter selector for product's price");
+            var selImageUrl = AskString("Enter selector for product's image URL");
+
+            try
             {
-                CategoryId = 0,
-                Id = 0,
-                MarketId = 0,
-                Url = "https://rost.kh.ua/catalog/produktovaya_gruppa-xlebobulochnye_izdeliya-xleb/",
-                SelName = "body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-body > h4 > a",
-                SelPrice = "body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-body > div.item-price > span.price",
-                SelImageUrl = "body > div.all.wrapper > div > div.matrix-main > div.tovars-main > div.tovars > div > div > div.item-img > a > img",
-                ParserId = 0
-            };
+                // Actually parsing the page
 
-            TestWebPageParsing(input);
+                var input = new ParserSource
+                {
+                    Url = url,
+                    SelName = selName,
+                    SelPrice = selPrice,
+                    SelImageUrl = selImageUrl
+                };
+
+                TestWebPageParsing(input);
+            }
+            catch (Exception ex)
+            {
+                // Display error message
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private static void EditInput()
+        {
+            // I NEED DB
+            throw new NotImplementedException();
         }
 
         private static void TestWebPageParsing(ParserSource input)
