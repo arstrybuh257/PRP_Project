@@ -4,15 +4,16 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using GainBargain.Parser.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace GainBargain.Parser.Parsers
 {
     /// <summary>
-    /// Class for parsing products information from Json string.
+    /// Class for parsing class information from Json string.
     /// </summary>
-    public class JsonParser : ProductParser
+    public class JsonParser<Input, Output> : ClassParser<Input, Output>
+        where Input : new()
+        where Output : new()
     {
         /// <summary>
         /// Hierarchy of Json document
@@ -20,7 +21,7 @@ namespace GainBargain.Parser.Parsers
         protected JObject json;
 
         /// <summary>
-        /// Creates new Json parser of products. 
+        /// Creates new Json parser of classs. 
         /// </summary>
         /// <param name="json">Json document.</param>
         public JsonParser(string json)
@@ -29,14 +30,14 @@ namespace GainBargain.Parser.Parsers
         }
 
         /// <summary>
-        /// Retrieves all the product's values from Json using 
+        /// Retrieves all the class' values from Json using 
         /// JsonPath query selector. 
         /// </summary>
-        /// <typeparam name="V">Product output class to be created.</typeparam>
+        /// <typeparam name="V">Output class to be created.</typeparam>
         /// <param name="input">Objects that stores all the information needed
-        /// to parse product objects.</param>        
+        /// to parse output objects.</param>        
         /// /// <returns>All the parsed objects.</returns>
-        public override IEnumerable<IParserOutput<float>> ParseInformation<V>(IParserInput<float> input)
+        protected override IEnumerable<Output> ParseInformation(Input input)
         {
             // Get all the properties to parse using JsonPath query
             PropertyInfo[] propertiesToParse = GetParseableProperties().ToArray();
@@ -91,7 +92,7 @@ namespace GainBargain.Parser.Parsers
             for (int objIndx = 0; objIndx < objectsParsed; ++objIndx)
             {
                 // Create an empty object
-                var obj = CreateGenericProduct<V>(input);
+                var obj = CreateGenericOutput(input);
 
                 // Set their parsed properties
                 for (i = 0; i < rawValues.Length; ++i)

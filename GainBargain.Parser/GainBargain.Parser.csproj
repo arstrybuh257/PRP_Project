@@ -150,13 +150,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IParserInput.cs" />
-    <Compile Include="Interfaces\IParserOutput.cs" />
     <Compile Include="IO\ConsoleIO.cs" />
+    <Compile Include="Parsers\ClassParser.cs" />
     <Compile Include="Parsers\HTMLParser.cs" />
-    <Compile Include="Parsers\IProductParser.cs" />
+    <Compile Include="Parsers\IClassParser.cs" />
     <Compile Include="Parsers\JsonParser.cs" />
-    <Compile Include="Parsers\ProductParser.cs" />
     <Compile Include="WebAccess\HttpDownloader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

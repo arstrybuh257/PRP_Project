@@ -1,8 +1,6 @@
-﻿using GainBargain.Parser.Interfaces;
-
-namespace GainBargain.DAL.Entities
+﻿namespace GainBargain.DAL.Entities
 {
-    public class ParserSource : IParserInput<float>
+    public class ParserSource
     {
         public int Id { set; get; }
         public byte ParserId { set; get; }

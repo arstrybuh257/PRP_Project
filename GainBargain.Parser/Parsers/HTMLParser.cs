@@ -7,7 +7,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Text;
-using GainBargain.Parser.Interfaces;
 
 namespace GainBargain.Parser.Parsers
 {
@@ -16,7 +15,9 @@ namespace GainBargain.Parser.Parsers
     /// Class designed to get sales data from Web pages
     /// via parsing their HTML content
     /// </summary>
-    public class HTMLParser : ProductParser
+    public class HTMLParser<Input, Output> : ClassParser<Input, Output>
+        where Input : new()
+        where Output : new()
     {
         /// <summary>
         /// Regular expression pattern for parsing pieces of prices
@@ -34,12 +35,14 @@ namespace GainBargain.Parser.Parsers
         /// <summary>
         /// Regular expression for parsing pieces of prices
         /// </summary>
-        private static readonly Regex priceRegex = new Regex(PRICE_REG_EX);
+        private static readonly Regex numberRegex = new Regex(PRICE_REG_EX);
 
         /// <summary>
         /// Regular expression for clearing a text up
         /// </summary>
         private static readonly Regex textRegex = new Regex(TEXT_REG_EX);
+
+        private static readonly Regex attributeSelectorRegex = new Regex(@"\{(\S)?}");
 
         /// <summary>
         /// Structure of the loaded HTML document
@@ -61,58 +64,61 @@ namespace GainBargain.Parser.Parsers
             pageDOM.LoadHtml(pageHtmlCode);
         }
 
-        #region PRODUCTS_PARSING
+        #region CLASS_PARSING
 
         /// <summary>
-        /// Retrieves all the product's values from page using 
+        /// Retrieves all the class' values from page using 
         /// CSS-like selector. If content of the selected
         /// element can't be parsed, the element will be skipped.
         /// </summary>
-        /// <typeparam name="T">Product output class to be created.</typeparam>
+        /// <typeparam name="T">Class output class to be created.</typeparam>
         /// <param name="input">Objects that stores all the information needed
-        /// to parse product objects.</param>
+        /// to parse output objects.</param>
         /// <returns>All the parsed objects.</returns>
-        public override IEnumerable<IParserOutput<float>> ParseInformation<T>(IParserInput<float> input)
+        protected override IEnumerable<Output> ParseInformation(Input input)
         {
             PropertyInfo[] propertiesToParse = GetParseableProperties().ToArray();
             // Get amount of parsing properties that must be parsed from web-page
             int selectorPropertiesCount = propertiesToParse.Length;
 
             // If there are some of them
-            if (selectorPropertiesCount > 0)
+            if (selectorPropertiesCount == 0)
             {
-                // Get html elements corresponding particular properties
-                // [X] axis => index of the property from productPropertiesToParse
-                // [Y] axis => index of parsed element (entry).
-                HtmlNode[][] selectedValues = ParseInputValues(input);
+                throw new Exception(
+                    "There are no parseable fields!");
+            }
 
-                // Check for the same amount of returned objects
-                CheckParsedValuesForEqualCount(selectedValues);
+            // Get html elements corresponding particular properties
+            // [X] axis => index of the property from parseable properties
+            // [Y] axis => index of parsed element (entry).
+            HtmlNode[][] selectedValues = ParseInputValues(input);
 
-                // Convert Html elements into float, strings etc
-                object[,] parsedValues = ProcessParsedElements(selectedValues, input);
+            // Check for the same amount of returned objects
+            CheckParsedValuesForEqualCount(selectedValues);
 
-                // Enumerate all the objects
-                for (int i = 0; i < selectedValues[0].Length; ++i)
+            // Convert Html elements into float, strings etc
+            object[,] parsedValues = ProcessParsedElements(selectedValues, input);
+
+            // Enumerate all the objects
+            for (int i = 0; i < selectedValues[0].Length; ++i)
+            {
+                // Create new Output
+                var output = CreateGenericOutput(input);
+
+                // Set its parsed properties
+                for (int j = 0; j < selectorPropertiesCount; ++j)
                 {
-                    // Create new product
-                    var product = CreateGenericProduct<T>(input);
-
-                    // Set its parsed properties
-                    for (int j = 0; j < selectorPropertiesCount; ++j)
-                    {
-                        propertiesToParse[j].SetValue(product, parsedValues[j, i]);
-                    }
-
-                    yield return product;
+                    propertiesToParse[j].SetValue(output, parsedValues[j, i]);
                 }
+
+                yield return output;
             }
         }
 
         /// <summary>
         /// Returns nodes for each input selector.
         /// </summary>
-        private HtmlNode[][] ParseInputValues(IParserInput<float> input)
+        private HtmlNode[][] ParseInputValues(Input input)
         {
             // Array of parsed elements of each property
             HtmlNode[][] selectedValues = new HtmlNode[GetParseableProperties().Count()][];
@@ -149,7 +155,7 @@ namespace GainBargain.Parser.Parsers
         /// <param name="selectedValues">An array of parsed elements of each property.
         /// The first dimension - an index of parsing property from productPropertiesToParse;
         /// the second dimension - how many objects have been parsed for each property.</param>
-        private static object[,] ProcessParsedElements(HtmlNode[][] selectedValues, IParserInput<float> input)
+        private static object[,] ProcessParsedElements(HtmlNode[][] selectedValues, Input input)
         {
             // Get all the properties to be parsed from the html
             PropertyInfo[] parseableProps = GetParseableProperties().ToArray();
@@ -161,46 +167,46 @@ namespace GainBargain.Parser.Parsers
             for (int i = 0; i < selectorPropertiesCount; ++i)
             {
                 // Get parsing property
-                var property = parseableProps[i];
+                PropertyInfo property = parseableProps[i];
+                string selectorPropName = GetSelectorProperty(property.Name);
+                PropertyInfo selectorProp = input.GetType().GetProperty(selectorPropName);
 
-                // How to process each html element
-                Func<HtmlNode, object> processor;
-
-                // If this is floating-point value (Price)
-                if (property.PropertyType == typeof(float))
+                // If this is an attribute selector
+                string attr = null;
+                Match attributeSelector = attributeSelectorRegex.Match(selectorPropName);
+                if (attributeSelector.Success)
                 {
-                    // Retrieve float value from string
-                    processor = el => ParsePrice(el.InnerHtml) ?? 0;
-                }
-                // If this is an image url
-                else if (GetSelectorProperty(property.Name) == nameof(input.SelImageUrl))
-                {
-                    // Get website domain name
-                    var pageHost = new Uri(input.Url).Host;
-
-                    // Image Url is domain name + relative path from src attribute
-                    processor = el => pageHost + "/"
-                    + el.Attributes
-                        .FirstOrDefault(attr => attr.Name == "src")
-                        ?.Value
-                        ?? throw new Exception("The element does not have src attribute!");
-                }
-                // If this is text property
-                else if (property.PropertyType == typeof(string))
-                {
-                    // Retrieve string from html
-                    processor = el => ParseString(el.InnerHtml);
-                }
-                // Unknown type
-                else
-                {
-                    throw new Exception($"Unknown type to parse - {property.PropertyType.Name}");
+                    attr = attributeSelector.Groups[1].Value;
                 }
 
-                // Fill processed collection with new values using "processor"
+                bool isPropertyNumeric = IsNumericType(property.PropertyType);
+
                 for (int j = 0; j < selectedValues[i].Length; ++j)
                 {
-                    processedValues[i, j] = processor(selectedValues[i][j]);
+                    HtmlNode node = selectedValues[i][j];
+                    string strVal;
+                    if (attr == null)
+                    {
+                        strVal = node.InnerHtml;
+                    }
+                    else
+                    {
+                        strVal = node.Attributes
+                            .FirstOrDefault(a => a.Name == attr)?.Value
+                            ?? throw new Exception(
+                                $"Node {node.InnerHtml} does not contain attribute {attr}!");
+                    }
+
+                    // If parsing a number
+                    if (isPropertyNumeric)
+                    {
+                        processedValues[i, j] = ParseNumber(strVal);
+                    }
+                    // Parsing a string
+                    else
+                    {
+                        processedValues[i, j] = ParseString(strVal);
+                    }
                 }
             }
 
@@ -208,11 +214,36 @@ namespace GainBargain.Parser.Parsers
         }
 
         /// <summary>
+        /// Checks whether the given type is numeric one.
+        /// Code shamelessly copied and pasted from StackOverflow.
+        /// </summary>
+        private static bool IsNumericType(Type type)
+        {
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// Checks whether there are the same number of parsed items using
         /// each selector. If it isn't so, throws detailed exception.
         /// </summary>
         /// <param name="selectedValues">An array of parsed values. 
-        /// The first dimension - an index of parsing property from productPropertiesToParse;
+        /// The first dimension - an index of parsing property from parseable properties;
         /// the second dimension - how many objects have been parsed for each property.</param>
         /// <returns>Returns amount of parsed objects.</returns>
         private static int CheckParsedValuesForEqualCount(HtmlNode[][] selectedValues)
@@ -246,7 +277,7 @@ namespace GainBargain.Parser.Parsers
         }
 
 
-        #endregion PRODUCTS_PARSING
+        #endregion CLASS_PARSING
 
         /// <summary>
         /// Executes CSS query selector and returns found document nodes
@@ -256,6 +287,14 @@ namespace GainBargain.Parser.Parsers
         protected IEnumerable<HtmlNode> ParseWebPage(string querySelector)
         {
             var document = pageDOM.DocumentNode;
+
+            // Exclude custom attribute selection (e.g. div > img {src})
+            var attributeSel = attributeSelectorRegex.Match(querySelector);
+            if (attributeSel.Success)
+            {
+                querySelector = querySelector.Substring(0, attributeSel.Index);
+            }
+
             return document.QuerySelectorAll(querySelector);
         }
 
@@ -266,9 +305,9 @@ namespace GainBargain.Parser.Parsers
         /// or simply any string that contains number.</param>
         /// <returns>Returns null if the argument does not match
         /// priceRegex regular expression or float valur if it does</returns>
-        protected static float? ParsePrice(string elementHtml)
+        protected static float ParseNumber(string elementHtml)
         {
-            var priceParts = priceRegex.Matches(elementHtml); // find all the pieces of price
+            var priceParts = numberRegex.Matches(elementHtml); // find all the pieces of price
             var pricePartsCount = priceParts.Count;
             if (pricePartsCount == 1 || // Found only integer
                 pricePartsCount == 2)   // Found both integer and fraction part
@@ -286,7 +325,7 @@ namespace GainBargain.Parser.Parsers
                 return price;
             }
 
-            return null;
+            return 0f;
         }
 
         /// <summary>
