@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GainBargain.DAL.Interfaces;
+using GainBargain.Parser.Interfaces;
 
 namespace GainBargain.Parser.Parsers
 {

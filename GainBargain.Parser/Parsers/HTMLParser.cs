@@ -5,9 +5,9 @@ using HtmlAgilityPack;
 using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
-using GainBargain.DAL.Interfaces;
 using System.Reflection;
 using System.Text;
+using GainBargain.Parser.Interfaces;
 
 namespace GainBargain.Parser.Parsers
 {
@@ -16,12 +16,12 @@ namespace GainBargain.Parser.Parsers
     /// Class designed to get sales data from Web pages
     /// via parsing their HTML content
     /// </summary>
-    public class PageParser : IProductParser<float>
+    public class HTMLParser : ProductParser
     {
         /// <summary>
         /// Regular expression pattern for parsing pieces of prices
         /// </summary>
-        private const string PRICE_REG_EX = @"\d+";//@"(\d+)([\<\>\w]*(\d\d))?";
+        private const string PRICE_REG_EX = @"\d+";
 
         /// <summary>
         /// Regular expression patter for deleting from text
@@ -30,11 +30,6 @@ namespace GainBargain.Parser.Parsers
         /// 3) Junk symbols(#№)
         /// </summary>
         private const string TEXT_REG_EX = @"(\<.*?\>.*?\<\/.*?\>)|(\s{2,})|[*#№]";
-
-        /// <summary>
-        /// What name prefix should be before IParserInput selector propertuies
-        /// </summary>
-        private const string SELECTOR_PROPERTY_PREFIX = "Sel";
 
         /// <summary>
         /// Regular expression for parsing pieces of prices
@@ -52,26 +47,12 @@ namespace GainBargain.Parser.Parsers
         private HtmlDocument pageDOM;
 
         /// <summary>
-        /// What properties of IParserOutput are filled in using selectors
-        /// </summary>
-        private static PropertyInfo[] productPropertiesToParse;
-
-        /// <summary>
-        /// Static constructor of the parser
-        /// </summary>
-        static PageParser()
-        {
-            // Get all the properties that have to be parsed using selectors
-            productPropertiesToParse = GetProductPropertiesToParse().ToArray();
-        }
-
-        /// <summary>
         /// Creates new parser using stream with HTML code.
         /// </summary>
         /// <remarks></remarks>
         /// <param name="pageHtmlCode">Stream with HTML code of the
         /// desired page. For example, it can use System.Net.WebResponce stream.</param>
-        public PageParser(string pageHtmlCode)
+        public HTMLParser(string pageHtmlCode)
         {
             // Save document structure
             pageDOM = new HtmlDocument();
@@ -87,20 +68,19 @@ namespace GainBargain.Parser.Parsers
         /// CSS-like selector. If content of the selected
         /// element can't be parsed, the element will be skipped.
         /// </summary>
-        /// <param name="querySelector">Selector to get a price</param>
-        /// <returns>Read price value.</returns>
-        public IEnumerable<IParserOutput<float>> ParseInformation<T>(IParserInput<float> input)
-            where T : IParserOutput<float>, new()
+        /// <typeparam name="T">Product output class to be created.</typeparam>
+        /// <param name="input">Objects that stores all the information needed
+        /// to parse product objects.</param>
+        /// <returns>All the parsed objects.</returns>
+        public override IEnumerable<IParserOutput<float>> ParseInformation<T>(IParserInput<float> input)
         {
+            PropertyInfo[] propertiesToParse = GetParseableProperties().ToArray();
             // Get amount of parsing properties that must be parsed from web-page
-            int selectorPropertiesCount = productPropertiesToParse.Length;
+            int selectorPropertiesCount = propertiesToParse.Length;
 
             // If there are some of them
             if (selectorPropertiesCount > 0)
             {
-                // Get current upload date
-                var uploadDate = DateTime.Now;
-
                 // Get html elements corresponding particular properties
                 // [X] axis => index of the property from productPropertiesToParse
                 // [Y] axis => index of parsed element (entry).
@@ -116,22 +96,16 @@ namespace GainBargain.Parser.Parsers
                 for (int i = 0; i < selectedValues[0].Length; ++i)
                 {
                     // Create new product
-                    var product = new T()
-                    {
-                        UploadTime = uploadDate,
-                        MarketId = input.MarketId,
-                        CategoryId = input.CategoryId,
-                    };
+                    var product = CreateGenericProduct<T>(input);
 
                     // Set its parsed properties
                     for (int j = 0; j < selectorPropertiesCount; ++j)
                     {
-                        productPropertiesToParse[j].SetValue(product, parsedValues[j, i]);
+                        propertiesToParse[j].SetValue(product, parsedValues[j, i]);
                     }
 
                     yield return product;
                 }
-
             }
         }
 
@@ -141,17 +115,17 @@ namespace GainBargain.Parser.Parsers
         private HtmlNode[][] ParseInputValues(IParserInput<float> input)
         {
             // Array of parsed elements of each property
-            HtmlNode[][] selectedValues = new HtmlNode[productPropertiesToParse.Length][];
+            HtmlNode[][] selectedValues = new HtmlNode[GetParseableProperties().Count()][];
             // Class of input object
             Type inputType = input.GetType();
             // How much properties have been parsed by now
             int propertiesSelected = 0;
 
             // Go through all the parsing properties of input object
-            foreach (var parsedProperty in productPropertiesToParse)
+            foreach (var parsedProperty in GetParseableProperties())
             {
                 // Retrieve selector value from input object
-                var selectorPropertyName = SELECTOR_PROPERTY_PREFIX + parsedProperty.Name;
+                var selectorPropertyName = GetSelectorProperty(parsedProperty.Name);
                 var selectorProperty = inputType.GetProperty(selectorPropertyName);
                 var selectorValue = selectorProperty.GetValue(input) as string;
 #if DEBUG
@@ -177,15 +151,17 @@ namespace GainBargain.Parser.Parsers
         /// the second dimension - how many objects have been parsed for each property.</param>
         private static object[,] ProcessParsedElements(HtmlNode[][] selectedValues, IParserInput<float> input)
         {
+            // Get all the properties to be parsed from the html
+            PropertyInfo[] parseableProps = GetParseableProperties().ToArray();
             int parsedObjectsCount = selectedValues[0]?.Length ?? 0;
-            int selectorPropertiesCount = productPropertiesToParse.Length;
+            int selectorPropertiesCount = parseableProps.Length;
 
             // Allocate an array of processed objects
             object[,] processedValues = new object[selectorPropertiesCount, parsedObjectsCount];
             for (int i = 0; i < selectorPropertiesCount; ++i)
             {
                 // Get parsing property
-                var property = productPropertiesToParse[i];
+                var property = parseableProps[i];
 
                 // How to process each html element
                 Func<HtmlNode, object> processor;
@@ -197,7 +173,7 @@ namespace GainBargain.Parser.Parsers
                     processor = el => ParsePrice(el.InnerHtml) ?? 0;
                 }
                 // If this is an image url
-                else if (SELECTOR_PROPERTY_PREFIX + property.Name == nameof(input.SelImageUrl))
+                else if (GetSelectorProperty(property.Name) == nameof(input.SelImageUrl))
                 {
                     // Get website domain name
                     var pageHost = new Uri(input.Url).Host;
@@ -241,8 +217,10 @@ namespace GainBargain.Parser.Parsers
         /// <returns>Returns amount of parsed objects.</returns>
         private static int CheckParsedValuesForEqualCount(HtmlNode[][] selectedValues)
         {
+            // Get properties to be parsed from html
+            PropertyInfo[] propertiesToParse = GetParseableProperties().ToArray();
             int parsedObjectsCount = selectedValues[0].Length;
-            int selectorPropertiesCount = productPropertiesToParse.Length;
+            int selectorPropertiesCount = propertiesToParse.Length;
 
             // Check whether an array is not jagged (all the dimensions are equal)
             for (int i = 1; i < selectorPropertiesCount; ++i)
@@ -255,7 +233,7 @@ namespace GainBargain.Parser.Parsers
                         "selectors return the same amount of matches!\n");
                     for (int j = 0; j < selectorPropertiesCount; ++j)
                     {
-                        sb.Append(productPropertiesToParse[j].Name);
+                        sb.Append(propertiesToParse[j].Name);
                         sb.Append(':');
                         sb.Append(selectedValues[j].Length);
                         sb.AppendLine();
@@ -320,31 +298,6 @@ namespace GainBargain.Parser.Parsers
             var censored = textRegex.Replace(elementHtml, string.Empty);
 
             return censored;
-        }
-
-        /// <summary>
-        /// Enumerates all IParserOutput properties that should be parsed using selectors
-        /// from IParserInput object.
-        /// </summary>
-        private static IEnumerable<PropertyInfo> GetProductPropertiesToParse()
-        {
-            var inputType = typeof(IParserInput<float>);
-            var inputProperties = inputType.GetProperties();
-            var outputType = typeof(IParserOutput<float>);
-            var outputProperties = outputType.GetProperties();
-
-            // Go through every parser output property
-            foreach (var outputProperty in outputProperties)
-            {
-                // Find required property name for input type
-                var selectorPropName = SELECTOR_PROPERTY_PREFIX + outputProperty.Name;
-                // If there is wanted property
-                if (inputProperties.Any(p => p.Name == selectorPropName))
-                {
-                    // Then this is a parsing property
-                    yield return outputProperty;
-                }
-            }
         }
     }
 }

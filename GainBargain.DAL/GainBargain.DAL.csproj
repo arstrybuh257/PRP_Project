@@ -57,13 +57,17 @@
     <Compile Include="Entities\Market.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />
-    <Compile Include="Interfaces\IParserInput.cs" />
-    <Compile Include="Interfaces\IParserOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GainBargain.Parser\GainBargain.Parser.csproj">
+      <Project>{3a3055d2-d55e-4de8-bd82-aa7ab92658a0}</Project>
+      <Name>GainBargain.Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,4 +1,4 @@
-﻿using GainBargain.DAL.Interfaces;
+﻿using GainBargain.Parser.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 

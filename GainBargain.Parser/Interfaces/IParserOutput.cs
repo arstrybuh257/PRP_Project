@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GainBargain.DAL.Interfaces
+namespace GainBargain.Parser.Interfaces
 {
     public interface IParserOutput<T>
             where T : struct,
