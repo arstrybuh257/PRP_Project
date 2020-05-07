@@ -1,14 +1,22 @@
 ﻿using GainBargain.DAL.EF;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace GainBargain.WEB.Controllers
 {
     public class HomeController : Controller
     {
+        GainBargainContext db = new GainBargainContext();
+
         public ActionResult Index()
         {
             //var db = new GainBargainContext();
-            return View();
+
+            var productList = db.Products
+                .OrderBy(p => p.Name)
+                .ToList();
+
+            return View(productList);
         }
 
         public ActionResult About()

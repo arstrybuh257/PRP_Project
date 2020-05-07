@@ -1,6 +1,16 @@
-﻿@{
+﻿@model List<GainBargain.DAL.Entities.Product>
+
+@{
     ViewBag.Title = "Home Page";
 }
+
+<h1>Products are (@Model.Count):</h1>
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>@product.Name</li>
+    }
+</ul>
 
 <div class="jumbotron">
     <h1>ASP.NET</h1>

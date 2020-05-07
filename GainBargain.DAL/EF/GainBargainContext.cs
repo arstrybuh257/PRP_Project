@@ -7,9 +7,9 @@ namespace GainBargain.DAL.EF
     {
         public GainBargainContext() : base() { }
 
-        DbSet<Product> Products { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Market> Markets { get; set; }
-        DbSet<ParserSource> ParserSources { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Market> Markets { get; set; }
+        public DbSet<ParserSource> ParserSources { get; set; }
     }
 }
