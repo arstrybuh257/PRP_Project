@@ -10,6 +10,10 @@ namespace GainBargain.DAL.Entities
         [Required]
         public string Name { get; set; }
 
+        public int SuperCategoryId { get; set; }
+
+        public SuperCategory SuperCategory { get; set; }
+
         public virtual ICollection<Product> Products { get; set; }
     }
 }

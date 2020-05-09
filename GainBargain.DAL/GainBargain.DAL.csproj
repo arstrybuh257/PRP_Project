@@ -57,6 +57,7 @@
     <Compile Include="Entities\Market.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />
+    <Compile Include="Entities\SuperCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

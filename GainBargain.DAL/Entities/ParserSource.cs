@@ -8,7 +8,9 @@
         public int Id { set; get; }
 
         /// <summary>
-        /// Whether HTML or Json
+        /// Whether HTML or Json.
+        /// 0 - HTML parser.
+        /// 1 - Json parser.
         /// </summary>
         public byte ParserId { set; get; }
 
@@ -23,7 +25,7 @@
         public int MarketId { set; get; }
 
         /// <summary>
-        /// Id of the category
+        /// Id of the category.
         /// </summary>
         public int CategoryId { set; get; }
 
