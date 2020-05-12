@@ -30,5 +30,7 @@
         public int CategoryId { set; get; }
 
         public virtual Market Market { set; get; }
+
+        public virtual Category Category { set; get; }
     }
 }
