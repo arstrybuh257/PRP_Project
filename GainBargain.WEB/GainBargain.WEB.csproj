@@ -314,6 +314,10 @@
       <Project>{D90B89DB-A0EA-4DDC-83CA-1E29552C0CAA}</Project>
       <Name>GainBargain.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GainBargain.Parser\GainBargain.Parser.csproj">
+      <Project>{3a3055d2-d55e-4de8-bd82-aa7ab92658a0}</Project>
+      <Name>GainBargain.Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

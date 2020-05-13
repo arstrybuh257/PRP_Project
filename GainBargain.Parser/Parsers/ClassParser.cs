@@ -23,8 +23,10 @@ namespace GainBargain.Parser.Parsers
 
         /// <summary>
         /// What properties should be copied from input when parsing.
+        /// Key - input property.
+        /// Value - output property.
         /// </summary>
-        private static PropertyInfo[] propsToCopy;
+        private static KeyValuePair<PropertyInfo, PropertyInfo>[] propsToCopy;
 
         /// <summary>
         /// What properties must be filled with the time of parsing.
@@ -107,9 +109,9 @@ namespace GainBargain.Parser.Parsers
             Output obj = new Output();
 
             // Copy values
-            foreach (var copyProp in propsToCopy)
+            foreach (var copyProps in propsToCopy)
             {
-                copyProp.SetValue(obj, copyProp.GetValue(input));
+                copyProps.Value.SetValue(obj, copyProps.Key.GetValue(input));
             }
 
             // Set timestamps
@@ -148,15 +150,20 @@ namespace GainBargain.Parser.Parsers
 
         /// <summary>
         /// What properties should be copied from input when parsing.
+        /// Key - input property.
+        /// Value - output property.
         /// </summary>
-        private static IEnumerable<PropertyInfo> GetPropertiesToCopy()
+        private static IEnumerable<KeyValuePair<PropertyInfo, PropertyInfo>> GetPropertiesToCopy()
         {
             var inputProps = typeof(Input).GetProperties();
             var outputProps = typeof(Output).GetProperties();
             return inputProps.Where(
                 inProp => outputProps
                     .Any(outProp => inProp.Name == outProp.Name
-                        && inProp.PropertyType == outProp.PropertyType));
+                        && inProp.PropertyType == outProp.PropertyType))
+                   .Select(inputProp => new KeyValuePair<PropertyInfo, PropertyInfo>(
+                       key: inputProp,
+                       value: outputProps.First(outProp => outProp.Name == inputProp.Name)));
         }
 
         /// <summary>
@@ -167,7 +174,8 @@ namespace GainBargain.Parser.Parsers
             var inputProps = typeof(Input).GetProperties();
             var outputProps = typeof(Output).GetProperties();
             return outputProps.Where(prop => prop.PropertyType == typeof(DateTime))
-                .Except(GetPropertiesToCopy())
+                .Except(GetPropertiesToCopy()
+                    .Select(pair => pair.Value))
                 .Except(GetParseableProperties());
         }
 

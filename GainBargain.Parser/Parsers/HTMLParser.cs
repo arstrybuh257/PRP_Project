@@ -42,7 +42,7 @@ namespace GainBargain.Parser.Parsers
         /// </summary>
         private static readonly Regex textRegex = new Regex(TEXT_REG_EX);
 
-        private static readonly Regex attributeSelectorRegex = new Regex(@"\{(\S)?}");
+        private static readonly Regex attributeSelectorRegex = new Regex(@"\s+\{(\S)+?\}");
 
         /// <summary>
         /// Structure of the loaded HTML document

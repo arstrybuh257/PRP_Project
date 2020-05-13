@@ -8,7 +8,7 @@
 <ul>
     @foreach (var product in Model)
     {
-        <li>@product.Name</li>
+        <li>@product.Name @String.Format("{0:0.00} грн", product.Price)</li>
     }
 </ul>
 
