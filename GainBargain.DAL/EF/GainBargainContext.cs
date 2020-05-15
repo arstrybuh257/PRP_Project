@@ -1,9 +1,10 @@
 ﻿using GainBargain.DAL.Entities;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GainBargain.DAL.EF
 {
-    public class GainBargainContext : DbContext
+    public class GainBargainContext : IdentityDbContext
     {
         public GainBargainContext() : base()
         {
