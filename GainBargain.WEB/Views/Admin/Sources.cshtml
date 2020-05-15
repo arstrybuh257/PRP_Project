@@ -1,0 +1,51 @@
+﻿@model List<ParserSource>
+@{
+    ViewBag.Title = "Sources";
+}
+
+@using (Html.BeginForm("CreateParsingSource", "Admin", FormMethod.Post))
+{
+    <div>
+        <label>URL:</label>
+        <input type="text" name="URL" />
+    </div>
+
+    <div>
+        <label>Market Id</label>
+        <input type="number" name="MarketId" />
+    </div>
+
+    <div>
+        <label>Category Id:</label>
+        <input type="text" name="CategoryId" />
+    </div>
+
+    <div>
+        <input type="submit" />
+    </div>
+}
+
+<hr />
+
+@using(Html.BeginForm("StartParsing", "Admin", FormMethod.Post))
+{
+    <input type="submit" value="PARRRRRSING!!!!"/>
+}
+
+<hr />
+
+<h2>Sources</h2>
+
+<table>
+    <tbody>
+        @foreach (var source in Model)
+        {
+            <tr>
+                <td>@source.Url</td>
+                <td>@source.Market.Name</td>
+                <td>@source.Category.Name</td>
+                <td><a href="@Url.Action("DeleteParsingSource", new { url = source.Url})">Delete this mf</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
