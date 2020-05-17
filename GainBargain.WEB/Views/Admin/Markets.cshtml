@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<GainBargain.DAL.Entities.Market>
 
+<h4>Магазини</h4>
+
 <p>
     @Html.ActionLink("Додати магазин", "CreateMarket")
 </p>
@@ -10,11 +12,11 @@
         <div class="row">
             <div class="col-3">
                 <h6>@item.Name</h6>
-                <p class="card-text">@item.Description</p>
+                <p>@item.Description</p>
             </div>
             <div class="col-3">
                 <h6>Адреси</h6>
-                <p class="card-text">А адресов я не вижу</p>
+                <p>А адресов я не вижу</p>
             </div>
             <div class="col-3">
                 @Html.ActionLink("Редагувати", "EditMarket", new { id = item.Id })

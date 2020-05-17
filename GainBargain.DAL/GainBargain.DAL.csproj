@@ -219,6 +219,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IParserSourceRepository.cs" />
     <Compile Include="Interfaces\ISuperCategoryRepository.cs" />
     <Compile Include="Migrations\202005151504128_Identity.cs" />
     <Compile Include="Migrations\202005151504128_Identity.designer.cs">
@@ -226,6 +227,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ParserSourceRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\SuperCategoryRepository.cs" />
   </ItemGroup>

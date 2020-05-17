@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="col-md-9" id="panel">
-
+            @Html.Action("DataUpdate")
         </div>
     </div>
 </div>
@@ -33,6 +33,9 @@
             });
             $("#btnStores").click(function () {
                 $("#panel").load("Markets");
+            });
+            $("#btnSources").click(function () {
+                $("#panel").load("SourcesManager");
             });
         });
     </script>

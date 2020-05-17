@@ -11,11 +11,6 @@
         Додати підкатегорію
     </button>
 
-    @*<form id="newCatForm-@sc.Id" method="post" action="/Admin/AddNewCategory" style="visibility:hidden">
-        <input type="hidden" value="@sc.Id" name="id" />
-        <input type="text" id="newCat" name="newCat" />
-        <input type="submit" id="newCatBut" onclick="refreshCategories('@sc.Id')"/>
-    </form>*@
     <div id="newCatForm-@sc.Id" style="visibility:hidden">
         <input type="hidden" value="@sc.Id" name="id" />
         <input type="text" id="newCat-@sc.Id" name="newCat" />

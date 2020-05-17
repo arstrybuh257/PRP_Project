@@ -1,9 +1,12 @@
-﻿using GainBargain.DAL.EF;
+﻿using AutoMapper;
+using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.Parser.Parsers;
 using GainBargain.Parser.WebAccess;
+using GainBargain.WEB.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -17,12 +20,14 @@ namespace GainBargain.WEB.Controllers
         ISuperCategoryRepository superCategories;
         IRepository<Category> categoryRepository;
         IRepository<Market> marketRepository;
+        IParserSourceRepository parserSourceRepository;
 
         public AdminController()
         {
             superCategories = new SuperCategoryRepository(db);
             categoryRepository = new Repository<Category>(db);
             marketRepository = new Repository<Market>(db);
+            parserSourceRepository = new ParserSourceRepository(db);
         }
 
         public ActionResult AdminPanel()
@@ -48,6 +53,20 @@ namespace GainBargain.WEB.Controllers
             return PartialView(model);
         }
 
+        public ActionResult SourcesManager()
+        {
+            var parserSources = parserSourceRepository.GetAllParserSources();
+            
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ParserSource, ParserSourceManager>()
+                .ForMember("CategoryName", opt => opt.MapFrom(ps => ps.Category.Name))
+                .ForMember("MarketName", opt => opt.MapFrom(ps => ps.Market.Name)));
+            var mapper = new Mapper(config);
+
+            var model = mapper.Map<List<ParserSourceManager>>(parserSources);
+
+            return PartialView(model);
+        }
+
         [HttpGet]
         public ActionResult EditMarket(int? id)
         {
@@ -60,7 +79,7 @@ namespace GainBargain.WEB.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult EditMarket(Market market)
         {
             try
@@ -80,6 +99,124 @@ namespace GainBargain.WEB.Controllers
             return View(market);
         }
 
+        public ActionResult DeleteMarket(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            var market = marketRepository.Get((int)id);
+
+            if (market == null)
+                return HttpNotFound();
+
+            marketRepository.Remove(market);
+            marketRepository.Save();
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        public ActionResult DeleteParserSource(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            var parserSrc = parserSourceRepository.Get((int)id);
+
+            if (parserSrc == null)
+                return HttpNotFound();
+
+            parserSourceRepository.Remove(parserSrc);
+            parserSourceRepository.Save();
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpGet]
+        public ActionResult EditParserSource(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            var model = parserSourceRepository.Get((int)id);
+
+            if (model == null)
+                return HttpNotFound();
+
+            SelectList markets = new SelectList(marketRepository.GetAll(), "Id", "Name");
+            SelectList categories = new SelectList(categoryRepository.GetAll(), "Id", "Name");
+
+            ViewBag.Markets = markets;
+            ViewBag.Categories = categories;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditParserSource(ParserSource parserSource)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    parserSourceRepository.Update(parserSource);
+                    marketRepository.Save();
+                    return RedirectToAction("AdminPanel");
+                }
+            }
+            catch (DataException)
+            {
+                //loggggg
+            }
+
+            SelectList markets = new SelectList(marketRepository.GetAll(), "Id", "Name");
+            SelectList categories = new SelectList(categoryRepository.GetAll(), "Id", "Name");
+
+            ViewBag.Markets = markets;
+            ViewBag.Categories = categories;
+
+            return View(parserSource);
+        }
+
+        [HttpGet]
+        public ActionResult CreateParserSource()
+        {
+            SelectList markets = new SelectList(marketRepository.GetAll(), "Id", "Name");
+            SelectList categories = new SelectList(categoryRepository.GetAll(), "Id", "Name");
+
+            ViewBag.Markets = markets;
+            ViewBag.Categories = categories;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateParserSource(ParserSource parserSource)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    parserSourceRepository.Add(parserSource);
+                    marketRepository.Save();
+                    return RedirectToAction("AdminPanel");
+                }
+            }
+            catch (DataException)
+            {
+                //log
+            }
+
+            SelectList markets = new SelectList(marketRepository.GetAll(), "Id", "Name");
+            SelectList categories = new SelectList(categoryRepository.GetAll(), "Id", "Name");
+
+            ViewBag.Markets = markets;
+            ViewBag.Categories = categories;
+
+            return View(parserSource);
+        }
+
         [HttpGet]
         public ActionResult CreateMarket()
         {
@@ -87,7 +224,7 @@ namespace GainBargain.WEB.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateMarket(Market market)
         {
             try
