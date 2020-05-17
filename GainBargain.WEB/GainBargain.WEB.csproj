@@ -318,10 +318,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GainBargain.BLL\GainBargain.BLL.csproj">
-      <Project>{eb3d585b-a3ee-487d-9c3e-077e92f93a07}</Project>
-      <Name>GainBargain.BLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GainBargain.DAL\GainBargain.DAL.csproj">
       <Project>{D90B89DB-A0EA-4DDC-83CA-1E29552C0CAA}</Project>
       <Name>GainBargain.DAL</Name>
