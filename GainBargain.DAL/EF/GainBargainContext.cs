@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GainBargain.DAL.EF
 {
-    public class GainBargainContext : IdentityDbContext
+    public class GainBargainContext : DbContext
     {
         public GainBargainContext() : base()
         {
@@ -14,7 +14,6 @@ namespace GainBargain.DAL.EF
         public DbSet<Category> Categories { get; set; }
         public DbSet<Market> Markets { get; set; }
         public DbSet<ParserSource> ParserSources { get; set; }
-
         public DbSet<SuperCategory> SuperCategories { get; set; }
     }
 }

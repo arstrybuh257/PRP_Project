@@ -1,0 +1,26 @@
+﻿@model IEnumerable<GainBargain.DAL.Entities.Market>
+
+<p>
+    @Html.ActionLink("Додати магазин", "CreateMarket")
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <h6>@item.Name</h6>
+                <p class="card-text">@item.Description</p>
+            </div>
+            <div class="col-3">
+                <h6>Адреси</h6>
+                <p class="card-text">А адресов я не вижу</p>
+            </div>
+            <div class="col-3">
+                @Html.ActionLink("Редагувати", "EditMarket", new { id = item.Id })
+                <img class="img-fluid" src="@item.MarketLogoUrl" alt="Product image">
+            </div>
+        </div>
+    </div>
+    <hr />
+}

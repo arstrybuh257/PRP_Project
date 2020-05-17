@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Панель адміністратора";
+}
+
+<h2><u>Панель адміністратора</u></h2>
+
+<div class="container m-2">
+    <div class="row">
+        <div class="col-md-3">
+            <h5>Налаштування</h5>
+            <ul class="list-group">
+                <li class="list-group-item btn" id="btnUpdate">Оновлення даних</li>
+                <li class="list-group-item btn" id="btnCategories">Категорії товарів</li>
+                <li class="list-group-item btn" id="btnStores">Магазини</li>
+                <li class="list-group-item btn" id="btnSources">Джерела оновлення</li>
+            </ul>
+        </div>
+        <div class="col-md-9" id="panel">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#btnCategories").click(function () {
+                $("#panel").load("CategoriesManager");
+            });
+            $("#btnUpdate").click(function () {
+                $("#panel").load("DataUpdate");
+            });
+            $("#btnStores").click(function () {
+                $("#panel").load("Markets");
+            });
+        });
+    </script>
+}
+

@@ -162,6 +162,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\categoryManagerScripts.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -291,10 +292,17 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\Sources.cshtml" />
+    <Content Include="Views\Admin\AdminPanel.cshtml" />
+    <Content Include="Views\Admin\CategoriesManager.cshtml" />
+    <Content Include="Views\Admin\DataUpdate.cshtml" />
+    <Content Include="Views\Admin\SubCategoriesPartial.cshtml" />
+    <Content Include="Views\Admin\Markets.cshtml" />
+    <Content Include="Views\Admin\EditMarket.cshtml" />
+    <Content Include="Views\Admin\CreateMarket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\AdminModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

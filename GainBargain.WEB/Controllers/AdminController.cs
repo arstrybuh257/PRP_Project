@@ -1,12 +1,12 @@
 ﻿using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
+using GainBargain.DAL.Interfaces;
+using GainBargain.DAL.Repositories;
 using GainBargain.Parser.Parsers;
 using GainBargain.Parser.WebAccess;
-using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -14,6 +14,157 @@ namespace GainBargain.WEB.Controllers
     public class AdminController : Controller
     {
         GainBargainContext db = new GainBargainContext();
+        ISuperCategoryRepository superCategories;
+        IRepository<Category> categoryRepository;
+        IRepository<Market> marketRepository;
+
+        public AdminController()
+        {
+            superCategories = new SuperCategoryRepository(db);
+            categoryRepository = new Repository<Category>(db);
+            marketRepository = new Repository<Market>(db);
+        }
+
+        public ActionResult AdminPanel()
+        {
+            return View();
+        }
+
+
+        public ActionResult DataUpdate()
+        {
+            return PartialView();
+        }
+
+        public ActionResult CategoriesManager()
+        {
+            var model = superCategories.GetAll();
+            return PartialView(model);
+        }
+
+        public ActionResult Markets()
+        {
+            var model = marketRepository.GetAll();
+            return PartialView(model);
+        }
+
+        [HttpGet]
+        public ActionResult EditMarket(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+            var model = marketRepository.Get((int)id);
+            if (model == null)
+                return HttpNotFound();
+            return View(model);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult EditMarket(Market market)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    marketRepository.Update(market);
+                    marketRepository.Save();
+                    return RedirectToAction("AdminPanel");
+                }
+            }
+            catch(DataException)
+            {
+                //loggggg
+            }
+
+            return View(market);
+        }
+
+        [HttpGet]
+        public ActionResult CreateMarket()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult CreateMarket(Market market)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    marketRepository.Add(market);
+                    marketRepository.Save();
+                    return RedirectToAction("AdminPanel");
+                }
+            }
+            catch (DataException)
+            {
+                //here goes lOG
+                //ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(market);
+        }
+
+        [HttpGet]
+        public ActionResult SubCategoriesPartial(int? id, string text)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            if (text != null)
+            {
+                Category category = new Category { Name = text, SuperCategoryId = (int)id };
+                categoryRepository.Add(category);
+                categoryRepository.Save();
+            }
+
+            var model = categoryRepository.Find(c => c.SuperCategoryId == id);
+            ViewBag.scId = id;
+            return PartialView(model);
+        }
+
+
+
+        [HttpPost, ValidateInput(false)]
+        public EmptyResult SubCategoriesPartial(int? id, string name, string submitButton)
+        {
+            if (id != null)
+            {
+                Category category = categoryRepository.Get((int)id);
+                if (category != null)
+                {
+                    ViewBag.scId = category.SuperCategoryId;
+                    switch (submitButton)
+                    {
+                        case "Зберегти":
+                            category.Name = name;
+                            categoryRepository.Update(category);
+                            categoryRepository.Save();
+                            break;
+                        case "Видалити":
+                            categoryRepository.Remove(category);
+                            categoryRepository.Save();
+                            break;
+                    }
+                }
+            }
+
+            return new EmptyResult();
+        }
+
+
+        //public JsonResult GetSubCategories(int id)
+        //{
+        //    var categories = categoryRepository.Find(c => c.SuperCategoryId == id).ToList();
+        //    var result = JsonConvert.SerializeObject(categories, Formatting.Indented,
+        //               new JsonSerializerSettings
+        //               {
+        //                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        //               });
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         private class ParserInput : ParserSource
         {

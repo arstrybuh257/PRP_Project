@@ -45,12 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GainBargain.DAL\GainBargain.DAL.csproj">
-      <Project>{d90b89db-a0ea-4ddc-83ca-1e29552c0caa}</Project>
-      <Name>GainBargain.DAL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
