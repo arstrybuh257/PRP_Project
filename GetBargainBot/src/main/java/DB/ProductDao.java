@@ -20,9 +20,10 @@ public class ProductDao {
 
     public ArrayList<String> searchProducts(String name) throws SQLException {
         ArrayList<String> list = new ArrayList<>();
-        String query = "SELECT Products.Name as n, Price as pr, M.name as m from Products\n" +
+        String query = "SELECT TOP 20 Products.Name as n, Price as pr, M.name as m from Products\n" +
                 "join Markets M on Products.MarketId = M.Id\n" +
                 "where Products.Name like ?";
+
         PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, "%"+name+"%");
         ResultSet resultSet = statement.executeQuery();

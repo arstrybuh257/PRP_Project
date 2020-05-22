@@ -5,6 +5,8 @@ import Enums.Step;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("SqlDialectInspection")
 public class UserDAO {
@@ -14,8 +16,20 @@ public class UserDAO {
         try {
             con = DBConnection.getConnection();
         } catch (SQLException e) {
-            System.out.println("Error getting connection!");
+            System.out.println(e.toString());
         }
+    }
+
+    public List<Long> getAllIds() throws SQLException {
+        ArrayList<Long> list = new ArrayList<>();
+        ResultSet resultSet;
+        String query = "select chat_id from users";
+        PreparedStatement statement = con.prepareStatement(query);
+        resultSet = statement.executeQuery();
+        while(resultSet.next()){
+            list.add(Long.parseLong(resultSet.getString("chat_id")));
+        }
+            return list;
     }
 
     public String getStatus(long id) throws SQLException {

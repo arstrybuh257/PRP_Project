@@ -68,4 +68,11 @@ public class InlineKeyboardBuilder {
         return message;
     }
 
+    public InlineKeyboardMarkup getKeyBoard(){
+        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+
+        keyboardMarkup.setKeyboard(keyboard);
+        return keyboardMarkup;
+    }
+
 }
