@@ -14,6 +14,7 @@ namespace GainBargain.WEB.Controllers
 
             var productList = db.Products
                 .OrderBy(p => p.Name)
+                .Take(30)
                 .ToList();
 
             return View(productList);

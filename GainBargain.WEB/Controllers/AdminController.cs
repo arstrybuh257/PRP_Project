@@ -6,10 +6,13 @@ using GainBargain.DAL.Repositories;
 using GainBargain.Parser.Parsers;
 using GainBargain.Parser.WebAccess;
 using GainBargain.WEB.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -21,6 +24,8 @@ namespace GainBargain.WEB.Controllers
         IRepository<Category> categoryRepository;
         IRepository<Market> marketRepository;
         IParserSourceRepository parserSourceRepository;
+
+        private static ParsingState parsingProgress = new ParsingState();
 
         public AdminController()
         {
@@ -56,7 +61,7 @@ namespace GainBargain.WEB.Controllers
         public ActionResult SourcesManager()
         {
             var parserSources = parserSourceRepository.GetAllParserSources();
-            
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ParserSource, ParserSourceManager>()
                 .ForMember("CategoryName", opt => opt.MapFrom(ps => ps.Category.Name))
                 .ForMember("MarketName", opt => opt.MapFrom(ps => ps.Market.Name)));
@@ -91,7 +96,7 @@ namespace GainBargain.WEB.Controllers
                     return RedirectToAction("AdminPanel");
                 }
             }
-            catch(DataException)
+            catch (DataException)
             {
                 //loggggg
             }
@@ -324,34 +329,90 @@ namespace GainBargain.WEB.Controllers
             }
         }
 
+        /// <summary>
+        /// Our holy grail method.
+        /// </summary>
         [HttpPost]
         public ActionResult StartParsing()
         {
-            var sources = db.ParserSources
-                .Include(s => s.Market);
+            const int maxConcurrentThreads = 5;
 
-            foreach (ParserSource source in sources)
+            // If we're parsing now
+            if (parsingProgress.IsParsing)
             {
-                // Download web request
-                string url = source.Url;
-                string responceBody = new HttpDownloader(url, null, null).GetPage();
+                // Somebody wants to start parsing again
+                return RedirectToAction("Index", "Home");
+            }
 
-                // Create an appropriate parser
-                IClassParser<ParserInput, Product> parser;
-                if (source.ParserId == 0)
+            // Get sources to parse
+            var sources = db.ParserSources
+                .Include(s => s.Market)
+                .ToList();
+
+            try
+            {
+                parsingProgress.ParsingStarted(sources.Count);
+
+                using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxConcurrentThreads))
                 {
-                    parser = new HTMLParser<ParserInput, Product>(responceBody);
-                }
-                else
-                {
-                    parser = new JsonParser<ParserInput, Product>(responceBody);
-                }
+                    List<Task> parsings = new List<Task>();
+                    object parsedIncrLock = new object();
+                    object addLock = new object();
 
-                // Create an input
-                ParserInput input = new ParserInput(source, source.Market);
+                    foreach (ParserSource source in sources)
+                    {
+                        concurrencySemaphore.Wait();
 
-                // Use it to get products
-                db.Products.AddRange(parser.Parse(input));
+                        // If all threads are running
+                        parsings.Add(Task.Run(async () =>
+                        {
+                            try
+                            {
+                                // Download web request
+                                string url = source.Url;
+                                string responceBody = await (new HttpDownloader(url, null, null).GetPageAsync());
+
+                                // Create an appropriate parser
+                                IClassParser<ParserInput, Product> parser;
+                                if (source.ParserId == 0)
+                                {
+                                    parser = new HTMLParser<ParserInput, Product>(responceBody);
+                                }
+                                else
+                                {
+                                    parser = new JsonParser<ParserInput, Product>(responceBody);
+                                }
+
+                                // Create an input
+                                ParserInput input = new ParserInput(source, source.Market);
+
+                                var v = parser.Parse(input).ToList();
+
+                                lock (addLock)
+                                {
+                                    // Use it to get products
+                                    db.Products.AddRange(v);
+                                }
+
+                                lock (parsedIncrLock)
+                                {
+                                    // Increment done
+                                    parsingProgress.IncrementDoneSources();
+                                }
+                            }
+                            finally
+                            {
+                                concurrencySemaphore.Release();
+                            }
+                        }));
+                    }
+
+                    Task.WaitAll(parsings.ToArray());
+                }
+            }
+            finally
+            {
+                parsingProgress.ParsingFinished();
             }
 
             db.SaveChanges();
@@ -360,12 +421,19 @@ namespace GainBargain.WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public JsonResult ParsingState()
+        {
+            return Json(parsingProgress, JsonRequestBehavior.AllowGet);
+        }
+
         // Idk, what it should be and whether it should be
         [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
+
 
         [HttpGet]
         public ActionResult Sources()

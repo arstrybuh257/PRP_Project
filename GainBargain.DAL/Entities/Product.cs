@@ -36,5 +36,10 @@ namespace GainBargain.DAL.Entities
             // Image Url is domain name + relative path from src attribute
             obj.ImageUrl = $"{pageHost}/{obj.ImageUrl}";           
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

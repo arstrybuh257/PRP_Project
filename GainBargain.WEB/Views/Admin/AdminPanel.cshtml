@@ -25,11 +25,11 @@
 {
     <script>
         $(document).ready(function () {
-            $("#btnCategories").click(function () {
-                $("#panel").load("CategoriesManager");
-            });
             $("#btnUpdate").click(function () {
                 $("#panel").load("DataUpdate");
+            });
+            $("#btnCategories").click(function () {
+                $("#panel").load("CategoriesManager");
             });
             $("#btnStores").click(function () {
                 $("#panel").load("Markets");
@@ -37,7 +37,27 @@
             $("#btnSources").click(function () {
                 $("#panel").load("SourcesManager");
             });
+
+
+
+            // This piece of code updates progress bar of parsing
+            $(document).ready(function () {
+                let updateParsingState = setInterval(function () {
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("ParsingState")',
+                        success: function (resp) {
+                            console.log(resp);
+                            $("#parsingProgrLine").width(
+                                resp.IsParsing
+                                    ? resp.SourcesParsed / resp.SourcesTotal * 100 + "%"
+                                    : 0);
+                        }
+                    });
+                }, 2 * 1000); // every 2 seconds
+            });
         });
+
     </script>
 }
 

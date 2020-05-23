@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace GainBargain.Parser.WebAccess
 {
@@ -46,6 +47,25 @@ namespace GainBargain.Parser.WebAccess
                 return ProcessContent(response);
             }
 
+        }
+
+
+        public async Task<string> GetPageAsync()
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+            if (!string.IsNullOrEmpty(_referer))
+                request.Referer = _referer;
+            if (!string.IsNullOrEmpty(_userAgent))
+                request.UserAgent = _userAgent;
+
+            request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
+
+            using (HttpWebResponse response = (HttpWebResponse)(await request.GetResponseAsync()))
+            {
+                Headers = response.Headers;
+                Url = response.ResponseUri;
+                return ProcessContent(response);
+            }
         }
 
         private string ProcessContent(HttpWebResponse response)
