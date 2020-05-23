@@ -20,5 +20,12 @@ namespace GainBargain.DAL.Repositories
         {
             return gbContext.SuperCategories.Include(sc => sc.Categories).ToList();
         }
+
+        public IEnumerable<SuperCategory> FindSuperCategoriesWithCategories(int id)
+        {
+            return gbContext.SuperCategories.Where(sc => sc.Id == id)
+                .Include(sc => sc.Categories)
+                .ToList();
+        }
     }
 }
