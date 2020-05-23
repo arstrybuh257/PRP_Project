@@ -1,35 +1,33 @@
-﻿@model IEnumerable<GainBargain.DAL.Entities.Product>
+﻿@model GainBargain.WEB.Models.CatalogVM
 @{
     ViewBag.Title = "Товари та послуги";
 }
 
 <div class="container">
     <div class="row p-2">
+        <h2 class=".orange_text"><u>@Model.SuperCategoryName</u></h2>
         <button class="ml-auto">Сортувати за ціною</button>
     </div>
     <div class="row border-top">
         <div class="col-12 col-md-3 border-left">
             <div class="border-bottom m-0 p-1">
                 <h6>Постачальники послуг\виробники</h6>
+                @foreach(var m in Model.Markets)
+                {
+                    <p>@m.Name</p>
+                }
             </div>
             <div class="border-top m-0 p-1">
                 <h6>Підкатегорії</h6>
+                @foreach(var c in Model.Categories)
+                {
+                    <p>@c.Name</p>
+                }
             </div>
         </div>
         <div class="col-12 col-md-9 border-left">
             <div class="row d-flex flex-row flex-wrap p-2">
-                @foreach (var p in Model)
-                {
-                    <div class="card col-12 col-md-6 col-lg-3">
-                        <img class="card-img-top" src="@p.ImageUrl">
-                        <div class="card-body">
-                            <p class="card-title">@p.Name</p>
-                            <div class="mt-2 mt-md-4 ml-auto">
-                                <p class="price">@p.Price</p>
-                            </div>
-                        </div>
-                    </div>
-                }
+                @Html.Action("Products", new { superCategoryId = Model.SuperCategoryId, categoryId = ViewBag.CategoryId })
             </div>
         </div>
     </div>

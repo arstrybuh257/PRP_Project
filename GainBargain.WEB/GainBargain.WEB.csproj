@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CatalogVM.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ParserSourceManager.cs" />
@@ -316,6 +317,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Catalog\Categories.cshtml" />
     <Content Include="Views\Catalog\Catalog.cshtml" />
+    <Content Include="Views\Catalog\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

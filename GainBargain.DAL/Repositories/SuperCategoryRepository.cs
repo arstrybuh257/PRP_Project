@@ -16,16 +16,15 @@ namespace GainBargain.DAL.Repositories
 
         public SuperCategoryRepository(GainBargainContext context) : base(context) { }
 
-        public IEnumerable<SuperCategory> GetSuperCategoriesWithCategories()
+        public IEnumerable<SuperCategory> GetAllSuperCategoriesWithCategories()
         {
             return gbContext.SuperCategories.Include(sc => sc.Categories).ToList();
         }
 
-        public IEnumerable<SuperCategory> FindSuperCategoriesWithCategories(int id)
+        public SuperCategory GetSuperCategoryWithCategories(int id)
         {
             return gbContext.SuperCategories.Where(sc => sc.Id == id)
-                .Include(sc => sc.Categories)
-                .ToList();
+                .Include(sc => sc.Categories).FirstOrDefault();
         }
     }
 }

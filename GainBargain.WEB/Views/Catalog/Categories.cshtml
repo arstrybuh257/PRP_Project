@@ -10,10 +10,10 @@
         @foreach (var sc in Model)
         {
             <div class="d-flex flex-column m-2 m-md-4">
-                <h5>@Html.ActionLink(sc.Name, "Catalog", new { type = "superCategory", categoryId = sc.Id })</h5>
+                <h5>@Html.ActionLink(sc.Name, "Catalog", new { superCategoryId = sc.Id })</h5>
                 @foreach (var c in sc.Categories)
                 {
-                    @Html.ActionLink(c.Name, "Catalog", new { type="category", categoryId = c.Id })
+                    @Html.ActionLink(c.Name, "Catalog", new { superCategoryId = sc.Id, categoryId = c.Id })
                 }
             </div>
         }
