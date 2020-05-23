@@ -211,6 +211,8 @@
   <ItemGroup>
     <Compile Include="EF\GainBargainContext.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\FavoriteCategory.cs" />
+    <Compile Include="Entities\FavoriteProduct.cs" />
     <Compile Include="Entities\Market.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />

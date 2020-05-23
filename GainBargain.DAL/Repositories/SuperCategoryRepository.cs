@@ -9,10 +9,7 @@ namespace GainBargain.DAL.Repositories
 {
     public class SuperCategoryRepository : Repository<SuperCategory>, ISuperCategoryRepository
     {
-        public GainBargainContext gbContext
-        {
-            get { return context as GainBargainContext; }
-        }
+        public GainBargainContext gbContext => context as GainBargainContext;
 
         public SuperCategoryRepository(GainBargainContext context) : base(context) { }
 

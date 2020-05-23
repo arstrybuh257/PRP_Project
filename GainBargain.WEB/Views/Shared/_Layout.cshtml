@@ -25,12 +25,24 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Каталог товарів</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Увійти</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Зареєструватися</a>
-                        </li>
+                        @if (!Request.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Account/Login">Увійти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Account/Register" tabindex="-1" aria-disabled="true">Зареєструватися</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/User/Index">Особистий кабінет</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

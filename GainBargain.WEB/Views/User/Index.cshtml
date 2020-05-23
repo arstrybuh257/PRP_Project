@@ -2,16 +2,11 @@
     ViewBag.Title = "Особистий кабінет";
 }
 
-<div class="container w-75">
+<h2 class=".orange_text">Особистий кабінет (@User.Identity.Name)</h2>
+
+<div class="container-fluid">
     <div class="row">
-        <div class="col-9">
-            <h2 class=".orange_text"><u>Особистий кабінет</u></h2>
-            <div>
-                <h6>Улюблені товари</h6>
-                <div>
-                    <h6 class="font-weight-light">Натисніть іконку ока при перегляді продукту, щоб слідкувати за ним тут</h6>
-                </div>
-            </div>
+        <div class="col-md-5">
             <div>
                 <h6>Щотижневий звіт</h6>
                 <div>
@@ -19,12 +14,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-md-4">
             <div>
-                <h6>Улюблені категорії</h6>
+                <h6>Улюблені товари</h6>
+                <div>
+                    <h6 class="font-weight-light">Натисніть іконку ока при перегляді продукту, щоб слідкувати за ним тут</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <h4>Улюблені категорії</h4>
+                <input type="text" name="newFavCat" />
             </div>
             <div>
-                <h6>Додати категорію</h6>
+                <button class="btn btn-success">Додати категорію</button>
             </div>
         </div>
     </div>
