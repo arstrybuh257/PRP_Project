@@ -1,0 +1,19 @@
+﻿@model IEnumerable<GainBargain.DAL.Entities.FavoriteCategory>
+
+<div class="favoriteCategories">
+    @foreach (var item in Model)
+    {
+        <div id="@item.CategoryId" name="@item.CategoryId">
+            <span>@item.Category.Name</span>
+            <a href="~/User/RemoveFromFavoriteCategories" class="btn btn-danger" onclick="removeFromFavoriteCategories(@item.CategoryId)">Видалити</a>
+        </div>
+    }
+</div>
+
+<div>
+    <h4>Улюблені категорії</h4>
+    <input type="text" name="newFavCat" />
+</div>
+<div>
+    <button class="btn btn-success">Додати категорію</button>
+</div>
