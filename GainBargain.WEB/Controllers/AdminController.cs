@@ -336,6 +336,7 @@ namespace GainBargain.WEB.Controllers
         public ActionResult StartParsing()
         {
             const int maxConcurrentThreads = 5;
+            const int insertsBeforeCtxtFlush = 100;
 
             // If we're parsing now
             if (parsingProgress.IsParsing)
@@ -349,6 +350,8 @@ namespace GainBargain.WEB.Controllers
                 .Include(s => s.Market)
                 .ToList();
 
+            bool changesMonitoring = db.Configuration.AutoDetectChangesEnabled;
+
             try
             {
                 parsingProgress.ParsingStarted(sources.Count);
@@ -358,6 +361,7 @@ namespace GainBargain.WEB.Controllers
                     List<Task> parsings = new List<Task>();
                     object parsedIncrLock = new object();
                     object addLock = new object();
+                    int addedToContext = 0;
 
                     foreach (ParserSource source in sources)
                     {
@@ -392,6 +396,12 @@ namespace GainBargain.WEB.Controllers
                                 {
                                     // Use it to get products
                                     db.Products.AddRange(v);
+                                    addedToContext += v.Count;
+
+                                    if (addedToContext >= insertsBeforeCtxtFlush)
+                                    {
+                                        db.SaveChanges();
+                                    }
                                 }
 
                                 lock (parsedIncrLock)
@@ -412,6 +422,7 @@ namespace GainBargain.WEB.Controllers
             }
             finally
             {
+                db.Configuration.AutoDetectChangesEnabled = changesMonitoring;
                 parsingProgress.ParsingFinished();
             }
 

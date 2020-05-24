@@ -48,10 +48,17 @@
                         url: '@Url.Action("ParsingState")',
                         success: function (resp) {
                             console.log(resp);
+
+                            // Widen the progress bar
                             $("#parsingProgrLine").width(
                                 resp.IsParsing
                                     ? resp.SourcesParsed / resp.SourcesTotal * 100 + "%"
                                     : 0);
+
+                            // Set start time
+                            if (resp.IsParsing) {
+                                $("#parseStartTime").text(resp.StartTime);
+                            }
                         }
                     });
                 }, 2 * 1000); // every 2 seconds

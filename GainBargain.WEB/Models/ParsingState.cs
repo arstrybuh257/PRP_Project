@@ -9,6 +9,8 @@ namespace GainBargain.WEB.Models
     {
         public bool IsParsing { private set; get; }
 
+        public DateTime StartTime { private set; get; }
+
         public int SourcesParsed { private set; get; }
 
         public int SourcesTotal { private set; get; }
@@ -18,6 +20,8 @@ namespace GainBargain.WEB.Models
             IsParsing = true;
             SourcesParsed = 0;
             SourcesTotal = total;
+
+            StartTime = DateTime.Now;
         }
 
         public bool IncrementDoneSources()
