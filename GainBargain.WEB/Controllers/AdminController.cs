@@ -9,7 +9,9 @@ using GainBargain.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -336,7 +338,7 @@ namespace GainBargain.WEB.Controllers
         public ActionResult StartParsing()
         {
             const int maxConcurrentThreads = 5;
-            const int insertsBeforeCtxtFlush = 100;
+            const int insertsBeforeCtxtFlush = 200;
 
             // If we're parsing now
             if (parsingProgress.IsParsing)
@@ -350,8 +352,6 @@ namespace GainBargain.WEB.Controllers
                 .Include(s => s.Market)
                 .ToList();
 
-            bool changesMonitoring = db.Configuration.AutoDetectChangesEnabled;
-
             try
             {
                 parsingProgress.ParsingStarted(sources.Count);
@@ -360,8 +360,6 @@ namespace GainBargain.WEB.Controllers
                 {
                     List<Task> parsings = new List<Task>();
                     object parsedIncrLock = new object();
-                    object addLock = new object();
-                    int addedToContext = 0;
 
                     foreach (ParserSource source in sources)
                     {
@@ -390,19 +388,39 @@ namespace GainBargain.WEB.Controllers
                                 // Create an input
                                 ParserInput input = new ParserInput(source, source.Market);
 
-                                var v = parser.Parse(input).ToList();
+                                var ctxt = new GainBargainContext();
+                                DbConnection connection = ctxt.Database.Connection;
+                                connection.Open();
+                                DbTransaction transaction = connection.BeginTransaction();
+                                DbCommand command = connection.CreateCommand();
 
-                                lock (addLock)
+
+                                command.Transaction = transaction;
+                                command.CommandType = CommandType.Text;
+                                command.CommandText = "INSERT INTO Products(Name, Price, UploadTime, ImageUrl, CategoryId, MarketId)"
+                                                    + "VALUES(@name, @price, @uploadTime, @imageUrl, @categoryId, @marketId);";
+
+                                command.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar));
+                                command.Parameters.Add(new SqlParameter("@price", SqlDbType.Real));
+                                command.Parameters.Add(new SqlParameter("@uploadTime", SqlDbType.DateTime));
+                                command.Parameters.Add(new SqlParameter("@imageUrl", SqlDbType.NVarChar));
+                                command.Parameters.Add(new SqlParameter("@categoryId", SqlDbType.Int));
+                                command.Parameters.Add(new SqlParameter("@marketId", SqlDbType.Int));
+                                
+                                foreach (Product p in parser.Parse(input))
                                 {
-                                    // Use it to get products
-                                    db.Products.AddRange(v);
-                                    addedToContext += v.Count;
+                                    command.Parameters["@name"].Value =  p.Name;
+                                    command.Parameters["@price"].Value = p.Price;
+                                    command.Parameters["@uploadTime"].Value = p.UploadTime;
+                                    command.Parameters["@imageUrl"].Value = p.ImageUrl;
+                                    command.Parameters["@categoryId"].Value = p.CategoryId;
+                                    command.Parameters["@marketId"].Value = p.MarketId;
 
-                                    if (addedToContext >= insertsBeforeCtxtFlush)
-                                    {
-                                        db.SaveChanges();
-                                    }
+                                    command.ExecuteNonQuery();
                                 }
+
+                                transaction.Commit();
+                                connection.Close();
 
                                 lock (parsedIncrLock)
                                 {
@@ -422,11 +440,8 @@ namespace GainBargain.WEB.Controllers
             }
             finally
             {
-                db.Configuration.AutoDetectChangesEnabled = changesMonitoring;
                 parsingProgress.ParsingFinished();
             }
-
-            db.SaveChanges();
 
             // Watch products
             return RedirectToAction("Index", "Home");
