@@ -1,8 +1,10 @@
-﻿@{
+﻿@model GainBargain.WEB.Models.UserProfileViewModel
+
+@{
     ViewBag.Title = "Особистий кабінет";
 }
 
-<h2 class=".orange_text">Особистий кабінет (@User.Identity.Name)</h2>
+<h2 class=".orange_text">Особистий кабінет (@Model.Name)</h2>
 
 <div class="container-fluid">
     <div class="row">
@@ -23,13 +25,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div>
-                <h4>Улюблені категорії</h4>
-                <input type="text" name="newFavCat" />
-            </div>
-            <div>
-                <button class="btn btn-success">Додати категорію</button>
-            </div>
+            @Html.Action("FavoriteCategoriesPartial")
         </div>
     </div>
 </div>

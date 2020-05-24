@@ -156,6 +156,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ParserSourceManager.cs" />
+    <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +174,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\categoryManagerScripts.js" />
+    <Content Include="Scripts\customScripts\userProfile.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -318,6 +320,7 @@
     <Content Include="Views\Catalog\Categories.cshtml" />
     <Content Include="Views\Catalog\Catalog.cshtml" />
     <Content Include="Views\Catalog\Products.cshtml" />
+    <Content Include="Views\User\FavoriteCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

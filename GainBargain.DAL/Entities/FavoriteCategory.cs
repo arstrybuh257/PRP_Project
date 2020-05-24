@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace GainBargain.DAL.Entities
 {
@@ -7,10 +8,12 @@ namespace GainBargain.DAL.Entities
     public class FavoriteCategory
     {
         [Key]
-        [Column(Order = 0)]
+        [Required, Column(Order = 0)]
         public int UserId;
-        [Key]
-        [Column(Order = 1)]
+        [Key, Column(Order = 1)]
+        [Required]
         public int CategoryId;
+        public virtual User User { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

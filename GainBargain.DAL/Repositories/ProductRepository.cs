@@ -8,10 +8,7 @@ namespace GainBargain.DAL.Repositories
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        public GainBargainContext gbContext
-        {
-            get { return context as GainBargainContext; }
-        }
+        public GainBargainContext gbContext => context as GainBargainContext;
 
         public ProductRepository(GainBargainContext context) : base(context) { }
 
