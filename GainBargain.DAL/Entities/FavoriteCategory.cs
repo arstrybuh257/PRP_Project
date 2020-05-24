@@ -9,11 +9,11 @@ namespace GainBargain.DAL.Entities
     {
         [Key]
         [Required, Column(Order = 0)]
-        public int UserId;
+        public int UserId { get; set; }
         [Key, Column(Order = 1)]
         [Required]
-        public int CategoryId;
-        public virtual User User { get; set; }
-        public virtual Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public User User { get; set; }
+        public Category Category { get; set; }
     }
 }
