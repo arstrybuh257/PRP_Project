@@ -28,7 +28,7 @@ namespace GainBargain.DAL.Entities
         /// </summary>
         /// <param name="obj">Instance to post update.</param>
         /// <param name="input">Input given to parse this object.</param>
-        public static void PostParsingAction(Product obj, ParserSource input)
+        public static void PostParsingAction(Product obj, ParserInput input)
         {
             // Get website domain name
             var pageHost = new Uri(input.Url).Host;

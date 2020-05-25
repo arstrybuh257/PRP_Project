@@ -214,6 +214,7 @@
     <Compile Include="Entities\FavoriteCategory.cs" />
     <Compile Include="Entities\FavoriteProduct.cs" />
     <Compile Include="Entities\Market.cs" />
+    <Compile Include="Entities\ParserInput.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />
     <Compile Include="Entities\Role.cs" />

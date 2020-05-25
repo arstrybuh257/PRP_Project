@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace GainBargain.WEB.Models
+﻿namespace GainBargain.WEB.Models
 {
     public class ParserSourceManager
     {

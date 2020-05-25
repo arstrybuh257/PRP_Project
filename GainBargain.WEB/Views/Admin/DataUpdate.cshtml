@@ -7,6 +7,7 @@
     <input type="submit" value="Оновити примусово"
            class="btn btn-warning" />
 
+    @* When the parsing has started *@
     <div class="row">
         <div class="col-4">
             Оновлення розпочалося:
@@ -15,6 +16,28 @@
             <span id="parseStartTime"></span>
         </div>
     </div>
+
+    @* How many parsing sources must be processed *@
+    <div class="row">
+        <div class="col-4">
+            Усього джерел:
+        </div>
+        <div class="col-8">
+            <span id="totalSources"></span>
+        </div>
+    </div>
+
+    @* How many parsing sources has been processed *@
+    <div class="row">
+        <div class="col-4">
+            Опрацьовано джерел:
+        </div>
+        <div class="col-8">
+            <span id="processedSources"></span>
+        </div>
+    </div>
+
+    @* Extremely pretty progress bar of parsing *@
     <div id="parsingLine" class="progress">
         <div id="parsingProgrLine" class="progress-bar progress-bar-striped"
              role="progressbar" style="width: 10%"

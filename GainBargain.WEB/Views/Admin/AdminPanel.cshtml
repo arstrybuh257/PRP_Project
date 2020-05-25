@@ -58,6 +58,8 @@
                             // Set start time
                             if (resp.IsParsing) {
                                 $("#parseStartTime").text(resp.StartTime);
+                                $("#totalSources").text(resp.SourcesTotal);
+                                $("#processedSources").text(resp.SourcesParsed);
                             }
                         }
                     });

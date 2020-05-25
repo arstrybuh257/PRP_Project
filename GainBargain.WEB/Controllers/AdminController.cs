@@ -3,15 +3,11 @@ using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
-using GainBargain.Parser.Parsers;
-using GainBargain.Parser.WebAccess;
 using GainBargain.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -310,26 +306,6 @@ namespace GainBargain.WEB.Controllers
         //    return Json(result, JsonRequestBehavior.AllowGet);
         //}
 
-        private class ParserInput : ParserSource
-        {
-            public string SelPrice { set; get; }
-            public string SelName { set; get; }
-            public string SelImageUrl { set; get; }
-
-            public ParserInput() { }
-
-            public ParserInput(ParserSource source, Market market)
-            {
-                this.ParserId = source.ParserId;
-                this.Url = source.Url;
-                this.MarketId = source.MarketId;
-                this.CategoryId = source.CategoryId;
-
-                this.SelPrice = market.SelPrice;
-                this.SelName = market.SelName;
-                this.SelImageUrl = market.SelImageUrl;
-            }
-        }
 
         /// <summary>
         /// Our holy grail method.
@@ -338,7 +314,6 @@ namespace GainBargain.WEB.Controllers
         public ActionResult StartParsing()
         {
             const int maxConcurrentThreads = 5;
-            const int insertsBeforeCtxtFlush = 200;
 
             // If we're parsing now
             if (parsingProgress.IsParsing)
@@ -354,6 +329,7 @@ namespace GainBargain.WEB.Controllers
 
             try
             {
+                // Tell the system that the parsing had started
                 parsingProgress.ParsingStarted(sources.Count);
 
                 using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxConcurrentThreads))
@@ -370,77 +346,49 @@ namespace GainBargain.WEB.Controllers
                         {
                             try
                             {
-                                // Download web request
-                                string url = source.Url;
-                                string responceBody = await (new HttpDownloader(url, null, null).GetPageAsync());
-
-                                // Create an appropriate parser
-                                IClassParser<ParserInput, Product> parser;
-                                if (source.ParserId == 0)
-                                {
-                                    parser = new HTMLParser<ParserInput, Product>(responceBody);
-                                }
-                                else
-                                {
-                                    parser = new JsonParser<ParserInput, Product>(responceBody);
-                                }
-
-                                // Create an input
-                                ParserInput input = new ParserInput(source, source.Market);
-
+                                // Create new context for sending batched products inserts
                                 var ctxt = new GainBargainContext();
-                                DbConnection connection = ctxt.Database.Connection;
-                                connection.Open();
-                                DbTransaction transaction = connection.BeginTransaction();
-                                DbCommand command = connection.CreateCommand();
 
-
-                                command.Transaction = transaction;
-                                command.CommandType = CommandType.Text;
-                                command.CommandText = "INSERT INTO Products(Name, Price, UploadTime, ImageUrl, CategoryId, MarketId)"
-                                                    + "VALUES(@name, @price, @uploadTime, @imageUrl, @categoryId, @marketId);";
-
-                                command.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar));
-                                command.Parameters.Add(new SqlParameter("@price", SqlDbType.Real));
-                                command.Parameters.Add(new SqlParameter("@uploadTime", SqlDbType.DateTime));
-                                command.Parameters.Add(new SqlParameter("@imageUrl", SqlDbType.NVarChar));
-                                command.Parameters.Add(new SqlParameter("@categoryId", SqlDbType.Int));
-                                command.Parameters.Add(new SqlParameter("@marketId", SqlDbType.Int));
-                                
-                                foreach (Product p in parser.Parse(input))
+                                // Create the command for inserting products
+                                using (var productInsert = new ProductInsertCommand(ctxt))
                                 {
-                                    command.Parameters["@name"].Value =  p.Name;
-                                    command.Parameters["@price"].Value = p.Price;
-                                    command.Parameters["@uploadTime"].Value = p.UploadTime;
-                                    command.Parameters["@imageUrl"].Value = p.ImageUrl;
-                                    command.Parameters["@categoryId"].Value = p.CategoryId;
-                                    command.Parameters["@marketId"].Value = p.MarketId;
-
-                                    command.ExecuteNonQuery();
+                                    // Insert every parsed product
+                                    foreach (Product p in await Models.Parser.ParseAsync(source))
+                                    {
+                                        productInsert.ExecuteOn(p);
+                                    }
                                 }
 
-                                transaction.Commit();
-                                connection.Close();
-
+                                // For tracking parsing progress
                                 lock (parsedIncrLock)
                                 {
-                                    // Increment done
+                                    // Increment processed parsing sources count
                                     parsingProgress.IncrementDoneSources();
                                 }
                             }
+                            catch(Exception ex)
+                            {
+                                // Log...
+                            }
                             finally
                             {
+                                // If thread is failed, release semaphore
                                 concurrencySemaphore.Release();
                             }
                         }));
                     }
 
+                    // Wait for all the tasks to be completed
                     Task.WaitAll(parsings.ToArray());
                 }
             }
             finally
             {
+                // In any case parsing must finish here
                 parsingProgress.ParsingFinished();
+
+                // Remove already existing entries
+                db.Database.ExecuteSqlCommand("RemoveDuplicates");
             }
 
             // Watch products

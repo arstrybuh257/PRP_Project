@@ -154,7 +154,9 @@
     </Compile>
     <Compile Include="Models\CatalogVM.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\Parser.cs" />
     <Compile Include="Models\ParsingState.cs" />
+    <Compile Include="Models\ProductInsertCommand.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ParserSourceManager.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />

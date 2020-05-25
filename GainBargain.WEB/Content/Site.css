@@ -15,7 +15,14 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /* 
+        I hate this! It makes me cry 'cause
+        I'd like to see all the selector line
+        without scrolling the control.
+        
+        max-width: 280px;
+
+    */
 }
 
 header {
