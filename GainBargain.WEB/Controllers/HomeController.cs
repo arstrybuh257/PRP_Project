@@ -1,6 +1,8 @@
 ﻿using GainBargain.DAL.EF;
 using System.Web.Mvc;
 using System.Linq;
+using GainBargain.DAL.Interfaces;
+using GainBargain.DAL.Repositories;
 
 namespace GainBargain.WEB.Controllers
 {
@@ -12,9 +14,9 @@ namespace GainBargain.WEB.Controllers
         {
             //var db = new GainBargainContext();
 
-            var productList = db.Products
-                .OrderBy(p => p.Name)
-                .Take(30)
+            IProductsDemoRepository rep = new ProductsDemoRepository(db);
+
+            var productList = rep.GetTopProducts(12)
                 .ToList();
 
             return View(productList);
