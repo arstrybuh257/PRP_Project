@@ -1,5 +1,6 @@
 package DB;
 
+import Enums.Paging;
 import Enums.Status;
 import Enums.Step;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -111,6 +112,18 @@ public class UserDAO {
         statement.execute();
     }
 
+    public int getPage(long chat_id) throws SQLException {
+        String query = "select page from auth where chat_id = ?";
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setString(1, String.valueOf(chat_id));
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+        if (resultSet.getInt("page")==-1)
+            return -1;
+        else
+            return resultSet.getInt("page");
+    }
+
     public Step getCurrentStep(long chat_id) throws SQLException {
         String query = "select step from auth where chat_id = ?";
         PreparedStatement statement = con.prepareStatement(query);
@@ -121,6 +134,20 @@ public class UserDAO {
             return null;
         else
             return Step.valueOf(resultSet.getString("step").toUpperCase());
+    }
+
+    public void setPage(Paging direction, long chat_id) throws SQLException {
+        String query = " UPDATE Auth\n" +
+                "    SET page = ? " +
+                "    WHERE chat_id = ?";
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setString(2, String.valueOf(chat_id));
+        if(direction==Paging.NEXT){
+            statement.setInt(1, getPage(chat_id)+1);
+        }else{
+            statement.setInt(1, getPage(chat_id)-1);
+        }
+        statement.execute();
     }
 
     public boolean userAuthenificated(long id) throws SQLException {

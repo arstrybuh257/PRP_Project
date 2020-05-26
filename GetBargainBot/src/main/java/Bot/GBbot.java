@@ -12,6 +12,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardRemove;
@@ -19,6 +20,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.quartz.CronScheduleBuilder.dailyAtHourAndMinute;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
@@ -114,10 +118,16 @@ public class GBbot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData().startsWith("c")) {
                 try {
+
                     if (update.getCallbackQuery().getData().endsWith("Back")) {
                         editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(dao3.getSuperCategories()));
-                    } else
-                        editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(dao3.getCategories(Integer.parseInt(update.getCallbackQuery().getData().substring(1)))));
+                    } else {
+                        List<String> list = dao2.searchProducts(Integer.parseInt(update.getCallbackQuery().getData().substring(1)));
+                        list = list.stream().skip(25*dao.getPage(update.getCallbackQuery().getMessage().getChatId())).limit(25).collect(Collectors.toList());
+                        editMessageText(new EditMessageText().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setText(String.join("\n~~~~~~~~~~~~~\n", list)));
+                        editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(InlineKeyboardBuilder.create().row().button("<","<").button(">",">").endRow().row().button("Назад","pBack").endRow().getKeyBoard()));
+
+                    }
 
                 } catch (TelegramApiException | SQLException e) {
                     e.printStackTrace();

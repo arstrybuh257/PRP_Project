@@ -7,10 +7,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1086b27-82cd-42e1-8083-394f5b15e05a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../DB/DB.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project 1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Task2/Task2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Task3/Task3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Task4/Task4.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../instaSpy/instaSpy.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c/storage_v2/_src_/database/GainBargainDb.UdXK8w/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c/storage_v2/_src_/database/GainBargainDb.UdXK8w/schema/dbo.sYMBAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GetBargainBot.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot/GBbot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot/GBbot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DB/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DB/ProductDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DB/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DB/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bot/GBbot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot/GBbot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DB/ProductDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DB/ProductDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DB/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DB/UserDAO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +57,20 @@
         <item name="GainBargainDb: database" type="ccb7ac2a:MsImplModel$Database" />
         <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="GBdb" type="feb32156:DbDataSourceImpl" />
+        <item name="GainBargainDb: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="GBdb" type="feb32156:DbDataSourceImpl" />
+        <item name="GainBargainDb: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+        <item name="routines" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
     </expand>
     <select />
   </component>
@@ -58,8 +85,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -90,6 +117,7 @@
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="sqlserver&#10;sqlite" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="D:/UserDAO.java" />
@@ -192,6 +220,8 @@
       <workItem from="1589975599214" duration="3728000" />
       <workItem from="1589991168782" duration="7279000" />
       <workItem from="1590080208636" duration="4428000" />
+      <workItem from="1590352520149" duration="6334000" />
+      <workItem from="1590443516423" duration="13000" />
     </task>
     <servers />
   </component>
@@ -235,22 +265,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1589817401943" />
-    <state width="1493" height="165" key="GridCell.Tab.0.bottom" timestamp="1590008067353">
+    <state width="1493" height="165" key="GridCell.Tab.0.bottom" timestamp="1590358971321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590008067353" />
-    <state width="1493" height="165" key="GridCell.Tab.0.center" timestamp="1590008067353">
+    <state width="1493" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
+    <state width="1493" height="165" key="GridCell.Tab.0.center" timestamp="1590358971321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590008067353" />
-    <state width="1493" height="165" key="GridCell.Tab.0.left" timestamp="1590008067353">
+    <state width="1493" height="165" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
+    <state width="1493" height="165" key="GridCell.Tab.0.left" timestamp="1590358971321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590008067353" />
-    <state width="1493" height="165" key="GridCell.Tab.0.right" timestamp="1590008067353">
+    <state width="1493" height="165" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
+    <state width="1493" height="165" key="GridCell.Tab.0.right" timestamp="1590358971321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590008067353" />
+    <state width="1493" height="165" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
     <state x="556" y="123" key="RollbackChangesDialog" timestamp="1589817540166">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -271,18 +301,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.824@0.0.1536.824" timestamp="1589830183992" />
-    <state x="452" y="54" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1589828981045">
+    <state x="452" y="54" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1590356044468">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="452" y="54" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1589828981045" />
+    <state x="452" y="54" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1590356044468" />
     <state x="635" y="125" key="com.intellij.database.view.ui.DbObjectDialog" timestamp="1589625927528">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="635" y="125" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1536.824@0.0.1536.824" timestamp="1589625927528" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1590080208896">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1590443520693">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1590080208896" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1590443520693" />
     <state x="540" y="115" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1588972967543">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -291,10 +321,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="209" y="108" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1589401040497" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1589973827748">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1590358076283">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1589973827748" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1590358076283" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1589919093820">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

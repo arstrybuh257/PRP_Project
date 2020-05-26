@@ -1,11 +1,15 @@
 package DB;
 
 
+import KeyBoard.InlineKeyboardBuilder;
+import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDao {
     Connection con;
@@ -25,7 +29,7 @@ public class ProductDao {
                 "where Products.Name like ?";
 
         PreparedStatement statement = con.prepareStatement(query);
-        statement.setString(1, "%"+name+"%");
+        statement.setString(1, "%" + name + "%");
         ResultSet resultSet = statement.executeQuery();
         StringBuilder sb;
         while (resultSet.next()) {
@@ -37,4 +41,29 @@ public class ProductDao {
         }
         return list;
     }
+
+    public ArrayList<String> searchProducts(int id) throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "SELECT Products.Name as n, Price as pr, M.name as m from Products\n" +
+                "join Markets M on Products.MarketId = M.Id\n" +
+                " join Categories on Categories.Id = Products.CategoryId " +
+                "where Products.CategoryId like ?";
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        StringBuilder sb;
+        while (resultSet.next()) {
+            sb = new StringBuilder();
+            sb.append(resultSet.getString("n")).append(". Ціна: ");
+            sb.append(resultSet.getString("pr")).append(". Заклад: ");
+            sb.append(resultSet.getString("m"));
+            list.add(sb.toString());
+        }
+        return list;
+    }
+
+
 }
+
+
+
