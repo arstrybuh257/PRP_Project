@@ -3,17 +3,19 @@
 <div class="favoriteCategories">
     @foreach (var item in Model)
     {
-        <div id="@item.CategoryId" name="@item.CategoryId">
+        <div id="cat-@item.CategoryId" name="cat-@item.CategoryId">
             <span>@item.Category.Name</span>
-            <a href="~/User/RemoveFromFavoriteCategories" class="btn btn-danger" onclick="removeFromFavoriteCategories(@item.CategoryId)">Видалити</a>
+            <button class="btn btn-danger" onclick="removeFromFavoriteCategories(@item.CategoryId)">Видалити</button>
         </div>
     }
 </div>
 
 <div>
     <h4>Улюблені категорії</h4>
-    <input type="text" name="newFavCat" />
+    <input type="text" id="newFavCat" />
 </div>
 <div>
-    <button class="btn btn-success">Додати категорію</button>
+    <button onclick="addNewFavoriteCategory()" class="btn btn-success">Додати категорію</button>
 </div>
+
+@Scripts.Render("~/Scripts/customScripts/userProfile.js")
