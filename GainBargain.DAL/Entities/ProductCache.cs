@@ -8,8 +8,8 @@ namespace GainBargain.DAL.Entities
     /// ProductDemo which has the property
     /// PrevPrice and does not have duplicates.
     /// </summary>
-    [Table("ProductsDemo")]
-    public class ProductsDemo
+    [Table("ProductsCache")]
+    public class ProductCache
     {
         [Key]
         public int Id { set; get; }

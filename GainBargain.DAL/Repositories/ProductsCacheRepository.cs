@@ -10,16 +10,16 @@ namespace GainBargain.DAL.Repositories
     /// <summary>
     /// Basic service for products demonstration entity.
     /// </summary>
-    public class ProductsDemoRepository : Repository<ProductsDemo>, IProductsDemoRepository
+    public class ProductsCacheRepository : Repository<ProductCache>, IProductCacheRepository
     {
         /// <summary>
         /// Just another slap in the performance's face.
         /// </summary>
         public GainBargainContext db => context as GainBargainContext;
 
-        public ProductsDemoRepository(GainBargainContext context) : base(context) { }
+        public ProductsCacheRepository(GainBargainContext context) : base(context) { }
 
-        public IEnumerable<ProductsDemo> GetTopProducts(int count)
+        public IEnumerable<ProductCache> GetTopProducts(int count)
         {
             db.Database.Log = new System.Action<string>(f => System.Diagnostics.Debug.WriteLine(f));
             var q = db.ProductsDemo
@@ -32,7 +32,7 @@ namespace GainBargain.DAL.Repositories
             return q;
         }
 
-        public IEnumerable<ProductsDemo> GetTopProducts(int count, int categoryId)
+        public IEnumerable<ProductCache> GetTopProducts(int count, int categoryId)
         {
             return db.ProductsDemo
                 .Where(p => p.CategoryId == categoryId)

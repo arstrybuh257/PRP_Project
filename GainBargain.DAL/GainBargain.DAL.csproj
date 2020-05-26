@@ -211,19 +211,22 @@
   <ItemGroup>
     <Compile Include="EF\GainBargainContext.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\DbLog.cs" />
     <Compile Include="Entities\FavoriteCategory.cs" />
     <Compile Include="Entities\FavoriteProduct.cs" />
     <Compile Include="Entities\Market.cs" />
     <Compile Include="Entities\ParserInput.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />
-    <Compile Include="Entities\ProductsDemo.cs" />
+    <Compile Include="Entities\ProductCache.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\SuperCategory.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserRole.cs" />
+    <Compile Include="Interfaces\IDbLogsRepository.cs" />
     <Compile Include="Interfaces\IFavoriteCategoriesRepository.cs" />
     <Compile Include="Interfaces\IMarketRepository.cs" />
+    <Compile Include="Interfaces\IProductCacheRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IParserSourceRepository.cs" />
@@ -234,11 +237,12 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DbLogsRepository.cs" />
     <Compile Include="Repositories\FavoriteCategoriesRepository.cs" />
     <Compile Include="Repositories\MarketRepository.cs" />
     <Compile Include="Repositories\ParserSourceRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
-    <Compile Include="Repositories\ProductsDemoRepository.cs" />
+    <Compile Include="Repositories\ProductsCacheRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\SuperCategoryRepository.cs" />
   </ItemGroup>

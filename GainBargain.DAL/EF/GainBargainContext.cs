@@ -19,7 +19,13 @@ namespace GainBargain.DAL.EF
         /// <summary>
         /// Perfect for displaying product entity.
         /// </summary>
-        public DbSet<ProductsDemo> ProductsDemo { get; set; }
+        public DbSet<ProductCache> ProductsDemo { get; set; }
+
+        /// <summary>
+        /// Used to write and read logs about system's activity.
+        /// </summary>
+        public DbSet<DbLog> DbLogs { get; set; }
+
 
         //public DbSet<FavoriteCategory> FavoriteProducts { get; set; }
     }

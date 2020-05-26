@@ -14,7 +14,7 @@ namespace GainBargain.WEB.Controllers
         {
             //var db = new GainBargainContext();
 
-            IProductsDemoRepository rep = new ProductsDemoRepository(db);
+            IProductCacheRepository rep = new ProductsCacheRepository(db);
 
             var productList = rep.GetTopProducts(12)
                 .ToList();
