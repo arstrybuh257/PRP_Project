@@ -214,8 +214,10 @@
     <Compile Include="Entities\FavoriteCategory.cs" />
     <Compile Include="Entities\FavoriteProduct.cs" />
     <Compile Include="Entities\Market.cs" />
+    <Compile Include="Entities\ParserInput.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />
+    <Compile Include="Entities\ProductsDemo.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\SuperCategory.cs" />
     <Compile Include="Entities\User.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Repositories\MarketRepository.cs" />
     <Compile Include="Repositories\ParserSourceRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ProductsDemoRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\SuperCategoryRepository.cs" />
   </ItemGroup>

@@ -15,6 +15,12 @@ namespace GainBargain.DAL.EF
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<FavoriteCategory> FavoriteCategories { get; set; }
+
+        /// <summary>
+        /// Perfect for displaying product entity.
+        /// </summary>
+        public DbSet<ProductsDemo> ProductsDemo { get; set; }
+
         //public DbSet<FavoriteCategory> FavoriteProducts { get; set; }
     }
 }

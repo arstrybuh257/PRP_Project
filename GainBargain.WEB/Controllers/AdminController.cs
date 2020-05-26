@@ -3,13 +3,14 @@ using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
-using GainBargain.Parser.Parsers;
-using GainBargain.Parser.WebAccess;
 using GainBargain.WEB.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -21,6 +22,8 @@ namespace GainBargain.WEB.Controllers
         IRepository<Category> categoryRepository;
         IRepository<Market> marketRepository;
         IParserSourceRepository parserSourceRepository;
+
+        private static ParsingState parsingProgress = new ParsingState();
 
         public AdminController()
         {
@@ -56,7 +59,7 @@ namespace GainBargain.WEB.Controllers
         public ActionResult SourcesManager()
         {
             var parserSources = parserSourceRepository.GetAllParserSources();
-            
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ParserSource, ParserSourceManager>()
                 .ForMember("CategoryName", opt => opt.MapFrom(ps => ps.Category.Name))
                 .ForMember("MarketName", opt => opt.MapFrom(ps => ps.Market.Name)));
@@ -91,7 +94,7 @@ namespace GainBargain.WEB.Controllers
                     return RedirectToAction("AdminPanel");
                 }
             }
-            catch(DataException)
+            catch (DataException)
             {
                 //loggggg
             }
@@ -303,61 +306,99 @@ namespace GainBargain.WEB.Controllers
         //    return Json(result, JsonRequestBehavior.AllowGet);
         //}
 
-        private class ParserInput : ParserSource
-        {
-            public string SelPrice { set; get; }
-            public string SelName { set; get; }
-            public string SelImageUrl { set; get; }
 
-            public ParserInput() { }
-
-            public ParserInput(ParserSource source, Market market)
-            {
-                this.ParserId = source.ParserId;
-                this.Url = source.Url;
-                this.MarketId = source.MarketId;
-                this.CategoryId = source.CategoryId;
-
-                this.SelPrice = market.SelPrice;
-                this.SelName = market.SelName;
-                this.SelImageUrl = market.SelImageUrl;
-            }
-        }
-
+        /// <summary>
+        /// Our holy grail method.
+        /// </summary>
         [HttpPost]
         public ActionResult StartParsing()
         {
-            var sources = db.ParserSources
-                .Include(s => s.Market);
+            const int maxConcurrentThreads = 5;
 
-            foreach (ParserSource source in sources)
+            // If we're parsing now
+            if (parsingProgress.IsParsing)
             {
-                // Download web request
-                string url = source.Url;
-                string responceBody = new HttpDownloader(url, null, null).GetPage();
-
-                // Create an appropriate parser
-                IClassParser<ParserInput, Product> parser;
-                if (source.ParserId == 0)
-                {
-                    parser = new HTMLParser<ParserInput, Product>(responceBody);
-                }
-                else
-                {
-                    parser = new JsonParser<ParserInput, Product>(responceBody);
-                }
-
-                // Create an input
-                ParserInput input = new ParserInput(source, source.Market);
-
-                // Use it to get products
-                db.Products.AddRange(parser.Parse(input));
+                // Somebody wants to start parsing again
+                return RedirectToAction("Index", "Home");
             }
 
-            db.SaveChanges();
+            // Get sources to parse
+            var sources = db.ParserSources
+                .Include(s => s.Market)
+                .ToList();
+
+            try
+            {
+                // Tell the system that the parsing had started
+                parsingProgress.ParsingStarted(sources.Count);
+
+                using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxConcurrentThreads))
+                {
+                    List<Task> parsings = new List<Task>();
+                    object parsedIncrLock = new object();
+
+                    foreach (ParserSource source in sources)
+                    {
+                        concurrencySemaphore.Wait();
+
+                        // If all threads are running
+                        parsings.Add(Task.Run(async () =>
+                        {
+                            try
+                            {
+                                // Create new context for sending batched products inserts
+                                var ctxt = new GainBargainContext();
+
+                                // Create the command for inserting products
+                                using (var productInsert = new ProductInsertCommand(ctxt))
+                                {
+                                    // Insert every parsed product
+                                    foreach (Product p in await Models.Parser.ParseAsync(source))
+                                    {
+                                        productInsert.ExecuteOn(p);
+                                    }
+                                }
+
+                                // For tracking parsing progress
+                                lock (parsedIncrLock)
+                                {
+                                    // Increment processed parsing sources count
+                                    parsingProgress.IncrementDoneSources();
+                                }
+                            }
+                            catch(Exception ex)
+                            {
+                                // Log...
+                            }
+                            finally
+                            {
+                                // If thread is failed, release semaphore
+                                concurrencySemaphore.Release();
+                            }
+                        }));
+                    }
+
+                    // Wait for all the tasks to be completed
+                    Task.WaitAll(parsings.ToArray());
+                }
+            }
+            finally
+            {
+                // In any case parsing must finish here
+                parsingProgress.ParsingFinished();
+
+                // Remove already existing entries
+                db.Database.ExecuteSqlCommand("RemoveDuplicates");
+            }
 
             // Watch products
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public JsonResult ParsingState()
+        {
+            return Json(parsingProgress, JsonRequestBehavior.AllowGet);
         }
 
         // Idk, what it should be and whether it should be
@@ -366,6 +407,7 @@ namespace GainBargain.WEB.Controllers
         {
             return View();
         }
+
 
         [HttpGet]
         public ActionResult Sources()

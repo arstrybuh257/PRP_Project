@@ -7,7 +7,7 @@
 @foreach (var item in Model)
 {
     <div class="container">
-        <div class="row">
+        <div class="row" style="word-break: break-all">
             <div class="col-3">
                 <p>@item.MarketName</p>
             </div>
@@ -15,7 +15,7 @@
                 <p>@item.CategoryName</p>
             </div>
             <div class="col-3">
-                <p>@item.Url</p>
+                <p><a href="@item.Url">@item.Url</a></p>
             </div>
             <div class="col-3">
                 @Html.ActionLink("Редагувати", "EditParserSource", new { id = item.Id })

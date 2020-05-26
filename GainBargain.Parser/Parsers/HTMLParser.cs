@@ -42,7 +42,7 @@ namespace GainBargain.Parser.Parsers
         /// </summary>
         private static readonly Regex textRegex = new Regex(TEXT_REG_EX);
 
-        private static readonly Regex attributeSelectorRegex = new Regex(@"\s+\{(\S)+?\}");
+        private static readonly Regex attributeSelectorRegex = new Regex(@"\s+\{(\S+)?\}");
 
         /// <summary>
         /// Structure of the loaded HTML document
@@ -173,10 +173,15 @@ namespace GainBargain.Parser.Parsers
 
                 // If this is an attribute selector
                 string attr = null;
-                Match attributeSelector = attributeSelectorRegex.Match(selectorPropName);
-                if (attributeSelector.Success)
+                if (selectorProp.PropertyType == typeof(string))
                 {
-                    attr = attributeSelector.Groups[1].Value;
+                    string propertyValue = selectorProp.GetValue(input) as string;
+                    Match attributeSelector = attributeSelectorRegex.Match(propertyValue);
+                    if (attributeSelector.Success)
+                    {
+                        // State that we need an attribute value
+                        attr = attributeSelector.Groups[1].Value;
+                    }
                 }
 
                 bool isPropertyNumeric = IsNumericType(property.PropertyType);

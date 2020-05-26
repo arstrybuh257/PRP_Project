@@ -9,54 +9,55 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+    <div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            <p>Назва</p>
-            <div class="col-md-10">
+        <div class="form-group row">
+            <div class="col-3">Назва</div>
+            <div class="col-9">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <p>Опис</p>
-            <div class="col-md-10">
+        <div class="form-group row">
+            <div class="col-3">Опис</div>
+            <div class="col-9">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <p>Логотип</p>
-            <div class="col-md-10">
+        <div class="form-group row">
+            <div class="col-3">Логотип</div>
+            <div class="col-9">
                 @Html.EditorFor(model => model.MarketLogoUrl, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MarketLogoUrl, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <p>Селектор ціни товару</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SelPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SelPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p>Селектор опису товару</p>
-            <div class="col-md-10">
+        <div class="form-group row">
+            <div class="col-3">Селектор назви товару</div>
+            <div class="col-9">
                 @Html.EditorFor(model => model.SelName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SelName, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <p>Селектор зображення товару</p>
-            <div class="col-md-10">
+        <div class="form-group row">
+            <div class="col-3">Селектор ціни товару</div>
+            <div class="col-9">
+                @Html.EditorFor(model => model.SelPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SelPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-3">Селектор зображення товару</div>
+            <div class="col-9">
                 @Html.EditorFor(model => model.SelImageUrl, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SelImageUrl, "", new { @class = "text-danger" })
             </div>
@@ -70,7 +71,7 @@
     </div>
 }
 
-    <div>
-        @Html.ActionLink("Повернутися", "Markets")
-        @Html.ActionLink("Видалити", "DeleteMarket", new { id = Model.Id})
-    </div>
+<div>
+    @Html.ActionLink("Повернутися", "Markets")
+    @Html.ActionLink("Видалити", "DeleteMarket", new { id = Model.Id })
+</div>

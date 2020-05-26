@@ -1,16 +1,12 @@
-﻿@model List<GainBargain.DAL.Entities.Product>
+﻿@model List<GainBargain.DAL.Entities.ProductsDemo>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Лера, Сеня, сделайте, чтоб ок было";
 }
-
-<h1>Products are (@Model.Count):</h1>
-<ul>
-    @foreach (var product in Model)
-    {
-        <li>@product.Name @String.Format("{0:0.00} грн", product.Price)</li>
-    }
-</ul>
 
 @Html.ActionLink("Parsing", "Sources", "Admin")
 @Html.ActionLink("Admin panel", "AdminPanel", "Admin")
+
+<h1>Гарячі пропозиції</h1>
+
+@Html.Partial("_HotProductCarousel", Model);

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ProductsDemo>
+
+@* Carousel for displaying hot offers must be here... *@
+
+<div class="row">
+    @foreach (ProductsDemo product in Model)
+    {
+        <div class="col-4 mb-2">
+            @Html.Partial("_HotProduct", product)
+
+        </div>
+    }
+
+</div>

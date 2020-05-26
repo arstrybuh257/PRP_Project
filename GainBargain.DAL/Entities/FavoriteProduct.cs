@@ -8,9 +8,10 @@ namespace GainBargain.DAL.Entities
     {
         [Key]
         [Column(Order = 0)]
-        public int UserId;
+        public int UserId { set; get; }
+
         [Key]
         [Column(Order = 1)]
-        public int ProductId;
+        public int ProductId { set; get; }
     }
 }
