@@ -11,11 +11,4 @@ namespace GainBargain.DAL.Interfaces
     {
         IEnumerable<Product> ProductsWithSameSuperCategory(int id);
     }
-
-    public interface IProductsDemoRepository : IRepository<ProductsDemo>
-    {
-        IEnumerable<ProductsDemo> GetTopProducts(int count);
-
-        IEnumerable<ProductsDemo> GetTopProducts(int count, int categoryId);
-    }
 }

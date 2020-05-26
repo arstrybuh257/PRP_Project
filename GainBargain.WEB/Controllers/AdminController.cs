@@ -395,6 +395,9 @@ namespace GainBargain.WEB.Controllers
                 // Remove already existing entries
                 db.Database.ExecuteSqlCommand("RemoveDuplicates");
 
+                // Update product's cache
+                db.Database.ExecuteSqlCommand("UpdateProductsCache");
+
                 dbLogsRepository.Log(DbLog.LogCode.Info, "Optimization is over. Parsing is done.");
             }
 

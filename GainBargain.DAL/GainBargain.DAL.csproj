@@ -218,7 +218,7 @@
     <Compile Include="Entities\ParserInput.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ParserSource.cs" />
-    <Compile Include="Entities\ProductsDemo.cs" />
+    <Compile Include="Entities\ProductCache.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\SuperCategory.cs" />
     <Compile Include="Entities\User.cs" />
@@ -226,6 +226,7 @@
     <Compile Include="Interfaces\IDbLogsRepository.cs" />
     <Compile Include="Interfaces\IFavoriteCategoriesRepository.cs" />
     <Compile Include="Interfaces\IMarketRepository.cs" />
+    <Compile Include="Interfaces\IProductCacheRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IParserSourceRepository.cs" />
