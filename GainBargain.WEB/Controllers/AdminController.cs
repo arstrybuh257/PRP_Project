@@ -17,11 +17,12 @@ namespace GainBargain.WEB.Controllers
 {
     public class AdminController : Controller
     {
-        GainBargainContext db = new GainBargainContext();
-        ISuperCategoryRepository superCategories;
-        IRepository<Category> categoryRepository;
-        IRepository<Market> marketRepository;
-        IParserSourceRepository parserSourceRepository;
+        private GainBargainContext db = new GainBargainContext();
+        private ISuperCategoryRepository superCategories;
+        private IRepository<Category> categoryRepository;
+        private IRepository<Market> marketRepository;
+        private IParserSourceRepository parserSourceRepository;
+        private IDbLogsRepository dbLogsRepository;
 
         private static ParsingState parsingProgress = new ParsingState();
 
@@ -31,6 +32,7 @@ namespace GainBargain.WEB.Controllers
             categoryRepository = new Repository<Category>(db);
             marketRepository = new Repository<Market>(db);
             parserSourceRepository = new ParserSourceRepository(db);
+            dbLogsRepository = new DbLogsRepository(db);
         }
 
         public ActionResult AdminPanel()
@@ -331,6 +333,7 @@ namespace GainBargain.WEB.Controllers
             {
                 // Tell the system that the parsing had started
                 parsingProgress.ParsingStarted(sources.Count);
+                dbLogsRepository.Log(DbLog.LogCode.Info, $"Started parsing of {sources.Count} sources.");
 
                 using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxConcurrentThreads))
                 {
@@ -368,7 +371,7 @@ namespace GainBargain.WEB.Controllers
                             }
                             catch(Exception ex)
                             {
-                                // Log...
+                                dbLogsRepository.Log(DbLog.LogCode.Error, ex.Message);
                             }
                             finally
                             {
@@ -387,8 +390,12 @@ namespace GainBargain.WEB.Controllers
                 // In any case parsing must finish here
                 parsingProgress.ParsingFinished();
 
+                dbLogsRepository.Log(DbLog.LogCode.Info, "Finished parsing. Starting omptimization.");
+
                 // Remove already existing entries
                 db.Database.ExecuteSqlCommand("RemoveDuplicates");
+
+                dbLogsRepository.Log(DbLog.LogCode.Info, "Optimization is over. Parsing is done.");
             }
 
             // Watch products

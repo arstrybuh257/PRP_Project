@@ -211,6 +211,7 @@
   <ItemGroup>
     <Compile Include="EF\GainBargainContext.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\DbLog.cs" />
     <Compile Include="Entities\FavoriteCategory.cs" />
     <Compile Include="Entities\FavoriteProduct.cs" />
     <Compile Include="Entities\Market.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Entities\SuperCategory.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserRole.cs" />
+    <Compile Include="Interfaces\IDbLogsRepository.cs" />
     <Compile Include="Interfaces\IFavoriteCategoriesRepository.cs" />
     <Compile Include="Interfaces\IMarketRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
