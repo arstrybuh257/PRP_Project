@@ -7,7 +7,7 @@ namespace GainBargain.DAL.Interfaces
     {
         IEnumerable<FavoriteCategory> GetFavoriteCategories();
         void AddFavoriteCategory(FavoriteCategory category);
-        void RemoveFromFavoriteCategory(int categoryId);
-        IEnumerable<FavoriteCategory> FindByUserId(int userId);
+        void RemoveFromFavoriteCategory(int categoryId, string userName);
+        IEnumerable<FavoriteCategory> FindByUserName(string userName);
     }
 }

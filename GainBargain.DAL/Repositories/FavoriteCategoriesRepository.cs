@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
@@ -6,32 +7,38 @@ using GainBargain.DAL.Interfaces;
 
 namespace GainBargain.DAL.Repositories
 {
-    public class FavoriteCategoriesRepository : Repository<FavoriteCategory>, IFavoriteCategoriesRepository
+    public class FavoriteCategoriesRepository : IFavoriteCategoriesRepository
     {
-
-        public GainBargainContext gbContext
+        private GainBargainContext db;
+        public FavoriteCategoriesRepository()
         {
-            get { return context as GainBargainContext; }
+            db = new GainBargainContext();
         }
-        public FavoriteCategoriesRepository(GainBargainContext context) : base(context) { }
         public IEnumerable<FavoriteCategory> GetFavoriteCategories()
         {
-           return gbContext.FavoriteCategories.Include("Category").AsNoTracking().ToList();
+           return db.FavoriteCategories.Include("Category").AsNoTracking().ToList();
         }
 
         public void AddFavoriteCategory(FavoriteCategory category)
         {
-            throw new System.NotImplementedException();
+            db.FavoriteCategories.Add(category);
+            db.SaveChanges();
         }
 
-        public void RemoveFromFavoriteCategory(int categoryId)
+        public void RemoveFromFavoriteCategory(int categoryId, string userName)
         {
-            throw new System.NotImplementedException();
+            var entity = db.FavoriteCategories
+                .FirstOrDefault(x => x.CategoryId == categoryId && x.User.Email == userName);
+            if (entity != null)
+            {
+                db.FavoriteCategories.Remove(entity);
+                db.SaveChanges();
+            }
         }
 
-        public IEnumerable<FavoriteCategory> FindByUserId(int userId)
+        public IEnumerable<FavoriteCategory> FindByUserName(string userName)
         {
-            return gbContext.FavoriteCategories.Include("Category").AsNoTracking().Where(x=>x.UserId == userId).ToList();
+            return db.FavoriteCategories.Include("Category").AsNoTracking().Where(x=>x.User.Email == userName).ToList();
         }
     }
 }
