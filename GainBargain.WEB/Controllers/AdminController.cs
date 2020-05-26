@@ -326,6 +326,7 @@ namespace GainBargain.WEB.Controllers
 
             // Get sources to parse
             var sources = db.ParserSources
+                .Where(s => s.CategoryId == 11)
                 .Include(s => s.Market)
                 .ToList();
 

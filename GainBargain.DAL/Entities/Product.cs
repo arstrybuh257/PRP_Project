@@ -36,8 +36,12 @@ namespace GainBargain.DAL.Entities
                 // Get website domain name
                 var pageHost = new Uri(input.Url).Host;
 
+                string scheme = obj.ImageUrl.StartsWith("http")
+                    ? string.Empty
+                    : "http://";
+
                 // Image Url is domain name + relative path from src attribute
-                obj.ImageUrl = $"{pageHost}/{obj.ImageUrl}";
+                obj.ImageUrl = $"{scheme}{pageHost}/{obj.ImageUrl}";
             }
         }
 
