@@ -1,0 +1,22 @@
+﻿@model ProductsDemo
+
+@* Carousel item for displaying a hot product *@
+
+<div class="card mb-2 hot-product">
+    <div>
+        <img class="card-img-top" src="@Model.ImageUrl"
+             alt="@Model.Name">
+        <div class="price-rect">
+            <div class="price">
+                @String.Format("{0:0.00} грн", Model.Price)
+            </div>
+            <div class="prev-price">
+                @String.Format("{0:0.00} грн", Model.PrevPrice)
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <h4 class="card-title">@Model.Name</h4>
+    </div>
+</div>
