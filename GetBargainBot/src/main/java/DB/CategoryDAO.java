@@ -56,6 +56,17 @@ public class CategoryDAO {
             return markup;
     }
 
+    public int getSuperBySub(String sub) throws SQLException {
+        String query = "SELECT superCategories.id from SuperCategories\n" +
+                "join categories on categories.supercategoryid = superCategories.id\n" +
+                "where categories.id = ?";
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setInt(1,Integer.parseInt(sub));
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt("id");
+    }
+
     public SendMessage displaySuperCategories(long tel_id, String message) throws SQLException {
         return new SendMessage().setReplyMarkup(getSuperCategories()).setText(message).setChatId(tel_id);
     }

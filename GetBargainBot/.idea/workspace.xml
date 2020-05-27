@@ -7,23 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1086b27-82cd-42e1-8083-394f5b15e05a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../DB/DB.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project 1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Task2/Task2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Task3/Task3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Task4/Task4.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../instaSpy/instaSpy.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c/storage_v2/_src_/database/GainBargainDb.UdXK8w/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d16b7a7d-8b79-4253-afd3-2375db9e7e0c/storage_v2/_src_/database/GainBargainDb.UdXK8w/schema/dbo.sYMBAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GetBargainBot.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot/GBbot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot/GBbot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DB/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DB/ProductDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DB/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DB/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bot/GBbot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot/GBbot.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/DB/ProductDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DB/ProductDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DB/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DB/UserDAO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +79,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -120,6 +108,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="grid.search.filter.rows" value="true" />
     <property name="last_opened_file_path" value="D:/UserDAO.java" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -162,22 +151,27 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@2dbca285" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@61751e26" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@40e364b9" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@5e9ffe8b" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@5660ce3e" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@288489d1" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@7677b9a8" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@1abcdf74" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@7d5644c8" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -222,6 +216,7 @@
       <workItem from="1590080208636" duration="4428000" />
       <workItem from="1590352520149" duration="6334000" />
       <workItem from="1590443516423" duration="13000" />
+      <workItem from="1590531160744" duration="21695000" />
     </task>
     <servers />
   </component>
@@ -265,22 +260,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1589817401943" />
-    <state width="1493" height="165" key="GridCell.Tab.0.bottom" timestamp="1590358971321">
+    <state width="1493" height="295" key="GridCell.Tab.0.bottom" timestamp="1590604058372">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
-    <state width="1493" height="165" key="GridCell.Tab.0.center" timestamp="1590358971321">
+    <state width="1493" height="295" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590604058372" />
+    <state width="1493" height="295" key="GridCell.Tab.0.center" timestamp="1590604058372">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
-    <state width="1493" height="165" key="GridCell.Tab.0.left" timestamp="1590358971321">
+    <state width="1493" height="295" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590604058372" />
+    <state width="1493" height="295" key="GridCell.Tab.0.left" timestamp="1590604058371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
-    <state width="1493" height="165" key="GridCell.Tab.0.right" timestamp="1590358971321">
+    <state width="1493" height="295" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590604058371" />
+    <state width="1493" height="295" key="GridCell.Tab.0.right" timestamp="1590604058372">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590358971321" />
+    <state width="1493" height="295" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590604058372" />
     <state x="556" y="123" key="RollbackChangesDialog" timestamp="1589817540166">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -297,10 +292,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="566" y="237" width="403" height="347" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog/0.0.1536.824@0.0.1536.824" timestamp="1589041696833" />
-    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1589830183992">
+    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1590602282173">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.824@0.0.1536.824" timestamp="1589830183992" />
+    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.824@0.0.1536.824" timestamp="1590602282173" />
     <state x="452" y="54" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1590356044468">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

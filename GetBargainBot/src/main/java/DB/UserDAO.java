@@ -137,6 +137,9 @@ public class UserDAO {
     }
 
     public void setPage(Paging direction, long chat_id) throws SQLException {
+        if(direction==Paging.PREV && getPage(chat_id)==0){
+            return;
+        }
         String query = " UPDATE Auth\n" +
                 "    SET page = ? " +
                 "    WHERE chat_id = ?";

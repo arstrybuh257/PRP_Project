@@ -14,147 +14,174 @@
     <database id="3" parent="1" name="master">
       <ObjectId>1</ObjectId>
     </database>
-    <schema id="4" parent="2" name="INFORMATION_SCHEMA">
+    <schema id="4" parent="2" name="HangFire">
+      <ObjectId>5</ObjectId>
+    </schema>
+    <schema id="5" parent="2" name="INFORMATION_SCHEMA">
       <ObjectId>3</ObjectId>
     </schema>
-    <schema id="5" parent="2" name="db_accessadmin">
+    <schema id="6" parent="2" name="db_accessadmin">
       <ObjectId>16385</ObjectId>
     </schema>
-    <schema id="6" parent="2" name="db_backupoperator">
+    <schema id="7" parent="2" name="db_backupoperator">
       <ObjectId>16389</ObjectId>
     </schema>
-    <schema id="7" parent="2" name="db_datareader">
+    <schema id="8" parent="2" name="db_datareader">
       <ObjectId>16390</ObjectId>
     </schema>
-    <schema id="8" parent="2" name="db_datawriter">
+    <schema id="9" parent="2" name="db_datawriter">
       <ObjectId>16391</ObjectId>
     </schema>
-    <schema id="9" parent="2" name="db_ddladmin">
+    <schema id="10" parent="2" name="db_ddladmin">
       <ObjectId>16387</ObjectId>
     </schema>
-    <schema id="10" parent="2" name="db_denydatareader">
+    <schema id="11" parent="2" name="db_denydatareader">
       <ObjectId>16392</ObjectId>
     </schema>
-    <schema id="11" parent="2" name="db_denydatawriter">
+    <schema id="12" parent="2" name="db_denydatawriter">
       <ObjectId>16393</ObjectId>
     </schema>
-    <schema id="12" parent="2" name="db_owner">
+    <schema id="13" parent="2" name="db_owner">
       <ObjectId>16384</ObjectId>
     </schema>
-    <schema id="13" parent="2" name="db_securityadmin">
+    <schema id="14" parent="2" name="db_securityadmin">
       <ObjectId>16386</ObjectId>
     </schema>
-    <schema id="14" parent="2" name="dbo">
+    <schema id="15" parent="2" name="dbo">
       <ObjectId>1</ObjectId>
-      <IntrospectionTimestamp>2020-05-25.00:34:05.940</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2020-05-27.11:25:04.483</IntrospectionTimestamp>
       <Current>1</Current>
     </schema>
-    <schema id="15" parent="2" name="guest">
+    <schema id="16" parent="2" name="guest">
       <ObjectId>2</ObjectId>
     </schema>
-    <schema id="16" parent="2" name="sys">
+    <schema id="17" parent="2" name="sys">
       <ObjectId>4</ObjectId>
     </schema>
-    <table id="17" parent="14" name="Auth">
+    <table id="18" parent="15" name="Auth">
       <ObjectId>1445580188</ObjectId>
       <CreatedTimestamp>2020-05-09.13:25:27.850</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-25.00:34:04.767</ModifiedTimestamp>
     </table>
-    <table id="18" parent="14" name="Categories">
+    <table id="19" parent="15" name="Categories">
       <ObjectId>1205579333</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.197</CreatedTimestamp>
-      <ModifiedTimestamp>2020-05-24.12:29:33.053</ModifiedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:12:37.763</ModifiedTimestamp>
     </table>
-    <table id="19" parent="14" name="FavoriteCategories">
+    <table id="20" parent="15" name="DbLogs">
+      <ObjectId>626101271</ObjectId>
+      <CreatedTimestamp>2020-05-26.16:19:31.180</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.16:19:31.180</ModifiedTimestamp>
+    </table>
+    <table id="21" parent="15" name="FavoriteCategories">
       <ObjectId>178099675</ObjectId>
       <CreatedTimestamp>2020-05-24.12:29:33.050</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-24.12:29:33.050</ModifiedTimestamp>
     </table>
-    <table id="20" parent="14" name="FavoriteProducts">
+    <table id="22" parent="15" name="FavoriteProducts">
       <ObjectId>242099903</ObjectId>
       <CreatedTimestamp>2020-05-24.12:29:33.060</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-24.12:29:33.060</ModifiedTimestamp>
     </table>
-    <table id="21" parent="14" name="Markets">
+    <table id="23" parent="15" name="Markets">
       <ObjectId>1269579561</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.533</CreatedTimestamp>
-      <ModifiedTimestamp>2020-05-09.21:28:47.060</ModifiedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:12:37.763</ModifiedTimestamp>
     </table>
-    <table id="22" parent="14" name="ParserSources">
+    <table id="24" parent="15" name="ParserSources">
       <ObjectId>1301579675</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.623</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:03.147</ModifiedTimestamp>
     </table>
-    <table id="23" parent="14" name="Products">
+    <table id="25" parent="15" name="Products">
       <ObjectId>1237579447</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.443</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-24.12:29:33.063</ModifiedTimestamp>
     </table>
-    <table id="24" parent="14" name="Roles">
+    <table id="26" parent="15" name="ProductsCache">
+      <ObjectId>514100872</ObjectId>
+      <CreatedTimestamp>2020-05-26.15:12:37.763</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:12:37.763</ModifiedTimestamp>
+    </table>
+    <table id="27" parent="15" name="Roles">
       <ObjectId>1701581100</ObjectId>
       <CreatedTimestamp>2020-05-17.17:27:31.483</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-17.17:27:31.483</ModifiedTimestamp>
     </table>
-    <table id="25" parent="14" name="SuperCategories">
+    <table id="28" parent="15" name="SuperCategories">
       <ObjectId>1525580473</ObjectId>
       <CreatedTimestamp>2020-05-09.21:28:47.073</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-16.11:35:35.477</ModifiedTimestamp>
     </table>
-    <table id="26" parent="14" name="UserRoles">
+    <table id="29" parent="15" name="UserRoles">
       <ObjectId>1749581271</ObjectId>
       <CreatedTimestamp>2020-05-17.17:34:50.050</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-17.17:34:50.050</ModifiedTimestamp>
     </table>
-    <table id="27" parent="14" name="Users">
+    <table id="30" parent="15" name="Users">
       <ObjectId>1781581385</ObjectId>
       <CreatedTimestamp>2020-05-17.18:39:00.437</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-24.12:29:33.063</ModifiedTimestamp>
     </table>
-    <routine id="28" parent="14" name="RemoveDuplicates">
+    <view id="31" parent="15" name="ProductsDemo">
+      <ObjectId>434100587</ObjectId>
+      <SourceTextLength>581</SourceTextLength>
+      <CreatedTimestamp>2020-05-26.15:08:37.823</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:08:37.823</ModifiedTimestamp>
+    </view>
+    <routine id="32" parent="15" name="RemoveDuplicates">
       <ObjectId>306100131</ObjectId>
-      <SourceTextLength>238</SourceTextLength>
+      <SourceTextLength>241</SourceTextLength>
       <CreatedTimestamp>2020-05-24.21:30:47.633</CreatedTimestamp>
-      <ModifiedTimestamp>2020-05-24.21:30:47.633</ModifiedTimestamp>
+      <ModifiedTimestamp>2020-05-25.15:06:12.470</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <column id="29" parent="17" name="chat_id">
+    <routine id="33" parent="15" name="UpdateProductsCache">
+      <ObjectId>578101100</ObjectId>
+      <SourceTextLength>144</SourceTextLength>
+      <CreatedTimestamp>2020-05-26.15:20:34.023</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:20:34.023</ModifiedTimestamp>
+      <RoutineKind>procedure</RoutineKind>
+      <RoutineType>proc</RoutineType>
+    </routine>
+    <column id="34" parent="18" name="chat_id">
       <Position>1</Position>
       <DataType>varchar(20 char)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="30" parent="17" name="status">
+    <column id="35" parent="18" name="status">
       <Position>2</Position>
       <DataType>varchar(15 char)|0s</DataType>
     </column>
-    <column id="31" parent="17" name="email">
+    <column id="36" parent="18" name="email">
       <Position>3</Position>
       <DataType>varchar(25 char)|0s</DataType>
     </column>
-    <column id="32" parent="17" name="step">
+    <column id="37" parent="18" name="step">
       <Position>4</Position>
       <DataType>varchar(15 char)|0s</DataType>
     </column>
-    <column id="33" parent="17" name="page">
+    <column id="38" parent="18" name="page">
       <Position>5</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="34" parent="17" name="Auth_chat_id_uindex">
+    <index id="39" parent="18" name="Auth_chat_id_uindex">
       <Position>2</Position>
       <ColNames>chat_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="35" parent="17" name="Auth_pk">
+    <index id="40" parent="18" name="Auth_pk">
       <Position>3</Position>
       <ColNames>chat_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="36" parent="17" name="Auth_email_uindex">
+    <index id="41" parent="18" name="Auth_email_uindex">
       <Position>5</Position>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="37" parent="17" name="Auth_pk">
+    <key id="42" parent="18" name="Auth_pk">
       <ObjectId>1461580245</ObjectId>
       <CreatedTimestamp>2020-05-09.13:25:27.980</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-09.13:25:27.980</ModifiedTimestamp>
@@ -162,29 +189,29 @@
       <UnderlyingIndexName>Auth_pk</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="38" parent="18" name="Id">
+    <column id="43" parent="19" name="Id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="39" parent="18" name="Name">
+    <column id="44" parent="19" name="Name">
       <Position>2</Position>
       <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="40" parent="18" name="SuperCategoryId">
+    <column id="45" parent="19" name="SuperCategoryId">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="41" parent="18" name="PK_dbo.Categories">
+    <index id="46" parent="19" name="PK_dbo.Categories">
       <Position>1</Position>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="42" parent="18" name="PK_dbo.Categories">
+    <key id="47" parent="19" name="PK_dbo.Categories">
       <ObjectId>1221579390</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.273</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:02.273</ModifiedTimestamp>
@@ -192,7 +219,7 @@
       <UnderlyingIndexName>PK_dbo.Categories</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="43" parent="18" name="FK__Categorie__Super__5CD6CB2B">
+    <foreign-key id="48" parent="19" name="FK__Categorie__Super__5CD6CB2B">
       <ObjectId>1557580587</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-09.21:28:47.087</CreatedTimestamp>
@@ -203,17 +230,53 @@
       <RefKeyName>PK__SuperCat__3214EC076207B6B6</RefKeyName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <column id="44" parent="19" name="CategoryId">
+    <column id="49" parent="20" name="Id">
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="50" parent="20" name="Time">
+      <Position>2</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="51" parent="20" name="Code">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="52" parent="20" name="Info">
+      <Position>4</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="53" parent="20" name="PK__DbLogs__3214EC078103D211">
+      <Position>1</Position>
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>Id</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="54" parent="20" name="PK__DbLogs__3214EC078103D211">
+      <ObjectId>642101328</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2020-05-26.16:19:31.180</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.16:19:31.180</ModifiedTimestamp>
+      <ColNames>Id</ColNames>
+      <UnderlyingIndexName>PK__DbLogs__3214EC078103D211</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="55" parent="21" name="CategoryId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="45" parent="19" name="UserId">
+    <column id="56" parent="21" name="UserId">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="46" parent="19" name="PK__Favorite__C871B6CFAD549512">
+    <index id="57" parent="21" name="PK__Favorite__C871B6CFAD549512">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CategoryId
@@ -221,7 +284,7 @@ UserId</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="47" parent="19" name="PK__Favorite__C871B6CFAD549512">
+    <key id="58" parent="21" name="PK__Favorite__C871B6CFAD549512">
       <ObjectId>194099732</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-24.12:29:33.053</CreatedTimestamp>
@@ -231,7 +294,7 @@ UserId</ColNames>
       <UnderlyingIndexName>PK__Favorite__C871B6CFAD549512</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="48" parent="19" name="FK__FavoriteC__Categ__0C85DE4D">
+    <foreign-key id="59" parent="21" name="FK__FavoriteC__Categ__0C85DE4D">
       <ObjectId>210099789</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-24.12:29:33.053</CreatedTimestamp>
@@ -243,7 +306,7 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="49" parent="19" name="FK__FavoriteC__UserI__0D7A0286">
+    <foreign-key id="60" parent="21" name="FK__FavoriteC__UserI__0D7A0286">
       <ObjectId>226099846</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-24.12:29:33.053</CreatedTimestamp>
@@ -255,17 +318,17 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="50" parent="20" name="ProductId">
+    <column id="61" parent="22" name="ProductId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="51" parent="20" name="UserId">
+    <column id="62" parent="22" name="UserId">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="52" parent="20" name="PK__Favorite__65744A094727D310">
+    <index id="63" parent="22" name="PK__Favorite__65744A094727D310">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ProductId
@@ -273,7 +336,7 @@ UserId</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="53" parent="20" name="PK__Favorite__65744A094727D310">
+    <key id="64" parent="22" name="PK__Favorite__65744A094727D310">
       <ObjectId>258099960</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-24.12:29:33.063</CreatedTimestamp>
@@ -283,7 +346,7 @@ UserId</ColNames>
       <UnderlyingIndexName>PK__Favorite__65744A094727D310</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="54" parent="20" name="FK__FavoriteP__Produ__10566F31">
+    <foreign-key id="65" parent="22" name="FK__FavoriteP__Produ__10566F31">
       <ObjectId>274100017</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-24.12:29:33.063</CreatedTimestamp>
@@ -295,7 +358,7 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="55" parent="20" name="FK__FavoriteP__UserI__114A936A">
+    <foreign-key id="66" parent="22" name="FK__FavoriteP__UserI__114A936A">
       <ObjectId>290100074</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-24.12:29:33.063</CreatedTimestamp>
@@ -307,46 +370,46 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="56" parent="21" name="Id">
+    <column id="67" parent="23" name="Id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="57" parent="21" name="Name">
+    <column id="68" parent="23" name="Name">
       <Position>2</Position>
       <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="58" parent="21" name="SelPrice">
+    <column id="69" parent="23" name="SelPrice">
       <Position>3</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
-    <column id="59" parent="21" name="SelName">
+    <column id="70" parent="23" name="SelName">
       <Position>4</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
-    <column id="60" parent="21" name="SelImageUrl">
+    <column id="71" parent="23" name="SelImageUrl">
       <Position>5</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
-    <column id="61" parent="21" name="Description">
+    <column id="72" parent="23" name="Description">
       <Position>6</Position>
       <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="62" parent="21" name="MarketLogoUrl">
+    <column id="73" parent="23" name="MarketLogoUrl">
       <Position>7</Position>
       <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="63" parent="21" name="PK_dbo.Markets">
+    <index id="74" parent="23" name="PK_dbo.Markets">
       <Position>1</Position>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="64" parent="21" name="PK_dbo.Markets">
+    <key id="75" parent="23" name="PK_dbo.Markets">
       <ObjectId>1285579618</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.533</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:02.533</ModifiedTimestamp>
@@ -354,42 +417,42 @@ UserId</ColNames>
       <UnderlyingIndexName>PK_dbo.Markets</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="65" parent="22" name="Id">
+    <column id="76" parent="24" name="Id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="66" parent="22" name="ParserId">
+    <column id="77" parent="24" name="ParserId">
       <Position>2</Position>
       <DataType>tinyint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="67" parent="22" name="Url">
+    <column id="78" parent="24" name="Url">
       <Position>3</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
-    <column id="68" parent="22" name="MarketId">
+    <column id="79" parent="24" name="MarketId">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="69" parent="22" name="CategoryId">
+    <column id="80" parent="24" name="CategoryId">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="70" parent="22" name="PK_dbo.ParserSources">
+    <index id="81" parent="24" name="PK_dbo.ParserSources">
       <Position>1</Position>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <index id="71" parent="22" name="IX_MarketId">
+    <index id="82" parent="24" name="IX_MarketId">
       <Position>2</Position>
       <ColNames>MarketId</ColNames>
     </index>
-    <key id="72" parent="22" name="PK_dbo.ParserSources">
+    <key id="83" parent="24" name="PK_dbo.ParserSources">
       <ObjectId>1317579732</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.623</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:02.623</ModifiedTimestamp>
@@ -397,7 +460,7 @@ UserId</ColNames>
       <UnderlyingIndexName>PK_dbo.ParserSources</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="73" parent="22" name="FK_dbo.ParserSources_dbo.Markets_MarketId">
+    <foreign-key id="84" parent="24" name="FK_dbo.ParserSources_dbo.Markets_MarketId">
       <ObjectId>1365579903</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:03.147</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:03.147</ModifiedTimestamp>
@@ -408,56 +471,56 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="74" parent="23" name="Id">
+    <column id="85" parent="25" name="Id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="75" parent="23" name="Name">
+    <column id="86" parent="25" name="Name">
       <Position>2</Position>
       <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="76" parent="23" name="Price">
+    <column id="87" parent="25" name="Price">
       <Position>3</Position>
       <DataType>real|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="77" parent="23" name="UploadTime">
+    <column id="88" parent="25" name="UploadTime">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="78" parent="23" name="ImageUrl">
+    <column id="89" parent="25" name="ImageUrl">
       <Position>5</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
-    <column id="79" parent="23" name="CategoryId">
+    <column id="90" parent="25" name="CategoryId">
       <Position>6</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="80" parent="23" name="MarketId">
+    <column id="91" parent="25" name="MarketId">
       <Position>7</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="81" parent="23" name="PK_dbo.Products">
+    <index id="92" parent="25" name="PK_dbo.Products">
       <Position>1</Position>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <index id="82" parent="23" name="IX_CategoryId">
+    <index id="93" parent="25" name="IX_CategoryId">
       <Position>2</Position>
       <ColNames>CategoryId</ColNames>
     </index>
-    <index id="83" parent="23" name="IX_MarketId">
+    <index id="94" parent="25" name="IX_MarketId">
       <Position>3</Position>
       <ColNames>MarketId</ColNames>
     </index>
-    <key id="84" parent="23" name="PK_dbo.Products">
+    <key id="95" parent="25" name="PK_dbo.Products">
       <ObjectId>1253579504</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.443</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:02.443</ModifiedTimestamp>
@@ -465,7 +528,7 @@ UserId</ColNames>
       <UnderlyingIndexName>PK_dbo.Products</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="85" parent="23" name="FK_dbo.Products_dbo.Categories_CategoryId">
+    <foreign-key id="96" parent="25" name="FK_dbo.Products_dbo.Categories_CategoryId">
       <ObjectId>1333579789</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:02.967</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:02.967</ModifiedTimestamp>
@@ -476,7 +539,7 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="86" parent="23" name="FK_dbo.Products_dbo.Markets_MarketId">
+    <foreign-key id="97" parent="25" name="FK_dbo.Products_dbo.Markets_MarketId">
       <ObjectId>1349579846</ObjectId>
       <CreatedTimestamp>2020-05-07.12:58:03.057</CreatedTimestamp>
       <ModifiedTimestamp>2020-05-07.12:58:03.057</ModifiedTimestamp>
@@ -487,31 +550,108 @@ UserId</ColNames>
       <RefColNames>Id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="87" parent="24" name="Id">
+    <column id="98" parent="26" name="Id">
       <Position>1</Position>
-      <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="88" parent="24" name="Name">
+    <column id="99" parent="26" name="Name">
       <Position>2</Position>
-      <DataType>nvarchar(20 char)|0s</DataType>
+      <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="89" parent="24" name="PK__Roles__3214EC07A78173FE">
+    <column id="100" parent="26" name="Price">
+      <Position>3</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="101" parent="26" name="PrevPrice">
+      <Position>4</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="26" name="UploadTime">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="103" parent="26" name="ImageUrl">
+      <Position>6</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="104" parent="26" name="CategoryId">
+      <Position>7</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="105" parent="26" name="MarketId">
+      <Position>8</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="106" parent="26" name="PK__Products__3214EC07AD6B959C">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <index id="90" parent="24" name="UQ__Roles__737584F671B31D78">
+    <key id="107" parent="26" name="PK__Products__3214EC07AD6B959C">
+      <ObjectId>530100929</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2020-05-26.15:12:37.763</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:12:37.763</ModifiedTimestamp>
+      <ColNames>Id</ColNames>
+      <UnderlyingIndexName>PK__Products__3214EC07AD6B959C</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="108" parent="26" name="FK__ProductsC__Categ__208CD6FA">
+      <ObjectId>546100986</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2020-05-26.15:12:37.763</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:12:37.763</ModifiedTimestamp>
+      <ColNames>CategoryId</ColNames>
+      <RefTableId>1205579333</RefTableId>
+      <RefTableName>Categories</RefTableName>
+      <RefKeyName>PK_dbo.Categories</RefKeyName>
+      <RefColNames>Id</RefColNames>
+    </foreign-key>
+    <foreign-key id="109" parent="26" name="FK__ProductsC__Marke__2180FB33">
+      <ObjectId>562101043</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2020-05-26.15:12:37.763</CreatedTimestamp>
+      <ModifiedTimestamp>2020-05-26.15:12:37.763</ModifiedTimestamp>
+      <ColNames>MarketId</ColNames>
+      <RefTableId>1269579561</RefTableId>
+      <RefTableName>Markets</RefTableName>
+      <RefKeyName>PK_dbo.Markets</RefKeyName>
+      <RefColNames>Id</RefColNames>
+    </foreign-key>
+    <column id="110" parent="27" name="Id">
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="27" name="Name">
+      <Position>2</Position>
+      <DataType>nvarchar(20 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="112" parent="27" name="PK__Roles__3214EC07A78173FE">
+      <Position>1</Position>
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>Id</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <index id="113" parent="27" name="UQ__Roles__737584F671B31D78">
       <Position>2</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Name</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="91" parent="24" name="PK__Roles__3214EC07A78173FE">
+    <key id="114" parent="27" name="PK__Roles__3214EC07A78173FE">
       <ObjectId>1717581157</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-17.17:27:31.483</CreatedTimestamp>
@@ -520,7 +660,7 @@ UserId</ColNames>
       <UnderlyingIndexName>PK__Roles__3214EC07A78173FE</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="92" parent="24" name="UQ__Roles__737584F671B31D78">
+    <key id="115" parent="27" name="UQ__Roles__737584F671B31D78">
       <ObjectId>1733581214</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-17.17:27:31.483</CreatedTimestamp>
@@ -528,24 +668,24 @@ UserId</ColNames>
       <ColNames>Name</ColNames>
       <UnderlyingIndexName>UQ__Roles__737584F671B31D78</UnderlyingIndexName>
     </key>
-    <column id="93" parent="25" name="Id">
+    <column id="116" parent="28" name="Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="94" parent="25" name="Name">
+    <column id="117" parent="28" name="Name">
       <Position>2</Position>
       <DataType>nvarchar(max)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="95" parent="25" name="PK__SuperCat__3214EC076207B6B6">
+    <index id="118" parent="28" name="PK__SuperCat__3214EC076207B6B6">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="96" parent="25" name="PK__SuperCat__3214EC076207B6B6">
+    <key id="119" parent="28" name="PK__SuperCat__3214EC076207B6B6">
       <ObjectId>1541580530</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-09.21:28:47.077</CreatedTimestamp>
@@ -554,17 +694,17 @@ UserId</ColNames>
       <UnderlyingIndexName>PK__SuperCat__3214EC076207B6B6</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="97" parent="26" name="UserId">
+    <column id="120" parent="29" name="UserId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="98" parent="26" name="RoleId">
+    <column id="121" parent="29" name="RoleId">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="99" parent="26" name="PK__UserRole__5B8242DE16778395">
+    <index id="122" parent="29" name="PK__UserRole__5B8242DE16778395">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>UserId
@@ -572,7 +712,7 @@ RoleId</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="100" parent="26" name="PK__UserRole__5B8242DE16778395">
+    <key id="123" parent="29" name="PK__UserRole__5B8242DE16778395">
       <ObjectId>1765581328</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-17.17:34:50.050</CreatedTimestamp>
@@ -582,40 +722,40 @@ RoleId</ColNames>
       <UnderlyingIndexName>PK__UserRole__5B8242DE16778395</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="101" parent="27" name="Id">
+    <column id="124" parent="30" name="Id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="102" parent="27" name="Email">
+    <column id="125" parent="30" name="Email">
       <Position>2</Position>
       <DataType>nvarchar(50 char)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="103" parent="27" name="Password">
+    <column id="126" parent="30" name="Password">
       <Position>3</Position>
       <DataType>nvarchar(20 char)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="104" parent="27" name="chat_id">
+    <column id="127" parent="30" name="chat_id">
       <Position>4</Position>
       <DataType>varchar(20 char)|0s</DataType>
     </column>
-    <index id="105" parent="27" name="PK__Users__3214EC07CCD99E33">
+    <index id="128" parent="30" name="PK__Users__3214EC07CCD99E33">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <index id="106" parent="27" name="UQ__Users__A9D1053440444DF8">
+    <index id="129" parent="30" name="UQ__Users__A9D1053440444DF8">
       <Position>2</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="107" parent="27" name="PK__Users__3214EC07CCD99E33">
+    <key id="130" parent="30" name="PK__Users__3214EC07CCD99E33">
       <ObjectId>1797581442</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-17.18:39:00.440</CreatedTimestamp>
@@ -624,7 +764,7 @@ RoleId</ColNames>
       <UnderlyingIndexName>PK__Users__3214EC07CCD99E33</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="108" parent="27" name="UQ__Users__A9D1053440444DF8">
+    <key id="131" parent="30" name="UQ__Users__A9D1053440444DF8">
       <ObjectId>1813581499</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-05-17.18:39:00.440</CreatedTimestamp>
@@ -632,5 +772,43 @@ RoleId</ColNames>
       <ColNames>Email</ColNames>
       <UnderlyingIndexName>UQ__Users__A9D1053440444DF8</UnderlyingIndexName>
     </key>
+    <column id="132" parent="31" name="Id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="133" parent="31" name="Name">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="134" parent="31" name="Price">
+      <Position>3</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="135" parent="31" name="PrevPrice">
+      <Position>4</Position>
+      <DataType>real|0s</DataType>
+    </column>
+    <column id="136" parent="31" name="UploadTime">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="137" parent="31" name="ImageUrl">
+      <Position>6</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="138" parent="31" name="CategoryId">
+      <Position>7</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="139" parent="31" name="MarketId">
+      <Position>8</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
   </database-model>
 </dataSource>
