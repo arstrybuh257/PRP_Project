@@ -1,0 +1,10 @@
+﻿@model IEnumerable<GainBargain.DAL.Entities.ProductCache>
+
+@foreach (var item in Model)
+{
+    <div class="favProductCard">
+        <div><img src="@item.ImageUrl" /></div>
+        <h3 class="price">@item.Price</h3>
+        <div class="productName">@item.Name</div>
+    </div>
+}

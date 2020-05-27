@@ -331,6 +331,7 @@
     <Content Include="Views\User\FavoriteCategories.cshtml" />
     <Content Include="Views\Home\_HotProduct.cshtml" />
     <Content Include="Views\Home\_HotProductCarousel.cshtml" />
+    <Content Include="Views\User\FavoriteProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

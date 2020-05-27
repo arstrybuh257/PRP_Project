@@ -132,3 +132,30 @@ h4 ul {
     margin-bottom: 40px;
 }
 
+.reportTitle {
+    background-color: #f59a23;
+}
+
+.favProductCard {
+    display: inline-block;
+    border: 1px solid black;
+    width: 160px;
+    /*height: 300px;*/
+    margin-left: 5px;
+    text-align: center;
+}
+
+.favProductCard img{
+    width: 150px;
+    height: 150px;
+}
+
+    .favProductCard .productName {
+        display: inline-block;
+        padding-bottom: 40px;
+    }
+
+.favProductCard .price {
+    display: inline-block;
+    
+}
