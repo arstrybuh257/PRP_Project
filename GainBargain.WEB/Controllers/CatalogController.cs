@@ -3,8 +3,6 @@ using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.WEB.Models;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -16,6 +14,7 @@ namespace GainBargain.WEB.Controllers
         IProductRepository productRepo;
         IMarketRepository marketRepo;
 
+        const int pageSize = 32;
         public CatalogController()
         {
             superCategoryRepo = new SuperCategoryRepository(new GainBargainContext());
@@ -29,7 +28,7 @@ namespace GainBargain.WEB.Controllers
             return View(superCategoryRepo.GetAllSuperCategoriesWithCategories());
         }
 
-        public ActionResult Catalog(int? superCategoryId, int? categoryId)
+        public ActionResult Catalog(int? superCategoryId, int? categoryId, int page = 1)
         {
             if (superCategoryId == null)
             {
@@ -44,26 +43,60 @@ namespace GainBargain.WEB.Controllers
             }
 
             CatalogVM catalog = new CatalogVM();
+
             catalog.SuperCategoryId = sc.Id;
             catalog.SuperCategoryName = sc.Name;
-            catalog.Categories = sc.Categories;
-            catalog.Markets = marketRepo.FindMarketsBySuperCategory(sc.Id);
 
-            ViewBag.CategoryId = categoryId;
+            int countProducts;
 
+            catalog.Products = productRepo.GetProductsPerPage
+                (page, pageSize, superCategoryId.Value, categoryId ?? null, out countProducts);
+
+            catalog.AvailableCategories = sc.Categories;
+
+
+            catalog.Pager = new Pager(countProducts, page, pageSize, 3);
+
+            //catalog.PageInfo = new PageInfo()
+            //{
+            //    PageNumber = page,
+            //    PageSize = pageSize,
+            //    TotalItems = countProducts
+            //};
+
+            if (categoryId != null)
+                catalog.SelectedCategories.Add(categoryId.Value);
 
             return View(catalog);
         }
 
-        public ActionResult Products(int? superCategoryId, int? categoryId)
+        [HttpPost]
+        public ActionResult Catalog(CatalogVM model, int page = 1)
         {
-            if (superCategoryId == null)
-                return HttpNotFound();
-            if (categoryId != null) {
-                return PartialView(productRepo.Find(p => p.CategoryId == categoryId));
-            }
-            return PartialView(productRepo.ProductsWithSameSuperCategory((int)superCategoryId));
+            var sc = superCategoryRepo.GetSuperCategoryWithCategories(model.SuperCategoryId);
+
+            int countProducts;
+
+            model.Products = productRepo.GetProductsPerPage
+                (page, pageSize, model.SuperCategoryId, model.SelectedCategories, out countProducts);
+
+            model.AvailableCategories = sc.Categories;
+
+            model.Pager = new Pager(countProducts, page, pageSize, 3);
+
+            return View(model);
+
         }
+
+        //public ActionResult Products(int? superCategoryId, int? categoryId)
+        //{
+        //    if (superCategoryId == null)
+        //        return HttpNotFound();
+        //    if (categoryId != null) {
+        //        return PartialView(productRepo.Find(p => p.CategoryId == categoryId));
+        //    }
+        //    return PartialView(productRepo.ProductsWithSameSuperCategory((int)superCategoryId));
+        //}
 
     }
 }
