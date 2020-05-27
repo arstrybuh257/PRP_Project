@@ -13,6 +13,8 @@ namespace GainBargain.WEB.Models
         public IEnumerable<Category> AvailableCategories { get; set; }
         //public PageInfo PageInfo { get; set; }
         public Pager Pager { get; set; }
+
+        public int CountProducts { get; set; }
         public string SortOrder { get; set; } //none; asc; desc 
 
         public CatalogVM()

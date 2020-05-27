@@ -5,38 +5,40 @@
     ViewBag.Title = "Товари та послуги";
 }
 
-@using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post))
-{
 
 <div class="container">
-    @Html.HiddenFor(m => m.SuperCategoryId)
-    @Html.HiddenFor(m => m.SuperCategoryName)
     <div class="row p-2">
         <h2 class=".orange_text"><u>@Model.SuperCategoryName</u></h2>
+        <h6>Знайдено товарів: @Model.CountProducts</h6>
         <button class="ml-auto">Сортувати за ціною</button>
     </div>
     <div class="row border-top">
         <div class="col-12 col-md-3 border-left">
             @*<div class="border-bottom m-0 p-1">
-                <h6>Постачальники послуг\виробники</h6>
-                @foreach(var m in Model.Markets)
-                    {
-                        <p>@m.Name</p>
-                    }
-            </div>*@
+                    <h6>Постачальники послуг\виробники</h6>
+                    @foreach(var m in Model.Markets)
+                        {
+                            <p>@m.Name</p>
+                        }
+                </div>*@
             <div class="border-top m-0 p-1">
                 <h6>Підкатегорії</h6>
-                @foreach (var item in Model.AvailableCategories)
+                @using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post))
                 {
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"
-                                   name="SelectedCategories"
-                                   value="@item.Id"
-                                   @if (Model.SelectedCategories.Contains(item.Id)) { <text> checked </text> } />
-                            @item.Name
-                        </label>
-                    </div>
+                    @Html.HiddenFor(m => m.SuperCategoryId)
+                    foreach (var item in Model.AvailableCategories)
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="SelectedCategories"
+                                       value="@item.Id"
+                                       @if (Model.SelectedCategories.Contains(item.Id)) { <text> checked </text> } />
+                                @item.Name
+                            </label>
+                        </div>
+                    }
+                    <input type="submit" class="btn btn-primary" value="Фільтрувати"/>
                 }
             </div>
         </div>
@@ -58,12 +60,24 @@
 
                 @*@Html.Action("Products", new { superCategoryId = Model.SuperCategoryId, categoryId = ViewBag.CategoryId })*@
             </div>
-
-            <div class="btn-group">
-                @Html.PageButtons(Model.Pager)
+            <div class="row">
+                @using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post))
+                {
+                    @Html.HiddenFor(m => m.SuperCategoryId)
+                    for (int i = 0; i < Model.SelectedCategories.Count; ++i)
+                    {
+                        @Html.HiddenFor(model => Model.SelectedCategories[i])
+                    }
+                    <div class="btn-group">
+                        @Html.PageButtons(Model.Pager)
+                    </div>
+                }
             </div>
-
         </div>
     </div>
 </div>
-}
+
+
+<script>
+</script>
+

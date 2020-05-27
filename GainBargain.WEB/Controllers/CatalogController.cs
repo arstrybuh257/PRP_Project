@@ -52,6 +52,8 @@ namespace GainBargain.WEB.Controllers
             catalog.Products = productRepo.GetProductsPerPage
                 (page, pageSize, superCategoryId.Value, categoryId ?? null, out countProducts);
 
+            catalog.CountProducts = countProducts;
+
             catalog.AvailableCategories = sc.Categories;
 
 
@@ -75,10 +77,14 @@ namespace GainBargain.WEB.Controllers
         {
             var sc = superCategoryRepo.GetSuperCategoryWithCategories(model.SuperCategoryId);
 
+            model.SuperCategoryName = sc.Name;
+
             int countProducts;
 
             model.Products = productRepo.GetProductsPerPage
                 (page, pageSize, model.SuperCategoryId, model.SelectedCategories, out countProducts);
+
+            model.CountProducts = countProducts;
 
             model.AvailableCategories = sc.Categories;
 
