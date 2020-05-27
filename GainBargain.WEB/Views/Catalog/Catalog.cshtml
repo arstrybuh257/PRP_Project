@@ -8,9 +8,11 @@
 
 <div class="container">
     <div class="row p-2">
-        <h2 class=".orange_text"><u>@Model.SuperCategoryName</u></h2>
-        <h6>Знайдено товарів: @Model.CountProducts</h6>
-        <button class="ml-auto">Сортувати за ціною</button>
+        <div>
+            <h2 class="mr-auto orange_text"><u>@Model.SuperCategoryName</u></h2>
+            <h4 class="font-weight-light">Знайдено товарів: @Model.CountProducts</h4>
+        </div>
+        <button class="ml-auto mt-auto h-25">Сортувати за ціною</button>
     </div>
     <div class="row border-top">
         <div class="col-12 col-md-3 border-left">
@@ -52,7 +54,7 @@
                         <div class="card-body">
                             <p class="card-title">@p.Name</p>
                             <div class="mt-2 mt-md-4 ml-auto">
-                                <p class="price">@p.Price</p>
+                                <p class="price">@p.Price<span>&#8372;</span></p>
                             </div>
                         </div>
                     </div>
