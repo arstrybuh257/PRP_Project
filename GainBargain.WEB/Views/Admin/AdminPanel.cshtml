@@ -42,28 +42,44 @@
 
             // This piece of code updates progress bar of parsing
             $(document).ready(function () {
-                let updateParsingState = setInterval(function () {
+                function getParsingStatus () {
                     $.ajax({
                         method: "GET",
                         url: '@Url.Action("ParsingState")',
                         success: function (resp) {
                             console.log(resp);
 
-                            // Widen the progress bar
-                            $("#parsingProgrLine").width(
-                                resp.IsParsing
-                                    ? resp.SourcesParsed / resp.SourcesTotal * 100 + "%"
-                                    : 0);
 
                             // Set start time
                             if (resp.IsParsing) {
+                                $(".current-parsing-state").removeClass("hidden-panel");
+
                                 $("#parseStartTime").text(resp.StartTime);
                                 $("#totalSources").text(resp.SourcesTotal);
                                 $("#processedSources").text(resp.SourcesParsed);
+
+                                let parsingStage = resp.Stage;
+                                let msg;
+                                if (parsingStage == 0) {
+                                    msg = "Обробка джерел інформації...";
+                                }
+                                else {
+                                    msg = "Оптимізація даних...";
+                                }
+                                $("#parsingStage").text(msg);
+
+                                // Widen the progress bar
+                                $("#parsingProgrLine").width(
+                                    resp.SourcesParsed / resp.SourcesTotal * 100 + "%");
+                            }
+                            else {
+                                $(".current-parsing-state").addClass("hidden-panel");
                             }
                         }
                     });
-                }, 2 * 1000); // every 2 seconds
+                }
+                getParsingStatus();
+                let updateParsingState = setInterval(getParsingStatus, 2 * 1000); // every 2 seconds
             });
         });
 

@@ -7,40 +7,53 @@
     <input type="submit" value="Оновити примусово"
            class="btn btn-warning" />
 
-    @* When the parsing has started *@
-    <div class="row">
-        <div class="col-4">
-            Оновлення розпочалося:
-        </div>
-        <div class="col-8">
-            <span id="parseStartTime"></span>
-        </div>
-    </div>
+    <div class="current-parsing-state hidden-panel">
 
-    @* How many parsing sources must be processed *@
-    <div class="row">
-        <div class="col-4">
-            Усього джерел:
+        @* When the parsing has started *@
+        <div class="row">
+            <div class="col-4">
+                Оновлення розпочалося:
+            </div>
+            <div class="col-8">
+                <span id="parseStartTime"></span>
+            </div>
         </div>
-        <div class="col-8">
-            <span id="totalSources"></span>
-        </div>
-    </div>
 
-    @* How many parsing sources has been processed *@
-    <div class="row">
-        <div class="col-4">
-            Опрацьовано джерел:
+        @* How many parsing sources must be processed *@
+        <div class="row">
+            <div class="col-4">
+                Усього джерел:
+            </div>
+            <div class="col-8">
+                <span id="totalSources"></span>
+            </div>
         </div>
-        <div class="col-8">
-            <span id="processedSources"></span>
-        </div>
-    </div>
 
-    @* Extremely pretty progress bar of parsing *@
-    <div id="parsingLine" class="progress">
-        <div id="parsingProgrLine" class="progress-bar progress-bar-striped"
-             role="progressbar" style="width: 10%"
-             aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        @* How many parsing sources has been processed *@
+        <div class="row">
+            <div class="col-4">
+                Опрацьовано джерел:
+            </div>
+            <div class="col-8">
+                <span id="processedSources"></span>
+            </div>
+        </div>
+
+        @* Current stage of parsing *@
+        <div class="row">
+            <div class="col-4">
+                Стадія:
+            </div>
+            <div class="col-8">
+                <span id="parsingStage"></span>
+            </div>
+        </div>
+
+        @* Extremely pretty progress bar of parsing *@
+        <div id="parsingLine" class="progress">
+            <div id="parsingProgrLine" class="progress-bar progress-bar-striped"
+            role="progressbar" style="width: 0%"
+            aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
     </div>
 }

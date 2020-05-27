@@ -111,8 +111,6 @@ namespace GainBargain.WEB.Models
             }
             finally
             {
-                // In any case parsing must finish here
-                ParsingProgress.ParsingFinished();
 
                 dbLogsRepository.Log(DbLog.LogCode.Info, "Finished parsing. Starting omptimization.");
 
@@ -129,6 +127,9 @@ namespace GainBargain.WEB.Models
                 db.Database.CommandTimeout = defTimeout;
 
                 dbLogsRepository.Log(DbLog.LogCode.Info, "Optimization is over. Parsing is done.");
+
+                // In any case parsing must finish here
+                ParsingProgress.ParsingFinished();
             }
         }
 

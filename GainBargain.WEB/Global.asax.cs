@@ -23,19 +23,19 @@ namespace GainBargain.WEB
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+
+            // Parsing background job initialization
+
             HangfireAspNet.Use(GetHangfireServers);
 
-            // Cron schedule
-            // minutes
-            // hours
-            // day of the month 1-31
-            // month
-            // day of the week 0-6
-            //RecurringJob.AddOrUpdate("parsing", () => Models.Parser.Start(), "59 8 * * *");
+            // If of the job used to identify parsing activity
+            var jobId = ConfigurationManager.AppSettings["ParsingJobId"] ?? "parsing";
 
-            // Start the parsing after 1 minute
-            DateTime now = DateTime.UtcNow;
-            RecurringJob.AddOrUpdate("parsing", () => Models.Parser.Start(), $"{now.Minute + 1} {now.Hour} * * *");
+            // Schedule parsing as it is written in the config file
+            // or at 3am UTC
+            var cronStr = ConfigurationManager.AppSettings["ParsingCron"] ?? "0 3 * * *";
+
+            RecurringJob.AddOrUpdate(jobId, () => Models.Parser.Start(), cronStr);
         }
 
         //protected void Application_AuthenticateRequest()
@@ -69,13 +69,14 @@ namespace GainBargain.WEB
 
         /// <summary>
         /// This method is used for creating background
-        /// tasks (in our case is parsing)
+        /// tasks processors (in our case is the one for parsing).
         /// </summary>
-        /// <returns></returns>
         private IEnumerable<IDisposable> GetHangfireServers()
         {
+            // Connection to the db where to store its stuff
             var conStr = ConfigurationManager.ConnectionStrings["GainBargainContext"].ConnectionString;
 
+            // Do some magic
             GlobalConfiguration.Configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
@@ -90,8 +91,10 @@ namespace GainBargain.WEB
                     DisableGlobalLocks = true,
                 });
 
+            // Create server
             yield return new BackgroundJobServer(new BackgroundJobServerOptions
             {
+                // Limit max threads count to 5
                 WorkerCount = Models.Parser.MAX_PROCESSING_SOURCES
             });
         }

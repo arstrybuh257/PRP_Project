@@ -12,6 +12,11 @@ namespace GainBargain.WEB.Models
     public class ParsingState
     {
         /// <summary>
+        /// When the parsing has started.
+        /// </summary>
+        private DateTime startTime;
+
+        /// <summary>
         /// Whether the parsing process is executing now.
         /// </summary>
         public bool IsParsing { private set; get; }
@@ -19,8 +24,7 @@ namespace GainBargain.WEB.Models
         /// <summary>
         /// When the parsing has started.
         /// </summary>
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime StartTime { private set; get; }
+        public string StartTime { get => startTime.ToString("mm:HH dd.MM.YYYY"); }
 
         /// <summary>
         /// How many parsing sources has been parsed by now.
@@ -33,6 +37,28 @@ namespace GainBargain.WEB.Models
         public int SourcesTotal { private set; get; }
 
         /// <summary>
+        /// Fase of the parsing.
+        /// If not parsing: -1.
+        /// If not all sources are processed: 0.
+        /// If optimization stage: 1.
+        /// </summary>
+        public int Stage
+        {
+            get
+            {
+                if (!IsParsing)
+                {
+                    return -1;
+                }
+                if (SourcesParsed < SourcesTotal)
+                {
+                    return 0;
+                }
+                return 1;
+            }
+        }
+
+        /// <summary>
         /// Tell this object that the parsing has started.
         /// </summary>
         /// <param name="total">How many parsing sources will be processed.</param>
@@ -42,7 +68,7 @@ namespace GainBargain.WEB.Models
             SourcesParsed = 0;
             SourcesTotal = total;
 
-            StartTime = DateTime.Now;
+            startTime = DateTime.Now;
         }
 
         /// <summary>
@@ -50,10 +76,12 @@ namespace GainBargain.WEB.Models
         /// Note: this method can automatically turn its state to finished
         /// when all the parsing sources are processed.
         /// </summary>
-        /// <returns></returns>
-        public bool IncrementDoneSources()
+        public void IncrementDoneSources()
         {
-            return IsParsing = ++SourcesParsed != SourcesTotal;
+            if (++SourcesParsed > SourcesTotal)
+            {
+                throw new Exception("Parsed more than was planning!");
+            }
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using GainBargain.WEB.Models;
 using Hangfire;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -315,7 +316,7 @@ namespace GainBargain.WEB.Controllers
         [HttpPost]
         public ActionResult StartParsing()
         {
-            RecurringJob.Trigger("parsing");
+            RecurringJob.Trigger(ConfigurationManager.AppSettings["ParsingJobId"] ?? "parsing");
 
             return RedirectToAction("Index", "Home");
         }
