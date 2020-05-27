@@ -4,27 +4,22 @@
     ViewBag.Title = "Особистий кабінет";
 }
 
-<h2 class=".orange_text">Особистий кабінет (@Model.Name)</h2>
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-7 reportCol">
+            <h2 class="orangeText">Особистий кабінет (@Model.Name)</h2>
             <div>
-                <h6>Щотижневий звіт</h6>
-                <div>
-                    <h6 class="font-weight-light">Обери улюблені категорії та отримай звіт</h6>
+                <h3>Улюблені товари</h3>
+                <div class="eyeIconWelcome">
+                    <h4 class="font-weight-light">Натисніть іконку ока при перегляді продукту, щоб слідкувати за ним тут...</h4>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h6>Улюблені товари</h6>
-                <div>
-                    <h6 class="font-weight-light">Натисніть іконку ока при перегляді продукту, щоб слідкувати за ним тут</h6>
-                </div>
+            <h3>Щотижневий звіт</h3>
+            <div class="eyeIconWelcome">
+                <h4 class="font-weight-light">Обери улюблені категорії та отримай звіт</h4>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-5 favCatCol">
             @Html.Action("FavoriteCategoriesPartial")
         </div>
     </div>

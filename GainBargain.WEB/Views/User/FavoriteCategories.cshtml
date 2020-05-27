@@ -1,21 +1,35 @@
 ﻿@model IEnumerable<GainBargain.DAL.Entities.FavoriteCategory>
 
 <div class="favoriteCategories">
-    @foreach (var item in Model)
-    {
-        <div id="cat-@item.CategoryId" name="cat-@item.CategoryId">
-            <span>@item.Category.Name</span>
-            <button class="btn btn-danger" onclick="removeFromFavoriteCategories(@item.CategoryId)">Видалити</button>
-        </div>
-    }
+    <h4>Улюблені категорії</h4>
+    <table class="table table-sm">
+        <thead class="orangeThead">
+            <tr>
+                <th>Назва</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="favCatTable">
+            @foreach (var item in Model)
+            {
+                <tr id="cat-@item.CategoryId">
+                    <td>
+                        <span>@item.Category.Name</span>
+                    </td>
+                    <td class="removeTd">
+                        <img src="~/Content/img/removeCat.svg" onclick="removeFromFavoriteCategories(@item.CategoryId)" class="removeIcon" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
-<div>
-    <h4>Улюблені категорії</h4>
-    <input type="text" id="newFavCat" />
+<div class="addNewCat">
+    <h4>Додати категорію</h4>
+    <input type="text" id="newFavCat"/>
+    <img onclick="addNewFavoriteCategory()" src="/Content/img/addFavCat.png"/>
 </div>
-<div>
-    <button onclick="addNewFavoriteCategory()" class="btn btn-success">Додати категорію</button>
-</div>
+
 
 @Scripts.Render("~/Scripts/customScripts/userProfile.js")
