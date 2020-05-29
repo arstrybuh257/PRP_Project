@@ -70,9 +70,11 @@
                     <div class="card col-12 col-md-6 col-lg-3">
                         <img class="card-img-top" src="@p.ImageUrl">
                         <div class="card-body">
-                            <p class="card-title">@p.Name</p>
+                            @Html.ActionLink(p.Name, "Product", new { id = p.Id}, new {@class = "card-title text-decoration-none" })
+                            @*<a class="card-title text-decoration-none" href="~/Catalog/Product">@p.Name</a>*@
                             <div class="mt-2 mt-md-4 ml-auto">
-                                <p class="price">@p.Price<span>&#8372;</span></p>
+                                <p class="text-break"><s>@p.PrevPrice<span>грн</span></s></p>
+                                <h6 class="price">@p.Price<span>грн</span></h6>
                             </div>
                         </div>
                     </div>

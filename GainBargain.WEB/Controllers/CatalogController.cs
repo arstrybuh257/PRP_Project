@@ -12,7 +12,7 @@ namespace GainBargain.WEB.Controllers
     {
         ISuperCategoryRepository superCategoryRepo;
         IRepository<Category> categoryRepo;
-        IProductRepository productRepo;
+        IProductCacheRepository productRepo;
         IMarketRepository marketRepo;
 
         const int pageSize = 32;
@@ -20,7 +20,7 @@ namespace GainBargain.WEB.Controllers
         {
             superCategoryRepo = new SuperCategoryRepository(new GainBargainContext());
             categoryRepo = new Repository<Category>(new GainBargainContext());
-            productRepo = new ProductRepository(new GainBargainContext());
+            productRepo = new ProductsCacheRepository(new GainBargainContext());
             marketRepo = new MarketRepository(new GainBargainContext());
         }
 
@@ -94,5 +94,13 @@ namespace GainBargain.WEB.Controllers
 
         }
 
+        public ActionResult Product(int id)
+        {
+            var product = productRepo.Get(id);
+            var market = marketRepo.Get(product.MarketId);
+            ProductVM productVM = new ProductVM(product.Name, product.ImageUrl, product.Price, product.PrevPrice,
+                market.Id, market.Name, market.MarketLogoUrl);
+            return View(productVM);
+        }
     }
 }

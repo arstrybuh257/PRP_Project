@@ -7,7 +7,7 @@ namespace GainBargain.WEB.Models
     {
         public int SuperCategoryId { get; set; }
         public string SuperCategoryName { get; set; }
-        public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<ProductCache> Products { get; set; }
         //public IEnumerable<Market> Markets { get; set; }
         public IList<int> SelectedCategories { get; set; }
         public IEnumerable<Category> AvailableCategories { get; set; }

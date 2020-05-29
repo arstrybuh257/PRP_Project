@@ -41,5 +41,44 @@ namespace GainBargain.DAL.Repositories
                 .Take(count)
                 .AsNoTracking();
         }
+
+        public IEnumerable<ProductCache> GetProductsPerPage
+            (int page, int pageSize, int superCategory, int? category, out int countProducts)
+        {
+            IEnumerable<ProductCache> products;
+            if (category != null)
+            {
+                products = db.ProductsDemo.Where(p => p.CategoryId == category);
+            }
+            else
+            {
+                List<int> categoryIds = GetCategoryIdsBySuperCategory(superCategory);
+                products = db.ProductsDemo.Where(p => categoryIds.Contains(p.CategoryId));
+            }
+            countProducts = products.Count();
+            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public IEnumerable<ProductCache> GetProductsPerPage
+           (int page, int pageSize, int superCategory, IEnumerable<int> categoriesIds, out int countProducts)
+        {
+            IEnumerable<ProductCache> products;
+            if (categoriesIds.Count() > 0)
+            {
+                products = db.ProductsDemo
+                .Where(p => categoriesIds.Contains(p.CategoryId));
+                countProducts = products.Count();
+                return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }
+            List<int> categoryIds = GetCategoryIdsBySuperCategory(superCategory);
+            products = db.ProductsDemo.Where(p => categoryIds.Contains(p.CategoryId));
+            countProducts = products.Count();
+            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        private List<int> GetCategoryIdsBySuperCategory(int scId)
+        {
+            return db.Categories.Where(c => c.SuperCategoryId == scId).Select(c => c.Id).ToList();
+        }
     }
 }
