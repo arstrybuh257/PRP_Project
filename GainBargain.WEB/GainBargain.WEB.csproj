@@ -178,6 +178,7 @@
     <Compile Include="Models\Parser.cs" />
     <Compile Include="Models\ParsingState.cs" />
     <Compile Include="Models\ProductInsertCommand.cs" />
+    <Compile Include="Models\ProductVM.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ParserSourceManager.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
@@ -352,6 +353,7 @@
     <Content Include="Views\User\FavoriteProduct.cshtml" />
     <Content Include="Views\Account\RegisterPartial.cshtml" />
     <Content Include="Views\Account\LoginPartial.cshtml" />
+    <Content Include="Views\Catalog\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

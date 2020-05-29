@@ -1,0 +1,27 @@
+﻿@model GainBargain.WEB.Models.ProductVM
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="container w-75">
+    <div class="row">
+        <div class="col-sm-5">
+            <img class="img-fluid" src="@Model.ImageUrl"/>
+        </div>
+        <div class="col-sm-7">
+            <h4>@Model.Name</h4>
+            <div class="mt-auto">
+                <h6>@Model.Price грн</h6>
+                <s>@Model.PrevPrice грн</s>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2 d-flex flex-row justify-content-start">
+        <h6 class="font-weight-light mr-1">Постачальник послуг: </h6>
+        @Html.ActionLink(Model.MarketName, "Market", "Market", new { id = Model.MarketId}, new { @class="font-weight-bold"})
+        <div class="col-2 col-sm-1">
+            <img src="@Model.MarketImgUrl" class="img-fluid"/>
+        </div>
+    </div>
+</div>
