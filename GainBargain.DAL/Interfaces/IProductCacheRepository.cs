@@ -14,5 +14,7 @@ namespace GainBargain.DAL.Interfaces
 
         IEnumerable<ProductCache> GetProductsPerPage
           (int page, int pageSize, int superCategory, IEnumerable<int> categoriesIds, out int countProducts);
+
+        IEnumerable<ProductCache> SearchProduct(int page, int pageSize, string text, out int countProducts);
     }
 }

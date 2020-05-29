@@ -15,9 +15,11 @@ namespace GainBargain.WEB.Models
 
         public int CountProducts { get; set; }
         public bool? SortOrder { get; set; } //null; asc -- true; desc -- false
+        public string Search { get; set; }
 
         public CatalogVM()
         {
+            Products = new List<ProductCache>();
             SelectedCategories = new List<int>();
             AvailableCategories = new List<Category>();
         }
