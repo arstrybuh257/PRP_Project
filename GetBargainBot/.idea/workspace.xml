@@ -9,8 +9,11 @@
     <list default="true" id="e1086b27-82cd-42e1-8083-394f5b15e05a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot/GBbot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot/GBbot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DB/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DB/ProductDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DB/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DB/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bot/GBbot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot/GBbot.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/DB/ProductDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DB/ProductDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DB/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DB/UserDAO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +53,13 @@
         <item name="GainBargainDb: database" type="ccb7ac2a:MsImplModel$Database" />
         <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
         <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="GBdb" type="feb32156:DbDataSourceImpl" />
+        <item name="GainBargainDb: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+        <item name="views" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -151,27 +161,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@61751e26" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@5e9ffe8b" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@288489d1" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@1abcdf74" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="GBdb: root" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@7d5644c8" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@5a2b75ee" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -216,7 +206,9 @@
       <workItem from="1590080208636" duration="4428000" />
       <workItem from="1590352520149" duration="6334000" />
       <workItem from="1590443516423" duration="13000" />
-      <workItem from="1590531160744" duration="21695000" />
+      <workItem from="1590531160744" duration="24854000" />
+      <workItem from="1590659831285" duration="971000" />
+      <workItem from="1590700351162" duration="6478000" />
     </task>
     <servers />
   </component>
@@ -260,22 +252,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1589817401943" />
-    <state width="1493" height="295" key="GridCell.Tab.0.bottom" timestamp="1590604058372">
+    <state width="1493" height="295" key="GridCell.Tab.0.bottom" timestamp="1590740024042">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="295" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590604058372" />
-    <state width="1493" height="295" key="GridCell.Tab.0.center" timestamp="1590604058372">
+    <state width="1493" height="295" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590740024042" />
+    <state width="1493" height="295" key="GridCell.Tab.0.center" timestamp="1590740024042">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="295" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590604058372" />
-    <state width="1493" height="295" key="GridCell.Tab.0.left" timestamp="1590604058371">
+    <state width="1493" height="295" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590740024042" />
+    <state width="1493" height="295" key="GridCell.Tab.0.left" timestamp="1590740024042">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="295" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590604058371" />
-    <state width="1493" height="295" key="GridCell.Tab.0.right" timestamp="1590604058372">
+    <state width="1493" height="295" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590740024042" />
+    <state width="1493" height="295" key="GridCell.Tab.0.right" timestamp="1590740024042">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="295" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590604058372" />
+    <state width="1493" height="295" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590740024042" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1590665239330">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590665239330" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1590665239329">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1590665239329" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1590665239329">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1590665239329" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1590665239329">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1590665239329" />
     <state x="556" y="123" key="RollbackChangesDialog" timestamp="1589817540166">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -292,10 +300,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="566" y="237" width="403" height="347" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog/0.0.1536.824@0.0.1536.824" timestamp="1589041696833" />
-    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1590602282173">
+    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1590742948822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.824@0.0.1536.824" timestamp="1590602282173" />
+    <state x="560" y="333" key="com.intellij.database.run.ParametersPanel.Standalone/0.0.1536.824@0.0.1536.824" timestamp="1590742948822" />
     <state x="452" y="54" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1590356044468">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -304,10 +312,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="635" y="125" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1536.824@0.0.1536.824" timestamp="1589625927528" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1590443520693">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1590700351090">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1590443520693" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1590700351090" />
     <state x="540" y="115" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1588972967543">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

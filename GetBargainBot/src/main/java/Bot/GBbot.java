@@ -10,6 +10,7 @@ import KeyBoard.InlineKeyboardBuilder;
 import KeyBoard.PlainKeyboardBuilder;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.methods.updatingmessages.DeleteMessage;
@@ -81,9 +82,10 @@ public class GBbot extends TelegramLongPollingBot {
                 if (Status.valueOf(dao.getStatus(tel_id).toUpperCase()) == Status.SUCCESS) {
                     if(tryParse(messageText.substring(1))){
                         String[] arr = dao2.getProductById(messageText.substring(1));
-                        String caption = String.format("%s, текущая цена - %s грн., пред. цена - %s ",arr[0],arr[1],arr[2]);
-                        SendPhoto mes = new SendPhoto().setCaption(caption).setPhoto(arr[3]).setChatId(tel_id);
+                        String caption = String.format("%s, ціна - %s грн., стара ціна - <s>%s</s> грн. ",arr[0],arr[1],arr[2]);
+                        SendPhoto mes = new SendPhoto().setParseMode("HTML").setCaption(caption).setPhoto(arr[3]).setChatId(tel_id);
                         sendPhoto(mes);
+                        //execute(new SendMessage().setChatId(tel_id).enableMarkdown(true).enableHtml(true).setText(caption));
                         System.out.println(arr[3]);
                         return;
                     }
@@ -129,18 +131,26 @@ public class GBbot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData().startsWith("c")) {
                 try {
-
                     if (update.getCallbackQuery().getData().endsWith("Back")) {
                         editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(dao3.getSuperCategories()));
                     } else {
+                        dao.setPageStart(update.getCallbackQuery().getMessage().getChatId());
                         System.out.println(update.getCallbackQuery().getData());
                         List<String> list = dao2.searchProducts(Integer.parseInt(update.getCallbackQuery().getData().substring(1)));
                         list = list.stream().skip(25 * dao.getPage(update.getCallbackQuery().getMessage().getChatId())).limit(25).collect(Collectors.toList());
-                        editMessageText(new EditMessageText().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setText(String.join("\n~~~~~~~~~~~~~\n", list)));
+                        editMessageText(new EditMessageText().enableHtml(true).setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setText(String.join("\n~~~~~~~~~~~~~\n", list)));
                         editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(InlineKeyboardBuilder.create().row().button("<", "<" + update.getCallbackQuery().getData().substring(1)).button(">", ">" + update.getCallbackQuery().getData().substring(1)).endRow().row().button("Назад", "pBack" + dao3.getSuperBySub(update.getCallbackQuery().getData().substring(1))).endRow().getKeyBoard()));
                     }
 
-                } catch (TelegramApiException | SQLException e) {
+                } catch (org.telegram.telegrambots.exceptions.TelegramApiValidationException ex){
+                    try {
+                        AnswerCallbackQuery answ = new AnswerCallbackQuery().setCallbackQueryId(update.getCallbackQuery().getId()).setText("Немає товарів у категорії!");
+                        answ.setCacheTime(2000);
+                        answerCallbackQuery(answ);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }catch (TelegramApiException | SQLException e) {
                     e.printStackTrace();
                 }
             } else if (update.getCallbackQuery().getData().contains(">")) {
@@ -155,8 +165,8 @@ public class GBbot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData().contains("<")) {
                 try {
-                    List<String> list = dao2.searchProducts(Integer.parseInt(update.getCallbackQuery().getData().substring(1)));
                     dao.setPage(Paging.PREV, update.getCallbackQuery().getMessage().getChatId());
+                    List<String> list = dao2.searchProducts(Integer.parseInt(update.getCallbackQuery().getData().substring(1)));
                     list = list.stream().skip(20 * dao.getPage(update.getCallbackQuery().getMessage().getChatId())).limit(25).collect(Collectors.toList());
                     editMessageText(new EditMessageText().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setText(String.join("\n~~~~~~~~~~~~~\n", list)));
                     editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(InlineKeyboardBuilder.create().row().button("<", "<" + update.getCallbackQuery().getData().substring(1)).button(">", ">" + update.getCallbackQuery().getData().substring(1)).endRow().row().button("Назад", "pBack" + dao3.getSuperBySub(update.getCallbackQuery().getData().substring(1))).endRow().getKeyBoard()));
@@ -166,6 +176,7 @@ public class GBbot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData().startsWith("p") && update.getCallbackQuery().getData().contains("Back")) {
                 try {
+                    dao.setPage(Paging.PREV, update.getCallbackQuery().getMessage().getChatId());
                     int categoryId = Integer.parseInt(update.getCallbackQuery().getData().substring(5));
                     System.out.println(categoryId);
                     editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(dao3.getCategories(Integer.parseInt(update.getCallbackQuery().getData().substring(5)))));

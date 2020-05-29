@@ -153,6 +153,12 @@ public class UserDAO {
         statement.execute();
     }
 
+    public void setPageStart(long tel_id) throws SQLException {
+        while(getPage(tel_id)!=0){
+            setPage(Paging.PREV,tel_id);
+        }
+    }
+
     public boolean userAuthenificated(long id) throws SQLException {
         return !"null".equals(getEmail(id));
     }

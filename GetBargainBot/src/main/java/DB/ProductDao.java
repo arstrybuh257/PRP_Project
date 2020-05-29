@@ -26,7 +26,7 @@ public class ProductDao {
                 "where ProductsCache.Name like ?";
 
         PreparedStatement statement = con.prepareStatement(query);
-        statement.setString(1, "%" + name + "%");
+        statement.setString(1, name + "%");
         ResultSet resultSet = statement.executeQuery();
         StringBuilder sb;
         while (resultSet.next()) {
@@ -42,7 +42,7 @@ public class ProductDao {
 
     public ArrayList<String> searchProducts(int id) throws SQLException {
         ArrayList<String> list = new ArrayList<>();
-        String query = "SELECT ProductsCache.id as id,ProductsCache.Name as n, Price as pr, M.name as m from ProductsCache\n" +
+        String query = "SELECT ProductsCache.id as id,ProductsCache.Name as n, Price as pr , prevprice as prpr, M.name as m from ProductsCache\n" +
                 "join Markets M on ProductsCache.MarketId = M.Id\n" +
                 " join Categories on Categories.Id = ProductsCache.CategoryId " +
                 "where ProductsCache.CategoryId like ?";
@@ -54,7 +54,8 @@ public class ProductDao {
             sb = new StringBuilder();
             sb.append("[/").append(resultSet.getInt("id")).append("] ");
             sb.append(resultSet.getString("n")).append(". Ціна: ");
-            sb.append(resultSet.getString("pr")).append(". Заклад: ");
+            sb.append(resultSet.getString("pr")).append(". Стара ціна: <s>");
+            sb.append(resultSet.getString("prpr")).append("</s>. Заклад: ");
             sb.append(resultSet.getString("m"));
             list.add(sb.toString());
         }
