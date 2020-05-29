@@ -4,8 +4,10 @@ using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.WEB.Models;
+using Hangfire;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -24,7 +26,6 @@ namespace GainBargain.WEB.Controllers
         private IParserSourceRepository parserSourceRepository;
         private IDbLogsRepository dbLogsRepository;
 
-        private static ParsingState parsingProgress = new ParsingState();
 
         public AdminController()
         {
@@ -315,101 +316,15 @@ namespace GainBargain.WEB.Controllers
         [HttpPost]
         public ActionResult StartParsing()
         {
-            const int maxConcurrentThreads = 5;
+            RecurringJob.Trigger(ConfigurationManager.AppSettings["ParsingJobId"] ?? "parsing");
 
-            // If we're parsing now
-            if (parsingProgress.IsParsing)
-            {
-                // Somebody wants to start parsing again
-                return RedirectToAction("Index", "Home");
-            }
-
-            // Get sources to parse
-            var sources = db.ParserSources
-                .Where(s => s.CategoryId == 11)
-                .Include(s => s.Market)
-                .ToList();
-
-            try
-            {
-                // Tell the system that the parsing had started
-                parsingProgress.ParsingStarted(sources.Count);
-                dbLogsRepository.Log(DbLog.LogCode.Info, $"Started parsing of {sources.Count} sources.");
-
-                using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxConcurrentThreads))
-                {
-                    List<Task> parsings = new List<Task>();
-                    object parsedIncrLock = new object();
-
-                    foreach (ParserSource source in sources)
-                    {
-                        concurrencySemaphore.Wait();
-
-                        // If all threads are running
-                        parsings.Add(Task.Run(async () =>
-                        {
-                            try
-                            {
-                                // Create new context for sending batched products inserts
-                                var ctxt = new GainBargainContext();
-
-                                // Create the command for inserting products
-                                using (var productInsert = new ProductInsertCommand(ctxt))
-                                {
-                                    // Insert every parsed product
-                                    foreach (Product p in await Models.Parser.ParseAsync(source))
-                                    {
-                                        productInsert.ExecuteOn(p);
-                                    }
-                                }
-
-                                // For tracking parsing progress
-                                lock (parsedIncrLock)
-                                {
-                                    // Increment processed parsing sources count
-                                    parsingProgress.IncrementDoneSources();
-                                }
-                            }
-                            catch(Exception ex)
-                            {
-                                dbLogsRepository.Log(DbLog.LogCode.Error, ex.Message);
-                            }
-                            finally
-                            {
-                                // If thread is failed, release semaphore
-                                concurrencySemaphore.Release();
-                            }
-                        }));
-                    }
-
-                    // Wait for all the tasks to be completed
-                    Task.WaitAll(parsings.ToArray());
-                }
-            }
-            finally
-            {
-                // In any case parsing must finish here
-                parsingProgress.ParsingFinished();
-
-                dbLogsRepository.Log(DbLog.LogCode.Info, "Finished parsing. Starting omptimization.");
-
-                // Remove already existing entries
-                db.Database.ExecuteSqlCommand("RemoveDuplicates");
-
-                // Update product's cache
-                db.Database.ExecuteSqlCommand("UpdateProductsCache");
-
-                dbLogsRepository.Log(DbLog.LogCode.Info, "Optimization is over. Parsing is done.");
-            }
-
-            // Watch products
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public JsonResult ParsingState()
         {
-            return Json(parsingProgress, JsonRequestBehavior.AllowGet);
+            return Json(Models.Parser.ParsingProgress, JsonRequestBehavior.AllowGet);
         }
 
         // Idk, what it should be and whether it should be

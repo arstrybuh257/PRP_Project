@@ -21,7 +21,6 @@ namespace GainBargain.DAL.Repositories
 
         public IEnumerable<ProductCache> GetTopProducts(int count)
         {
-            db.Database.Log = new System.Action<string>(f => System.Diagnostics.Debug.WriteLine(f));
             var q = db.ProductsDemo
                 .OrderBy(p => (db.ProductsDemo
                     .Where(avgp => avgp.CategoryId == p.CategoryId)
