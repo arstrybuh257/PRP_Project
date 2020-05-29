@@ -16,6 +16,18 @@ namespace GainBargain.WEB.Controllers
         }
 
         [HttpGet]
+        public ActionResult RegisterPartial()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult LoginPartial()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
         public ActionResult Register()
         {
             return View();

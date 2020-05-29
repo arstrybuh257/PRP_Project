@@ -88,19 +88,6 @@ namespace GainBargain.WEB.Controllers
             {
                 model.Products = model.SortOrder.Value ? model.Products.OrderBy(p => p.Price) 
                     : model.Products.OrderByDescending(p => p.Price);
-                //if (model.SortOrder != null)
-                //{
-                //    model.SortOrder = !model.SortOrder;
-                //    if (model.SortOrder.Value)
-                //        model.Products = model.Products.OrderBy(p => p.Price);
-                //    else
-                //        model.Products = model.Products.OrderByDescending(p => p.Price);
-                //}
-                //else
-                //{
-                //    model.SortOrder = true;
-                //    model.Products = model.Products.OrderBy(p => p.Price);
-                //}
             }
 
             return View(model);

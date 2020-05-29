@@ -236,6 +236,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\renderModals.js" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -349,6 +350,8 @@
     <Content Include="Views\Home\_HotProduct.cshtml" />
     <Content Include="Views\Home\_HotProductCarousel.cshtml" />
     <Content Include="Views\User\FavoriteProduct.cshtml" />
+    <Content Include="Views\Account\RegisterPartial.cshtml" />
+    <Content Include="Views\Account\LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

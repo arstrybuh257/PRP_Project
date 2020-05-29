@@ -10,6 +10,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/renderModals.js")
 </head>
 <body>
     <header class="d-flex align-items-center justify-content-center">
@@ -31,10 +32,11 @@
                         @if (!Request.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="~/Account/Login">Увійти</a>
+                                <a class="nav-link" href="~/Account/LoginParial" id="loginButton">Увійти</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="~/Account/Register" tabindex="-1" aria-disabled="true">Зареєструватися</a>
+                                <a class="nav-link" href="~/Account/RegisterPartial" tabindex="-1" aria-disabled="true" id="registerButton">
+                                Зареєструватися</a>
                             </li>
                         }
                         else
@@ -55,6 +57,8 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+        <div class="modal fade" id="registerModal" role="dialog"></div>
+        <div class="modal fade" id="loginModal" role="dialog"></div>
         <footer>
             <p>&copy; @DateTime.Now.Year - GainBargain</p>
         </footer>

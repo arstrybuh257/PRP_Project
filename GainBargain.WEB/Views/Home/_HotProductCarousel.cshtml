@@ -11,93 +11,101 @@
     }*@
 <div class="carousel slide" data-ride="carousel">
     <div class="container-fluid carousel-inner">
-        <div class="row carousel-item active">
-            @for (int i = 0; i < 3; ++i)
-            {
-                <div class="col-12 col-sm-4 card hot-product">
-                    <div>
-                        <img class="card-img-top img-fluid" src="@Model[i].ImageUrl"
-                             alt="@Model[i].Name">
-                        <div class="price-rect">
-                            <div class="price">
-                                @String.Format("{0:0.00} грн", Model[i].Price)
-                            </div>
-                            <div class="prev-price">
-                                @String.Format("{0:0.00} грн", Model[i].PrevPrice)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@Model[i].Name</h4>
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="row carousel-item">
-            @for (int i = 3; i < 6; ++i)
-            {
-                <div class="col-12 col-sm-4 card mb-2 hot-product">
-                    <div>
-                        <img class="card-img-top" src="@Model[i].ImageUrl"
-                             alt="@Model[i].Name">
-                        <div class="price-rect">
-                            <div class="price">
-                                @String.Format("{0:0.00} грн", Model[i].Price)
-                            </div>
-                            <div class="prev-price">
-                                @String.Format("{0:0.00} грн", Model[i].PrevPrice)
+        <div class="carousel-item active">
+            <div class="row ">
+                @for (int i = 0; i < 3; ++i)
+                {
+                    <div class="col-12 col-sm-4 card hot-product">
+                        <div>
+                            <img class="card-img-top img-fluid" src="@Model[i].ImageUrl"
+                                 alt="@Model[i].Name">
+                            <div class="price-rect">
+                                <div class="price">
+                                    @String.Format("{0:0.00} грн", Model[i].Price)
+                                </div>
+                                <div class="prev-price">
+                                    @String.Format("{0:0.00} грн", Model[i].PrevPrice)
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@Model[i].Name</h4>
-                    </div>
-                </div>
-            }
-        </div>
-        <div class=" row carousel-item">
-            @for (int i = 6; i < 9; ++i)
-            {
-                <div class="col-12 col-sm-4 card mb-2 hot-product">
-                    <div>
-                        <img class="card-img-top" src="@Model[i].ImageUrl"
-                             alt="@Model[i].Name">
-                        <div class="price-rect">
-                            <div class="price">
-                                @String.Format("{0:0.00} грн", Model[i].Price)
-                            </div>
-                            <div class="prev-price">
-                                @String.Format("{0:0.00} грн", Model[i].PrevPrice)
-                            </div>
+                        <div class="card-body">
+                            <h4 class="card-title">@Model[i].Name</h4>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@Model[i].Name</h4>
-                    </div>
-                </div>
-            }
+                }
+            </div>
         </div>
         <div class="carousel-item">
-            @for (int i = 9; i < 12; ++i)
-            {
-                <div class="card mb-2 hot-product">
-                    <div>
-                        <img class="card-img-top" src="@Model[i].ImageUrl"
-                             alt="@Model[i].Name">
-                        <div class="price-rect">
-                            <div class="price">
-                                @String.Format("{0:0.00} грн", Model[i].Price)
-                            </div>
-                            <div class="prev-price">
-                                @String.Format("{0:0.00} грн", Model[i].PrevPrice)
+            <div class="row ">
+                @for (int i = 3; i < 6; ++i)
+                {
+                    <div class="col-12 col-sm-4 card mb-2 hot-product">
+                        <div>
+                            <img class="card-img-top" src="@Model[i].ImageUrl"
+                                 alt="@Model[i].Name">
+                            <div class="price-rect">
+                                <div class="price">
+                                    @String.Format("{0:0.00} грн", Model[i].Price)
+                                </div>
+                                <div class="prev-price">
+                                    @String.Format("{0:0.00} грн", Model[i].PrevPrice)
+                                </div>
                             </div>
                         </div>
+                        <div class="card-body">
+                            <h4 class="card-title">@Model[i].Name</h4>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@Model[i].Name</h4>
-                    </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
+        <div class="carousel-item">
+            <div class="row ">
+                @for (int i = 6; i < 9; ++i)
+                {
+                    <div class="col-12 col-sm-4 card mb-2 hot-product">
+                        <div>
+                            <img class="card-img-top" src="@Model[i].ImageUrl"
+                                 alt="@Model[i].Name">
+                            <div class="price-rect">
+                                <div class="price">
+                                    @String.Format("{0:0.00} грн", Model[i].Price)
+                                </div>
+                                <div class="prev-price">
+                                    @String.Format("{0:0.00} грн", Model[i].PrevPrice)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">@Model[i].Name</h4>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="row ">
+                @for (int i = 9; i < 12; ++i)
+                {
+                    <div class="col-12 col-sm-4 ccard mb-2 hot-product">
+                        <div>
+                            <img class="card-img-top" src="@Model[i].ImageUrl"
+                                 alt="@Model[i].Name">
+                            <div class="price-rect">
+                                <div class="price">
+                                    @String.Format("{0:0.00} грн", Model[i].Price)
+                                </div>
+                                <div class="prev-price">
+                                    @String.Format("{0:0.00} грн", Model[i].PrevPrice)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">@Model[i].Name</h4>
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
 </div>
