@@ -25,7 +25,6 @@ public class CategoryDAO {
     }
 
     public HashMap<String,Integer> getSuperCategoriesAsMap() throws SQLException {
-
         String query = "SELECT id,name from SuperCategories\n";
         PreparedStatement statement = con.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
@@ -69,6 +68,16 @@ public class CategoryDAO {
 
     public SendMessage displaySuperCategories(long tel_id, String message) throws SQLException {
         return new SendMessage().setReplyMarkup(getSuperCategories()).setText(message).setChatId(tel_id);
+    }
+
+    public ResultSet getFavouriteCategories(long tel_id) throws SQLException {
+        String query = "SELECT CategoryId from FavoriteCategories\n"+
+                "join users on favoriteCategories.userid = users.id " +
+                "where chat_id=?";
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setInt(1,(int)tel_id);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet;
     }
 
     public InlineKeyboardMarkup getCategories(int id) throws SQLException {

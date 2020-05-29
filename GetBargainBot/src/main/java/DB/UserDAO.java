@@ -28,7 +28,10 @@ public class UserDAO {
         PreparedStatement statement = con.prepareStatement(query);
         resultSet = statement.executeQuery();
         while(resultSet.next()){
-            list.add(Long.parseLong(resultSet.getString("chat_id")));
+            if(resultSet.getString("chat_id")!=null){
+                list.add(Long.parseLong(resultSet.getString("chat_id")));
+            }
+
         }
             return list;
     }

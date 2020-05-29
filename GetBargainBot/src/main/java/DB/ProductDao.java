@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ProductDao {
     Connection con;
@@ -68,10 +69,37 @@ public class ProductDao {
         statement.setInt(1, Integer.parseInt(id));
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
-        String[] arr = {resultSet.getString("name"),String.valueOf(Math.floor(resultSet.getDouble("price") * 100) / 100),String.valueOf(Math.floor(resultSet.getDouble("prevprice") * 100) / 100),resultSet.getString("imageurl")};
+        String[] arr = {resultSet.getString("name"), String.valueOf(Math.floor(resultSet.getDouble("price") * 100) / 100), String.valueOf(Math.floor(resultSet.getDouble("prevprice") * 100) / 100), resultSet.getString("imageurl")};
         System.out.println(Arrays.toString(arr));
         return arr;
     }
+
+    public List<String> getFavCategoriesProducts(long tel_id) throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        CategoryDAO dao = new CategoryDAO();
+        ResultSet favouriteCategories = dao.getFavouriteCategories(tel_id);
+        while (favouriteCategories.next()) {
+            String query = "select top 5 ProductsDemo.id as id,ProductsDemo.name as n,price as pr,prevprice as prpr from ProductsDemo\n" +
+                    "where CategoryId = ?\n" +
+                    "order by (SELECT avg(PrevPrice-Price) as diff from ProductsDemo\n" +
+                    "where CategoryId = ?) - (PrevPrice - Price)\n";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, favouriteCategories.getInt("CategoryId"));
+            statement.setInt(2, favouriteCategories.getInt("CategoryId"));
+            ResultSet resultSet = statement.executeQuery();
+            StringBuilder sb;
+            while (resultSet.next()) {
+                sb = new StringBuilder();
+                sb.append("[/").append(resultSet.getInt("id")).append("] ");
+                sb.append(resultSet.getString("n")).append(". Ціна: ");
+                sb.append(resultSet.getString("pr")).append(". Стара ціна: <s>");
+                sb.append(resultSet.getString("prpr")).append("</s>.");
+                list.add(sb.toString());
+            }
+        }
+        return list;
+    }
+
 }
 
 

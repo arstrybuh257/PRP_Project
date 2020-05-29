@@ -39,19 +39,18 @@ public class GBbot extends TelegramLongPollingBot {
 
 
     public GBbot() throws SchedulerException {
-         new SendMessage().setParseMode("Markdown");
         JobDetail job = JobBuilder.newJob(Mailing.class)
                 .withIdentity("GBbot").build();
         Trigger trigger = newTrigger()
                 .withIdentity("trigger")
-                .withSchedule(dailyAtHourAndMinute(23, 56))
+                .withSchedule(dailyAtHourAndMinute(14, 13))
                 .build();
         scheduler.start();
         scheduler.scheduleJob(job, trigger);
     }
 
     public void sendMessage(String text, long id) throws TelegramApiException {
-        execute(new SendMessage().setChatId(id).setText(text));
+        execute(new SendMessage().enableHtml(true).setChatId(id).setText(text));
     }
 
     public void onUpdateReceived(Update update) {
