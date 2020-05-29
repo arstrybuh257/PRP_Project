@@ -33,12 +33,12 @@ h4 ul {
     display: none;
 }
 
-#parsingProgrLine {
+/*#parsingProgrLine {
     transition: width 1s ease;
 .carousel-inner .carousel-item-right,
 .carousel-inner .carousel-item-left {
     transform: translateX(0);
-}
+}*/
 
 /*Styles for UserProfile page*/
 .favCatCol {

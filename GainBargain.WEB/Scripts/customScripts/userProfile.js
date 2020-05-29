@@ -7,6 +7,6 @@
 
 function addNewFavoriteCategory() {
     var value = $('#newFavCat').val();
-    $.post("/User/AddFavoriteCategory", { id: value });
+    $.post("/User/AddFavoriteCategory", { id: +value });
     location.reload();
 }

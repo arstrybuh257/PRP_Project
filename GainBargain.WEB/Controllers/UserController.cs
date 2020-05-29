@@ -16,6 +16,7 @@ namespace GainBargain.WEB.Controllers
         private IFavoriteCategoriesRepository favCatRepository;
         private IRepository<FavoriteProduct> favProductRepository;
         private IRepository<User> userRepository;
+        private IRepository<Category> categoryRepository;
         private IProductCacheRepository productRepository;
         private GainBargainContext db;
         public UserController()
@@ -24,6 +25,7 @@ namespace GainBargain.WEB.Controllers
             favProductRepository = new Repository<FavoriteProduct>(new GainBargainContext());
             userRepository = new Repository<User>(new GainBargainContext());
             productRepository = new ProductsCacheRepository(new GainBargainContext());
+            categoryRepository = new Repository<Category>(new GainBargainContext());
             db = new GainBargainContext();
         }
         // GET: User
@@ -42,6 +44,8 @@ namespace GainBargain.WEB.Controllers
         [ChildActionOnly]
         public ActionResult FavoriteCategoriesPartial()
         {
+            SelectList categories = new SelectList(categoryRepository.GetAll(), "Id", "Name");
+            ViewBag.Categories = categories;
             return PartialView("FavoriteCategories", favCatRepository.FindByUserName(User.Identity.Name));
         }
 
@@ -53,6 +57,11 @@ namespace GainBargain.WEB.Controllers
         [HttpPost]
         public void AddFavoriteCategory(string id)
         {
+            if (id == null)
+            {
+                return;
+            }
+
             var userId = userRepository.Find(x=>x.Email == User.Identity.Name).FirstOrDefault().Id;
             var favCat = new FavoriteCategory()
             {
