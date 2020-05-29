@@ -13,7 +13,7 @@
         <form method="post" action="/Admin/SubCategoriesPartial" id="editForm-@item.Id">
                 <input type="hidden" value="@item.Id" name="id" />
                 <input type="hidden" value="Зберегти" name="submitButton"/>
-                <div class="row mb-3">
+                <div class="row mb-3 border-bottom">
                     <div class="col-4">
                         <input type="text" value="@item.Name" name="name" />
                     </div>
@@ -27,20 +27,6 @@
                     </div>
                 </div>
         </form>
-
-        @*<div class="container" id="editForm-@item.Id">
-            <div class="row mb-3">
-                <div class="col-4">
-                    <input type="text" class="categName" value="@item.Name" />
-                </div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-default" onclick="editCategory(@item.Id, @ViewBag.scId)">Зберегти</button>
-                </div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-default" onclick="deleteCategory(@item.Id, @ViewBag.scId)">Видалити</button>
-                </div>
-            </div>
-        </div>*@
     }
 
 </div>

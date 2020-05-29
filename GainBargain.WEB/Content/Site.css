@@ -2,27 +2,17 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    max-width: 1300px;
+    margin-top: 30px;
 }
+
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
     white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    /* 
-        I hate this! It makes me cry 'cause
-        I'd like to see all the selector line
-        without scrolling the control.
-        
-        max-width: 280px;
-
-    */
 }
 
 header {
@@ -45,4 +35,87 @@ h4 ul {
 
 #parsingProgrLine {
     transition: width 1s ease;
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left {
+    transform: translateX(0);
+}
+
+/*Styles for UserProfile page*/
+.favCatCol {
+    background-color: #e4e1e1;
+}
+
+.favoriteCategories {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.orangeText {
+    color: #f59a23;
+    text-decoration: underline;
+}
+
+.orangeThead {
+    background-color: #f59a23;
+    padding-right: 70%;
+}
+
+.favCatTable {
+    background-color: white;
+    text-align: left;
+}
+
+.favCatTable .removeTd {
+    text-align: right;
+}
+
+.favCatTable .removeIcon {
+    width: 30px;
+    height: 30px;
+}
+
+.addNewCat {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 150px;
+    margin-bottom: 100px;
+}
+.addNewCat img{
+    width: 30px;
+    height: 30px;
+}
+
+.eyeIconWelcome {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.reportTitle {
+    background-color: #f59a23;
+}
+
+.favProductCard {
+    display: inline-block;
+    border: 1px solid black;
+    width: 160px;
+    /*height: 300px;*/
+    margin-left: 5px;
+    text-align: center;
+}
+
+.favProductCard img{
+    width: 150px;
+    height: 150px;
+}
+
+    .favProductCard .productName {
+        display: inline-block;
+        padding-bottom: 40px;
+    }
+
+.favProductCard .price {
+    display: inline-block;
 }

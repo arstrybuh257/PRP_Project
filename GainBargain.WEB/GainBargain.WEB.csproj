@@ -170,8 +170,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Models\CatalogVM.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PageInfo.cs" />
+    <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\Parser.cs" />
     <Compile Include="Models\ParsingState.cs" />
     <Compile Include="Models\ProductInsertCommand.cs" />
@@ -187,6 +190,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\addFavCat.png" />
+    <Content Include="Content\img\removeCat.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -340,10 +345,10 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Catalog\Categories.cshtml" />
     <Content Include="Views\Catalog\Catalog.cshtml" />
-    <Content Include="Views\Catalog\Products.cshtml" />
     <Content Include="Views\User\FavoriteCategories.cshtml" />
     <Content Include="Views\Home\_HotProduct.cshtml" />
     <Content Include="Views\Home\_HotProductCarousel.cshtml" />
+    <Content Include="Views\User\FavoriteProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
