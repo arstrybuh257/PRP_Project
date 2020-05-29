@@ -11,27 +11,15 @@ namespace GainBargain.WEB.Models
         //public IEnumerable<Market> Markets { get; set; }
         public IList<int> SelectedCategories { get; set; }
         public IEnumerable<Category> AvailableCategories { get; set; }
-        //public PageInfo PageInfo { get; set; }
         public Pager Pager { get; set; }
 
         public int CountProducts { get; set; }
-        public string SortOrder { get; set; } //none; asc; desc 
+        public bool? SortOrder { get; set; } //null; asc -- true; desc -- false
 
         public CatalogVM()
         {
             SelectedCategories = new List<int>();
             AvailableCategories = new List<Category>();
-            SortOrder = "none";
         }
-
-        //public void SetAvailableCategories(IEnumerable<Category> categories)
-        //{
-        //    AvailableCategories = categories.Select(c =>
-        //    new SelectListItem
-        //    {
-        //        Text = c.Name,
-        //        Value = c.Id.ToString()
-        //    }) ;
-        //}
     }
 }

@@ -12,7 +12,25 @@
             <h2 class="mr-auto orange_text"><u>@Model.SuperCategoryName</u></h2>
             <h4 class="font-weight-light">Знайдено товарів: @Model.CountProducts</h4>
         </div>
-        <button class="ml-auto mt-auto h-25">Сортувати за ціною</button>
+        @using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post, new { @class = "ml-auto mt-auto " }))
+        {
+            @Html.HiddenFor(m => m.SuperCategoryId)
+            @*@Html.HiddenFor(m => m.SortOrder == null ? true : !Model.SortOrder)*@
+            if (Model.SortOrder == null || Model.SortOrder == false)
+            {
+                @Html.HiddenFor(m => m.SortOrder, new { Value = "true" })
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.SortOrder, new { Value = "false" })
+            }
+            @Html.Hidden("sort", "sort")
+            for (int i = 0; i < Model.SelectedCategories.Count; ++i)
+            {
+                @Html.HiddenFor(model => Model.SelectedCategories[i])
+            }
+            <button type="submit" class="btn btn-light">Сортувати за ціною</button>
+        }
     </div>
     <div class="row border-top">
         <div class="col-12 col-md-3 border-left">
@@ -66,6 +84,7 @@
                 @using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post))
                 {
                     @Html.HiddenFor(m => m.SuperCategoryId)
+                    @Html.HiddenFor(m => m.SortOrder)
                     for (int i = 0; i < Model.SelectedCategories.Count; ++i)
                     {
                         @Html.HiddenFor(model => Model.SelectedCategories[i])

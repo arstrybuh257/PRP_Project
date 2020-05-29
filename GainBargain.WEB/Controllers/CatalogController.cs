@@ -3,6 +3,7 @@ using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.WEB.Models;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -59,13 +60,6 @@ namespace GainBargain.WEB.Controllers
 
             catalog.Pager = new Pager(countProducts, page, pageSize, 3);
 
-            //catalog.PageInfo = new PageInfo()
-            //{
-            //    PageNumber = page,
-            //    PageSize = pageSize,
-            //    TotalItems = countProducts
-            //};
-
             if (categoryId != null)
                 catalog.SelectedCategories.Add(categoryId.Value);
 
@@ -73,7 +67,7 @@ namespace GainBargain.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Catalog(CatalogVM model, int page = 1)
+        public ActionResult Catalog(CatalogVM model, string sort, int page = 1)
         {
             var sc = superCategoryRepo.GetSuperCategoryWithCategories(model.SuperCategoryId);
 
@@ -90,19 +84,28 @@ namespace GainBargain.WEB.Controllers
 
             model.Pager = new Pager(countProducts, page, pageSize, 3);
 
+            if (model.SortOrder != null)
+            {
+                model.Products = model.SortOrder.Value ? model.Products.OrderBy(p => p.Price) 
+                    : model.Products.OrderByDescending(p => p.Price);
+                //if (model.SortOrder != null)
+                //{
+                //    model.SortOrder = !model.SortOrder;
+                //    if (model.SortOrder.Value)
+                //        model.Products = model.Products.OrderBy(p => p.Price);
+                //    else
+                //        model.Products = model.Products.OrderByDescending(p => p.Price);
+                //}
+                //else
+                //{
+                //    model.SortOrder = true;
+                //    model.Products = model.Products.OrderBy(p => p.Price);
+                //}
+            }
+
             return View(model);
 
         }
-
-        //public ActionResult Products(int? superCategoryId, int? categoryId)
-        //{
-        //    if (superCategoryId == null)
-        //        return HttpNotFound();
-        //    if (categoryId != null) {
-        //        return PartialView(productRepo.Find(p => p.CategoryId == categoryId));
-        //    }
-        //    return PartialView(productRepo.ProductsWithSameSuperCategory((int)superCategoryId));
-        //}
 
     }
 }
