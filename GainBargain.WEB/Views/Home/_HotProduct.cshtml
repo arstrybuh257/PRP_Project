@@ -4,7 +4,9 @@
 
 <div class="col-sm-4 card hot-product">
     <div>
-        <img class="card-img-top img-fluid" src="@Model.ImageUrl"
+        <img class="card-img-top img-fluid" src="@(System.Uri.IsWellFormedUriString(Model.ImageUrl, UriKind.Absolute) && Model.ImageUrl.StartsWith("http")
+                    ? Model.ImageUrl
+                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")"
              alt="@Model.Name">
         <div class="price-rect">
             <div class="price">

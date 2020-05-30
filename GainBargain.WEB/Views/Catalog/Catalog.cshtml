@@ -89,7 +89,9 @@
                 @foreach (var p in Model.Products)
                 {
                     <div class="card col-12 col-md-6 col-lg-3">
-                        <img class="card-img-top" src="@p.ImageUrl">
+                        <img class="card-img-top" src="@(System.Uri.IsWellFormedUriString(p.ImageUrl, UriKind.Absolute) && p.ImageUrl.StartsWith("http")
+? p.ImageUrl
+: "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")">
                         <div class="card-body">
                             @Html.ActionLink(p.Name, "Product", new { id = p.Id }, new { @class = "card-title text-decoration-none" })
                             <div class="mt-2 mt-md-4 ml-auto">
