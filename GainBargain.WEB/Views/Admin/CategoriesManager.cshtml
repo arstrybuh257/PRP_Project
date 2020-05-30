@@ -7,10 +7,14 @@
     @foreach (var sc in Model)
     {
         <div>
-            <button class="btn" onclick="showSubCategories('@sc.Id', 'createBut-@sc.Id')">@sc.Name</button>
+            <button class="btn superCategoty" 
+                    onclick="showSubCategories('@sc.Id', 'createBut-@sc.Id')">
+                <span id="marker-@sc.Id"><i class="fa fa-caret-down"></i></span>
+                @sc.Name
+            </button>
 
             <button class="btn" id="createBut-@sc.Id" style="visibility:hidden" onclick="showCategoryForm('newCatForm-@sc.Id')">
-                <span class="badge badge-info p-2">+ Додати підкатегорію</span>
+                <span class="addCategoryBtn">+ Додати підкатегорію</span>
             </button>
 
             <div id="newCatForm-@sc.Id" style="visibility:hidden" class="container">
@@ -27,4 +31,4 @@
 
 </div>
 
-@Scripts.Render("~/Scripts/categoryManagerScripts.js");
+@Scripts.Render("~/Scripts/categoryManagerScripts.js")

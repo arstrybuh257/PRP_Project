@@ -1,8 +1,18 @@
 ﻿if (window.$) {
     function showSubCategories(catId, butId) {
+        console.log("fdsfdsfsfdsd");
         let categories = document.getElementById(catId);
         let displayCats = categories.style.display;
-        categories.style.display = displayCats == 'none' ? 'block' : 'none';
+        let areHidden = displayCats == 'none';
+        categories.style.display = areHidden ? 'block' : 'none';
+
+        console.log('#marker-' + catId);
+        if (!areHidden) {
+            $('#marker-' + catId).html('<i class="fa fa-caret-down"></i>');
+        }
+        else {
+            $('#marker-' + catId).html('<i class="fa fa-caret-up"></i>');
+        }
 
         let butt = document.getElementById(butId);
         let visibButt = butt.style.visibility;
