@@ -2,12 +2,12 @@
     ViewBag.Title = "Панель адміністратора";
 }
 
-<h2 class="orange_text"><u>Панель адміністратора</u></h2>
+<h2 class="orangeText">Панель адміністратора</h2>
 
 <div class="container m-2">
     <div class="row">
         <div class="col-md-3">
-            <h5>Налаштування</h5>
+            <h5 class="orangeBottom">Налаштування</h5>
             <ul class="list-group">
                 <li class="list-group-item btn" id="btnUpdate">Оновлення даних</li>
                 <li class="list-group-item btn" id="btnCategories">Категорії товарів</li>
@@ -37,7 +37,6 @@
             $("#btnSources").click(function () {
                 $("#panel").load("SourcesManager");
             });
-
 
 
             // This piece of code updates progress bar of parsing
@@ -82,6 +81,8 @@
                 let updateParsingState = setInterval(getParsingStatus, 2 * 1000); // every 2 seconds
             });
         });
+
+        
 
     </script>
 }

@@ -27,6 +27,31 @@ namespace GainBargain.WEB.Controllers
             return PartialView();
         }
 
+        [HttpPost]
+        public ActionResult LoginPartial(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (GainBargainContext db = new GainBargainContext())
+            {
+                bool isValid = db.Users.Any(x => x.Email.Equals(model.Email) && x.Password.Equals(model.Password));
+
+                if (!isValid)
+                {
+                    ModelState.AddModelError("", "Credentials are wrong");
+                    return View(model);
+                }
+
+                User user = db.Users.FirstOrDefault(x => x.Email == model.Email);
+
+                FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
+                return Redirect(FormsAuthentication.GetRedirectUrl(model.Email, model.RememberMe));
+            }
+        }
+
         [HttpGet]
         public ActionResult Register()
         {

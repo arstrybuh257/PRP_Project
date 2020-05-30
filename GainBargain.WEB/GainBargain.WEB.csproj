@@ -173,6 +173,7 @@
     <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Models\CatalogVM.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MarketVM.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\Parser.cs" />
@@ -192,6 +193,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\addFavCat.png" />
+    <Content Include="Content\img\logo.jpg" />
+    <Content Include="Content\img\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\img\removeCat.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -232,6 +237,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modalsValidation.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -354,6 +360,8 @@
     <Content Include="Views\Account\RegisterPartial.cshtml" />
     <Content Include="Views\Account\LoginPartial.cshtml" />
     <Content Include="Views\Catalog\Product.cshtml" />
+    <Content Include="Views\Admin\CreateMarketPartial.cshtml" />
+    <Content Include="Views\Catalog\Market.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

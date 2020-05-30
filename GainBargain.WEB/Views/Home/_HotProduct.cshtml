@@ -2,21 +2,22 @@
 
 @* Carousel item for displaying a hot product *@
 
-<div class="card mb-2 hot-product">
+<div class="col-sm-4 card hot-product">
     <div>
-        <img class="card-img-top" src="@Model.ImageUrl"
+        <img class="card-img-top img-fluid" src="@(System.Uri.IsWellFormedUriString(Model.ImageUrl, UriKind.Absolute) && Model.ImageUrl.StartsWith("http")
+                    ? Model.ImageUrl
+                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")"
              alt="@Model.Name">
         <div class="price-rect">
             <div class="price">
-                @String.Format("{0:0.00} грн", Model.Price)
+                <h4><span class="badge badge-danger"> @String.Format("{0:0.00} грн", Model.Price)</span></h4>
             </div>
             <div class="prev-price">
-                @String.Format("{0:0.00} грн", Model.PrevPrice)
+                <s>@String.Format("{0:0.00} грн", Model.PrevPrice)</s>
             </div>
         </div>
     </div>
-
     <div class="card-body">
-        <h4 class="card-title">@Model.Name</h4>
+        <h4>@Html.ActionLink(Model.Name, "Product", "Catalog", new { id = Model.Id }, new { @class = "card-title text-decoration-none" })</h4>
     </div>
 </div>

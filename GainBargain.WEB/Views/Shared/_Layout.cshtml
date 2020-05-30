@@ -11,41 +11,45 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/renderModals.js")
+    @*@Scripts.Render("~/Scripts/modalsValidation.js")*@
 </head>
 <body>
     <header class="d-flex align-items-center justify-content-center">
         <nav class="navbar navbar-expand-md d-flex w-100">
-            <a class="navbar-brand ml-md-3 mr-md-auto" href="~/Home/Index">GainBargain</a>
+            <a class="navbar-brand ml-md-3 mr-md-auto" href="~/Home/Index"><img src="~/Content/img/logo.png" alt="logo"/></a>
             <div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse" id="navbarCollapse">
-                    <form class="form-inline mt-2 mt-md-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Пошук" aria-label="Search">
+                    @using (Html.BeginForm("Search", "Catalog", FormMethod.Get, new { @class = "form-inline mt-2 mt-md-0 mr-1" }))
+                    {
+                        <input class="form-control mr-sm-2" name="text" type="text" placeholder="Пошук" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button> @*temporary*@
-                    </form>
+                    }
+
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="~/Catalog/Categories">Каталог товарів</a>
+                            <a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a>
                         </li>
                         @if (!Request.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="~/Account/LoginPartial" id="loginButton">Увійти</a>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/LoginPartial" id="loginButton">Увійти</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="~/Account/RegisterPartial" tabindex="-1" aria-disabled="true" id="registerButton">
-                                Зареєструватися</a>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/RegisterPartial" tabindex="-1" aria-disabled="true" id="registerButton">
+                                    Зареєструватися
+                                </a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="~/User/Index">Особистий кабінет</a>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a>
                             </li>
                         }
                     </ul>
@@ -53,16 +57,17 @@
             </div>
         </nav>
     </header>
-    
+
     <div class="container body-content">
         @RenderBody()
         <hr />
         <div class="modal fade" id="registerModal" role="dialog"></div>
         <div class="modal fade" id="loginModal" role="dialog"></div>
-        <footer>
-            <p>&copy; @DateTime.Now.Year - GainBargain</p>
-        </footer>
     </div>
+
+    <footer>
+        <p class="text-white">&copy;GainBargain @DateTime.Now.Year</p>
+    </footer>
 
     @RenderSection("scripts", required: false)
 </body>

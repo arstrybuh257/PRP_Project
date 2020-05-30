@@ -76,9 +76,23 @@ namespace GainBargain.DAL.Repositories
             return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
+
+        public IEnumerable<ProductCache> SearchProduct(int page, int pageSize, string text, out int countProducts)
+        {
+            IEnumerable<ProductCache> products = db.ProductsDemo.Where(p => p.Name.Contains(text));
+            countProducts = products.Count();
+            if (countProducts > pageSize)
+            {
+                return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }
+            return products;
+        }
+
         private List<int> GetCategoryIdsBySuperCategory(int scId)
         {
             return db.Categories.Where(c => c.SuperCategoryId == scId).Select(c => c.Id).ToList();
         }
+
+
     }
 }
