@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -336,7 +337,7 @@ namespace GainBargain.WEB.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("AdminPanel");
         }
 
 
@@ -363,6 +364,7 @@ namespace GainBargain.WEB.Controllers
             return View("Error");
         }
 
+        [HttpPost]
         public ActionResult ChangeParsingTime(int daysPeriod, int hoursTime, int minutesTime)
         {
             // If the model is valid
@@ -371,11 +373,38 @@ namespace GainBargain.WEB.Controllers
                 && minutesTime >= 0 && minutesTime < 60)
             {
                 // Set CRON
-                ConfigurationManager.AppSettings["ParsingCron"] =
-                    $"{minutesTime} {hoursTime} */{daysPeriod} * *";
+                //ConfigurationManager.AppSettings["ParsingCron"] = $"{minutesTime} {hoursTime} */{daysPeriod} * *";
+
+                ConfigurationManager.AppSettings.Set("ParsingCron",
+                    $"{minutesTime} {hoursTime} */{daysPeriod} * *");
             }
 
             return RedirectToAction("AdminPanel");
+        }
+
+        /// <summary>
+        /// Current parsing schedule options.
+        /// </summary>
+        [HttpGet]
+        public JsonResult GetParsingTime()
+        {
+            string cron = ConfigurationManager.AppSettings["ParsingCron"];
+            var pattern = new Regex(@"(\d+) (\d+) \*/(\d+) \* \*");
+            var match = pattern.Match(cron);
+            if (!match.Success)
+            {
+                // Oh no
+                return Json(new { Status = "Failed" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                Status = "OK",
+                MinutesTime = match.Groups[1].Value,
+                HoursTime = match.Groups[2].Value,
+                DaysPeriod = match.Groups[3].Value
+
+            }, JsonRequestBehavior.AllowGet);
         }
 
 
