@@ -3,8 +3,10 @@
 @foreach (var item in Model)
 {
     <div class="favProductCard">
-        <div><img src="@item.ImageUrl" /></div>
+        <hr/>
+        <div><img src="@item.ImageUrl"/></div>
+        <hr/>
         <h3 class="price">@item.Price</h3>
-        <div class="productName">@item.Name</div>
+        <div class="productName">@Html.ActionLink(item.Name, "Product", "Catalog", new{id= item.Id}, null)</div>
     </div>
 }

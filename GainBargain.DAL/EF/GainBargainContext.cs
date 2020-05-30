@@ -27,6 +27,6 @@ namespace GainBargain.DAL.EF
         public DbSet<DbLog> DbLogs { get; set; }
 
 
-        //public DbSet<FavoriteCategory> FavoriteProducts { get; set; }
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.Owin.Security;
 
 namespace GainBargain.DAL.Entities
 {
@@ -13,5 +15,8 @@ namespace GainBargain.DAL.Entities
         [Key]
         [Column(Order = 1)]
         public int ProductId { set; get; }
+
+        public Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

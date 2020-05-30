@@ -177,15 +177,20 @@ h4 ul {
     }
 
 .eyeIconWelcome {
-    max-width: 300px;
-    margin: 0 auto;
+    
     margin-top: 40px;
     margin-bottom: 40px;
 }
 
-.reportTitle {
-    background-color: #f59a23;
-}
+    .eyeIconWelcome h4 {
+        max-width: 300px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+    }
+
+    .reportTitle {
+        background-color: #f59a23;
+    }
 
 .favProductCard {
     display: inline-block;
@@ -194,6 +199,7 @@ h4 ul {
     /*height: 300px;*/
     margin-left: 5px;
     text-align: center;
+    margin-bottom: 10px;
 }
 
     .favProductCard img {
@@ -203,14 +209,19 @@ h4 ul {
 
     .favProductCard .productName {
         display: inline-block;
-        padding-bottom: 40px;
+        padding-bottom: 15px;
     }
 
-    .favProductCard .price {
-        display: inline-block;
-    }
 
     .myForm {
         margin-bottom: 30%;
         width: 70%;
     }
+
+.favProductCard button {
+    margin-bottom: 20px;
+}
+
+.favProductCard a {
+    color: black;
+}

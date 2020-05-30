@@ -7,6 +7,7 @@ namespace GainBargain.WEB.Models
 {
     public class ProductVM
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { set; get; }
         public float Price { set; get; }
@@ -15,9 +16,10 @@ namespace GainBargain.WEB.Models
         public string MarketName { set; get; }
         public string MarketImgUrl { get; set; }
 
-        public ProductVM(string name, string imgUrl, float price, 
+        public ProductVM(int id, string name, string imgUrl, float price, 
             float prevPrice, int marketId, string marketName, string marketUrl)
         {
+            Id = id;
             Name = name;
             ImageUrl = imgUrl;
             Price = price;
