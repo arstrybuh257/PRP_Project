@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace GainBargain.DAL.Repositories
 
         public IEnumerable<FavoriteProduct> FindByUserName(string userName)
         {
-            return db.FavoriteProducts.Include("Product").ToList();
+            return db.FavoriteProducts.Where(x=>x.User.Email == userName).Include("Product").ToList();
         }
 
         public void RemoveFromFavoriteProducts(int productId, string userName)
