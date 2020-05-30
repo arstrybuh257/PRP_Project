@@ -33,6 +33,8 @@
         //       alert(response);
         //    });
 
+        $("#" + id).load('/Admin/SubCategoriesPartial?id=' + id, 'text=' + text); 
+
         $(formId).submit();
         $("#" + supCategId).load('/Admin/SubCategoriesPartial?id=' + supCategId); 
 

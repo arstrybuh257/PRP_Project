@@ -9,11 +9,11 @@
         <div>
             <button class="btn" onclick="showSubCategories('@sc.Id', 'createBut-@sc.Id')">@sc.Name</button>
 
-            <button class="btn btn-primary" id="createBut-@sc.Id" style="visibility:hidden" onclick="showCategoryForm('newCatForm-@sc.Id')">
-                Додати підкатегорію
+            <button class="btn" id="createBut-@sc.Id" style="visibility:hidden" onclick="showCategoryForm('newCatForm-@sc.Id')">
+                <span class="badge badge-info p-2">+ Додати підкатегорію</span>
             </button>
 
-            <div id="newCatForm-@sc.Id" style="visibility:hidden">
+            <div id="newCatForm-@sc.Id" style="visibility:hidden" class="container">
                 <input type="hidden" value="@sc.Id" name="id" />
                 <input type="text" id="newCat-@sc.Id" name="newCat" />
                 <button type="button" class="btn" onclick="refreshCategories('@sc.Id', 'newCat-@sc.Id', 'newCatForm-@sc.Id')">Додати</button>

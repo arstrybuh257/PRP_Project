@@ -5,14 +5,10 @@ using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.WEB.Models;
 using Hangfire;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
@@ -71,6 +67,40 @@ namespace GainBargain.WEB.Controllers
             var model = mapper.Map<List<ParserSourceManager>>(parserSources);
 
             return PartialView(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult CreateMarketPartial()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult CreateMarket()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateMarket(Market market)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    marketRepository.Add(market);
+                    marketRepository.Save();
+                    return RedirectToAction("AdminPanel");
+                }
+            }
+            catch (DataException)
+            {
+                //here goes lOG
+                //ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(market);
         }
 
         [HttpGet]
@@ -223,32 +253,6 @@ namespace GainBargain.WEB.Controllers
             return View(parserSource);
         }
 
-        [HttpGet]
-        public ActionResult CreateMarket()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateMarket(Market market)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    marketRepository.Add(market);
-                    marketRepository.Save();
-                    return RedirectToAction("AdminPanel");
-                }
-            }
-            catch (DataException)
-            {
-                //here goes lOG
-                //ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            return View(market);
-        }
 
         [HttpGet]
         public ActionResult SubCategoriesPartial(int? id, string text)
