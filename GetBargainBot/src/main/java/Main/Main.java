@@ -2,7 +2,6 @@ package Main;
 
 import Bot.GBbot;
 import DB.ProductDao;
-import DB.UserDAO;
 import org.quartz.SchedulerException;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
@@ -20,8 +19,6 @@ public class Main {
             b = new GBbot();
             telegramBotsApi.registerBot(b);
             ProductDao dao = new ProductDao();
-            b.sendMessage(String.join("\n~~~~~~~~~~~~~~~~~~~~\n",dao.getFavCategoriesProducts(544770546)),544770546);
-
         } catch (TelegramApiRequestException | SchedulerException e) {
 
         }

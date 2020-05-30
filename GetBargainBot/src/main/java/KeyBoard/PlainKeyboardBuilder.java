@@ -62,7 +62,7 @@ public class PlainKeyboardBuilder {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText(text);
-        replyKeyboardMarkup.setKeyboard(keyboard);
+        replyKeyboardMarkup.setResizeKeyboard(true).setKeyboard(keyboard);
         message.setReplyMarkup(replyKeyboardMarkup);
         return message;
     }

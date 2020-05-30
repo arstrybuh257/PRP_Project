@@ -17,7 +17,7 @@ public class Mailing implements Job {
     public void execute(JobExecutionContext jobExecutionContext) {
         try {
             for(long l : dao.getAllIds()){
-                Main.b.sendMessage("ЕЖЕНЕДЕЛЬНАЯ РАССЫЛКА:\n"+String.join("\n~~~~~~~~~~~~~~~~~~~~\n",dao2.getFavCategoriesProducts(l)),l);
+                Main.b.sendMessage("<strong>ЕЖЕНЕДЕЛЬНАЯ РАССЫЛКА:</strong>\n"+String.join("\n~~~~~~~~~~~~~~~~~~~~\n",dao2.getFavCategoriesProducts(l)),l);
             }
         } catch (TelegramApiException | SQLException e) {
             e.printStackTrace();

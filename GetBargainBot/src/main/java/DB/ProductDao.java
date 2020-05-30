@@ -22,7 +22,7 @@ public class ProductDao {
 
     public ArrayList<String> searchProducts(String name) throws SQLException {
         ArrayList<String> list = new ArrayList<>();
-        String query = "SELECT TOP 20 ProductsCache.id as id,ProductsCache.Name as n, Price as pr, M.name as m from ProductsCache\n" +
+        String query = "SELECT TOP 20 ProductsCache.id as id,ProductsCache.Name as n, Price as pr , Prevprice as prpr, M.name as m from ProductsCache\n" +
                 "join Markets M on ProductsCache.MarketId = M.Id\n" +
                 "where ProductsCache.Name like ?";
 
@@ -31,11 +31,19 @@ public class ProductDao {
         ResultSet resultSet = statement.executeQuery();
         StringBuilder sb;
         while (resultSet.next()) {
+            boolean hasDiscount = resultSet.getInt("pr") - resultSet.getInt("prpr") != 0;
             sb = new StringBuilder();
             sb.append("[/").append(resultSet.getInt("id")).append("] ");
-            sb.append(resultSet.getString("n")).append(". Ціна: ");
-            sb.append(resultSet.getString("pr")).append(". Заклад: ");
+            sb.append(resultSet.getString("n")).append(". <i>Ціна:</i> ");
+            sb.append(resultSet.getString("pr")).append("грн. ");
+            if (hasDiscount)
+                sb.append("<i>Стара ціна:</i> <s>").append(resultSet.getString("prpr")).append("грн</s>. ");
+            sb.append("<i>Заклад:</i> ");
             sb.append(resultSet.getString("m"));
+            if (hasDiscount) {
+                sb.insert(0, "<u>");
+                sb.append("</u>");
+            }
             list.add(sb.toString());
         }
         return list;
@@ -52,12 +60,19 @@ public class ProductDao {
         ResultSet resultSet = statement.executeQuery();
         StringBuilder sb;
         while (resultSet.next()) {
+            boolean hasDiscount = resultSet.getInt("pr") - resultSet.getInt("prpr") != 0;
             sb = new StringBuilder();
             sb.append("[/").append(resultSet.getInt("id")).append("] ");
-            sb.append(resultSet.getString("n")).append(". Ціна: ");
-            sb.append(resultSet.getString("pr")).append(". Стара ціна: <s>");
-            sb.append(resultSet.getString("prpr")).append("</s>. Заклад: ");
+            sb.append(resultSet.getString("n")).append(". <i>Ціна:</i> ");
+            sb.append(resultSet.getString("pr")).append("грн. ");
+            if (hasDiscount)
+                sb.append("<i>Стара ціна:</i> <s>").append(resultSet.getString("prpr")).append("грн</s>. ");
+            sb.append("<i>Заклад:</i> ");
             sb.append(resultSet.getString("m"));
+            if (hasDiscount) {
+                sb.insert(0, "<u>");
+                sb.append("</u>");
+            }
             list.add(sb.toString());
         }
         return list;
@@ -91,13 +106,64 @@ public class ProductDao {
             while (resultSet.next()) {
                 sb = new StringBuilder();
                 sb.append("[/").append(resultSet.getInt("id")).append("] ");
-                sb.append(resultSet.getString("n")).append(". Ціна: ");
-                sb.append(resultSet.getString("pr")).append(". Стара ціна: <s>");
-                sb.append(resultSet.getString("prpr")).append("</s>.");
+                sb.append(resultSet.getString("n")).append(". <i>Ціна:</i> ");
+                sb.append(resultSet.getString("pr")).append("грн. <i>Стара ціна:</i> <s>");
+                sb.append(resultSet.getString("prpr")).append("грн</s>.");
                 list.add(sb.toString());
             }
         }
         return list;
+    }
+
+    public List<String> getFavProducts(long tel_id) throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "select ProductsCache.Id as id ,ProductsCache.Name as name,ProductsCache.Price as pr,ProductsCache.PrevPrice as prpr,M.Name as m from FavoriteProducts\n" +
+                "join Users U on FavoriteProducts.UserId = U.Id\n" +
+                "join ProductsCache on FavoriteProducts.ProductId = ProductsCache.Id\n" +
+                "join Markets M on ProductsCache.MarketId = M.Id\n" +
+                "where chat_id = ?";
+        PreparedStatement p = con.prepareStatement(query);
+        p.setString(1, String.valueOf(tel_id));
+        ResultSet resultSet = p.executeQuery();
+        StringBuilder sb;
+        while (resultSet.next()) {
+            boolean hasDiscount = resultSet.getInt("pr") - resultSet.getInt("prpr") != 0;
+            sb = new StringBuilder();
+            sb.append("[/").append(resultSet.getInt("id")).append("] ");
+            sb.append(resultSet.getString("name")).append(". <i>Ціна:</i> ");
+            sb.append(resultSet.getString("pr")).append("грн. ");
+            if (hasDiscount)
+                sb.append("<i>Стара ціна:</i> <s>").append(resultSet.getString("prpr")).append("грн</s>. ");
+            sb.append("<i>Заклад:</i> ");
+            sb.append(resultSet.getString("m"));
+            if (hasDiscount) {
+                sb.insert(0, "<u>");
+                sb.append("</u>");
+            }
+            list.add(sb.toString());
+        }
+
+        return list;
+    }
+
+    public boolean addToFav(long tel_id, long item_id)  {
+        try {
+            String query2 = "select id from users " +
+                    "where chat_id=?";
+            PreparedStatement statement2 = con.prepareStatement(query2);
+            statement2.setString(1, String.valueOf(tel_id));
+            ResultSet resultSet = statement2.executeQuery();
+            resultSet.next();
+            String query = " INSERT into FavoriteProducts(productId,userId) values(?,?)";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, (int)item_id);
+            statement.setInt(2, resultSet.getInt("id"));
+            statement.execute();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return false;
+        }
+        return true;
     }
 
 }
