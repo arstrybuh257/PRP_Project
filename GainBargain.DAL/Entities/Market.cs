@@ -14,6 +14,8 @@ namespace GainBargain.DAL.Entities
         [Required]
         public string MarketLogoUrl { get; set; }
 
+        public string Addresses { get; set; }
+
         public string SelPrice { set; get; }
         public string SelName { set; get; }
         public string SelImageUrl { set; get; }
