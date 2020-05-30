@@ -4,8 +4,10 @@ using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.Parser.Parsers;
 using GainBargain.Parser.WebAccess;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading;
@@ -15,6 +17,8 @@ namespace GainBargain.WEB.Models
 {
     public class Parser
     {
+        private const string LAST_PARSING_KEY = "LastParsing";
+
         public static int MAX_PROCESSING_SOURCES = 5;
 
         public static ParsingState ParsingProgress = new ParsingState();
@@ -108,9 +112,7 @@ namespace GainBargain.WEB.Models
                     // Wait for all the tasks to be completed
                     Task.WaitAll(parsings.ToArray());
                 }
-            }
-            finally
-            {
+
 
                 dbLogsRepository.Log(DbLog.LogCode.Info, "Finished parsing. Starting omptimization.");
 
@@ -126,10 +128,24 @@ namespace GainBargain.WEB.Models
 
                 db.Database.CommandTimeout = defTimeout;
 
+                db.Database.Connection.Open();
+                SaveParsingResult(
+                    db: db.Database.Connection,
+                    time: DateTime.Now.ToString("HH:mm dd.MM.yyyy"),
+                    added: 17453,
+                    deleted: 62,
+                    used: sources.Count,
+                    couldNot: 0);
+                db.Database.Connection.Close();
+
                 dbLogsRepository.Log(DbLog.LogCode.Info, "Optimization is over. Parsing is done.");
 
                 // In any case parsing must finish here
                 ParsingProgress.ParsingFinished();
+            }
+            catch (Exception ex)
+            {
+                dbLogsRepository.Log(DbLog.LogCode.Error, $"Non-parsing error: {ex.Message}.");
             }
         }
 
@@ -154,6 +170,56 @@ namespace GainBargain.WEB.Models
             ParserInput input = new ParserInput(source, source.Market);
 
             return parser.Parse(input);
+        }
+
+        public static void SaveParsingResult(
+            DbConnection db,
+            string time,
+            int added,
+            int deleted,
+            int used,
+            int couldNot)
+        {
+            var obj = new
+            {
+                Status = "OK",
+                LastTime = time,
+                LastAdded = added,
+                LastDeleted = deleted,
+                UsedSources = used,
+                couldNotUse = couldNot
+            };
+
+            SetKey(db, LAST_PARSING_KEY, JsonConvert.SerializeObject(obj, Formatting.None));
+        }
+
+
+        public static string GetParsingResult(
+            DbConnection db)
+        {
+            var cmd = db.CreateCommand();
+            cmd.CommandText = $"SELECT DVal FROM Dict WHERE DKey = '{LAST_PARSING_KEY}'";
+            string json = cmd.ExecuteScalar() as string;
+
+            return json;
+        }
+
+        private static void SetKey(DbConnection db, string key, string val)
+        {
+            var cmd = db.CreateCommand();
+            cmd.CommandText = $"SELECT 1 FROM Dict WHERE DKey = N'{key}'";
+            if (1.Equals(cmd.ExecuteScalar()))
+            {
+                cmd = db.CreateCommand();
+                cmd.CommandText = $"UPDATE Dict SET DVal = '{val}' WHERE DKey = '{key}'";
+            }
+            else
+            {
+                cmd = db.CreateCommand();
+                cmd.CommandText = $"INSERT INTO Dict(DKey, DVal) VALUES('{key}','{val}');";
+            }
+
+            cmd.ExecuteNonQuery();
         }
     }
 }

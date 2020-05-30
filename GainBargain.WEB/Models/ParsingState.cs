@@ -24,7 +24,7 @@ namespace GainBargain.WEB.Models
         /// <summary>
         /// When the parsing has started.
         /// </summary>
-        public string StartTime { get => startTime.ToString("mm:HH dd.MM.YYYY"); }
+        public string StartTime { get => startTime.ToString("HH:mm dd.MM.yyyy"); }
 
         /// <summary>
         /// How many parsing sources has been parsed by now.

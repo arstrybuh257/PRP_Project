@@ -50,11 +50,56 @@ h4 ul {
 
 #parsingProgrLine {
     transition: width 1s ease;
-/*.carousel-inner .carousel-item-right,
-.carousel-inner .carousel-item-left {
-    transform: translateX(0);*/      /*Эдик, тут что-то вообще не то :) а я то думаю, чего ничего не работает...*/ 
 }
 
+/* Console like div */
+.console {
+    position: relative;
+    width: 100%;
+    height: 16em;
+    font-family: Consolas;
+    background-color: #000;
+    color: #dddddd;
+    overflow: hidden;
+}
+
+    .console .text {
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    .console .little-btn {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        bottom: 1px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        vertical-align: central;
+        padding: 0;
+        border: 0;
+    }
+
+    .console .up {
+        right: 37px;
+    }
+
+    .console .down {
+        right: 18px;
+    }
+
+    .console .little-btn:focus{
+        outline: none;
+    }
+
+    .console .error {
+        color: #f00;
+    }
+    /* For parsing schedule configuration form */
+    .parsingScheduleForm select {
+        width: 100%;
+    }
 /*Styles for UserProfile page*/
 .favCatCol {
     background-color: #e4e1e1;
@@ -93,14 +138,14 @@ h4 ul {
     text-align: left;
 }
 
-.favCatTable .removeTd {
-    text-align: right;
-}
+    .favCatTable .removeTd {
+        text-align: right;
+    }
 
-.favCatTable .removeIcon {
-    width: 30px;
-    height: 30px;
-}
+    .favCatTable .removeIcon {
+        width: 30px;
+        height: 30px;
+    }
 
 .addNewCat {
     margin: 0 auto;
@@ -108,10 +153,11 @@ h4 ul {
     margin-top: 150px;
     margin-bottom: 100px;
 }
-.addNewCat img{
-    width: 30px;
-    height: 30px;
-}
+
+    .addNewCat img {
+        width: 30px;
+        height: 30px;
+    }
 
 .eyeIconWelcome {
     max-width: 300px;
@@ -133,16 +179,16 @@ h4 ul {
     text-align: center;
 }
 
-.favProductCard img{
-    width: 150px;
-    height: 150px;
-}
+    .favProductCard img {
+        width: 150px;
+        height: 150px;
+    }
 
     .favProductCard .productName {
         display: inline-block;
         padding-bottom: 40px;
     }
 
-.favProductCard .price {
-    display: inline-block;
-}
+    .favProductCard .price {
+        display: inline-block;
+    }

@@ -46,11 +46,14 @@
                         method: "GET",
                         url: '@Url.Action("ParsingState")',
                         success: function (resp) {
-                            console.log(resp);
-
+                            //console.log(resp);
 
                             // Set start time
                             if (resp.IsParsing) {
+                                if (updateConsole) {
+                                    updateConsole(0);
+                                }
+
                                 $(".current-parsing-state").removeClass("hidden-panel");
 
                                 $("#parseStartTime").text(resp.StartTime);

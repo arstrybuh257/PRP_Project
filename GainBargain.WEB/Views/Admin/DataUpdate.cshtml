@@ -1,11 +1,158 @@
 ﻿
-<h4>Оновлення даних</h4>
+<h3>Оновлення даних</h3>
+
+<div>
+    <h4>Останнє оновлення</h4>
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-12">
+            <p>Час: <b id="lastTime">6:00 01.06.2020</b></p>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <p>Успішно додано: <b id="lastAdded">17000</b> товарів</p>
+            <p>Видалено за планом: <b id="lastDeleted">100</b> товарів</p>
+        </div>
+        <div class="col-lg-5 col-md-4 col-sm-12">
+            <p style="color: green">Використано <b id="usedSources">17000</b> джерел</p>
+            <p style="color: red">Не вдалося використати <b id="couldNotUse">100</b> джерел</p>
+        </div>
+    </div>
+
+    <script>
+        function getLastParsingInfo () {
+            $.ajax({
+                method: "GET",
+                url: '@Url.Action("GetPrevParsingInfo")',
+                success: function (resp) {
+                    resp = JSON.parse(resp);
+                    console.log(resp);
+
+                    if (resp.Status != "OK") {
+                        return;
+                    }
+
+                    $('#lastTime').text(resp.LastTime);
+                    $('#lastAdded').text(resp.LastAdded);
+                    $('#lastDeleted').text(resp.LastDeleted);
+                    $('#usedSources').text(resp.UsedSources);
+                    $('#couldNotUse').text(resp.CouldNotUse);
+                }
+            });
+        }
+
+        getLastParsingInfo();
+    </script>
+
+    <div class="console">
+        <div class="text">
+
+        </div>
+        <button class="little-btn up">^</button>
+        <button class="little-btn down">v</button>
+    </div>
+
+    <script>
+        let consolePage = 0;
+        function updateConsole(page) {
+            $.ajax({
+                method: "GET",
+                url: '@Url.Action("GetLog")?page=' + page,
+                success: function (resp) {
+                    let str = "";
+                    for (let row of resp) {
+                        let logClass = row.Code == 1 ? "error" : "info";
+                        str += `<div class="${logClass}">[${row.Time}] ${row.Info}</div>`;
+                    }
+                    $('.console .text').html(str);
+                }
+            });
+        }
+        updateConsole(consolePage);
+        $(".up").click(function () {
+            consolePage = Math.max(0, consolePage - 1);
+            updateConsole(consolePage);
+        });
+        $(".down").click(function () {
+            updateConsole(++consolePage);
+        });
+    </script>
+
+    <div class="parsingScheduleForm">
+
+        <h4>Заплановане оновлення</h4>
+        @using (Html.BeginForm("ChangeParsingTime", "Admin", FormMethod.Post))
+        {
+            <!-- UPDATING DAYS -->
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="daysPeriod">Період в днях</label>
+                        </div>
+                        <div class="col-6">
+                            <select id="daysPeriod" name="daysPeriod">
+                                @for (int i = 1; i <= 7; ++i)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATING HOURS -->
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="row">
+                        <div class="col-8">
+                            <label for="hoursTime">Час оновлення (годин)</label>
+                        </div>
+
+                        <div class="col-4">
+                            <select id="hoursTime" name="hoursTime">
+                                @for (int i = 0; i <= 24; ++i)
+                                {
+                                    <option value="@i">@i.ToString("00")</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATING MINUTES -->
+
+                <div class="col-lg-5 col-md-4 col-sm-12">
+
+                    <div class="row">
+                        <div class="col-8">
+                            <label for="minutesTime">Час оновлення (хвилин)</label>
+                        </div>
+
+                        <div class="col-4">
+                            <select id="minutesTime" name="minutesTime">
+                                @for (int i = 0; i < 60; i += 5)
+                                {
+                                    <option value="@i">@i.ToString("00")</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 
 @using (Html.BeginForm("StartParsing", "Admin", FormMethod.Post))
 {
-    <input type="submit" value="Оновити примусово"
-           class="btn btn-warning" />
+    <div class="text-right">
+        <input type="submit" value="Оновити примусово"
+               class="btn btn-warning" />
+        <input type="submit" value="Зберегти зміни"
+               class="btn btn-primary" />
+
+    </div>
 
     <div class="current-parsing-state hidden-panel">
 
@@ -52,8 +199,8 @@
         @* Extremely pretty progress bar of parsing *@
         <div id="parsingLine" class="progress">
             <div id="parsingProgrLine" class="progress-bar progress-bar-striped"
-            role="progressbar" style="width: 0%"
-            aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                 role="progressbar" style="width: 0%"
+                 aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
 }
