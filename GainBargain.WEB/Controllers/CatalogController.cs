@@ -1,4 +1,5 @@
-﻿using GainBargain.DAL.EF;
+﻿using AutoMapper;
+using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
@@ -129,13 +130,26 @@ namespace GainBargain.WEB.Controllers
 
         }
 
-        public ActionResult Product(int id)
+        public ActionResult Product(int? id)
         {
-            var product = productRepo.Get(id);
+            if (id == null)
+                return HttpNotFound();
+            var product = productRepo.Get(id.Value);
             var market = marketRepo.Get(product.MarketId);
             ProductVM productVM = new ProductVM(product.Name, product.ImageUrl, product.Price, product.PrevPrice,
                 market.Id, market.Name, market.MarketLogoUrl);
             return View(productVM);
+        }
+
+        public ActionResult Market(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+            
+            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Market, MarketVM>()));
+            var marketVM = mapper.Map<Market, MarketVM>(marketRepo.Get(id.Value));
+
+            return View(marketVM);
         }
     }
 }
