@@ -305,9 +305,9 @@ h4 ul {
         color: #575a5c;
     }
 
-.carousel-control-prev, 
+.carousel-control-prev,
 .carousel-control-next {
-    width:5%;
+    width: 5%;
 }
 
 .carousel-indicators li {
@@ -343,3 +343,17 @@ hot-product-name {
     padding: 5px 15px;
     text-transform: uppercase;
 }
+
+/*Catalog*/
+.catalogCard {
+    height: 320px;
+}
+
+    .catalogCard img {
+        width: 50%;
+        height: 20vh;
+        display: block;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
