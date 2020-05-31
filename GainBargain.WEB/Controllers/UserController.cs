@@ -1,13 +1,10 @@
 ﻿using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
 using GainBargain.WEB.Models;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
 
 namespace GainBargain.WEB.Controllers
 {
@@ -44,7 +41,9 @@ namespace GainBargain.WEB.Controllers
         [ChildActionOnly]
         public ActionResult FavoriteCategoriesPartial()
         {
-            SelectList categories = new SelectList(categoryRepository.GetAll(), "Id", "Name");
+            var cat = categoryRepository.GetAll()
+                .Where(x => favCatRepository.FindByUserName(User.Identity.Name).All(y => y.CategoryId != x.Id));
+            SelectList categories = new SelectList(cat, "Id", "Name");
             ViewBag.Categories = categories;
             return PartialView("FavoriteCategories", favCatRepository.FindByUserName(User.Identity.Name));
         }

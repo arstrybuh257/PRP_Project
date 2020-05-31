@@ -23,6 +23,8 @@ function delFavCat(id) {
 
     $.get("/User/RemoveFromFavoriteProduct", { id: id });
     $(".eyeLogo").attr('src', "../../Content/img/vision1.svg");
+
+    location.reload();
 }
 
 function addRemoveFavoriteProduct(productId) {
