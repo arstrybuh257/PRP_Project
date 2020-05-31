@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<GainBargain.DAL.Entities.ProductCache>
 
+@if (!Model.Any())
+{
+    <h4>У данній категорії ще немає товарів</h4>
+}
+
 @foreach (var item in Model)
 {
     <div class="favProductCard">

@@ -3,13 +3,13 @@
     elem.css('display', 'none');
 
     $.get("/User/RemoveFromFavoriteCategory", { id: id });
-    location.reload();
+    setTimeout(() => location.reload(), 700);
 }
 
 function addNewFavoriteCategory() {
     var value = $('#newFavCat').val();
     $.post("/User/AddFavoriteCategory", { id: +value });
-    location.reload();
+    setTimeout(() => location.reload(), 700);
 }
 
 function addToFavoriteProducts(productId) {
@@ -24,7 +24,7 @@ function delFavCat(id) {
     $.get("/User/RemoveFromFavoriteProduct", { id: id });
     $(".eyeLogo").attr('src', "../../Content/img/vision1.svg");
 
-    location.reload();
+    setTimeout(() => location.reload(), 700);
 }
 
 function addRemoveFavoriteProduct(productId) {
