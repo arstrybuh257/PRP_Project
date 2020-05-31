@@ -16,6 +16,7 @@ namespace GainBargain.WEB.Controllers
         IRepository<Category> categoryRepo;
         IProductCacheRepository productRepo;
         IMarketRepository marketRepo;
+        private IFavoriteProductRepository favProductRepository;
 
         const int pageSize = 32;
         public CatalogController()
@@ -24,6 +25,7 @@ namespace GainBargain.WEB.Controllers
             categoryRepo = new Repository<Category>(new GainBargainContext());
             productRepo = new ProductsCacheRepository(new GainBargainContext());
             marketRepo = new MarketRepository(new GainBargainContext());
+            favProductRepository = new FavoriteProductRepository();
         }
 
         public ActionResult Categories()
@@ -138,6 +140,9 @@ namespace GainBargain.WEB.Controllers
             var market = marketRepo.Get(product.MarketId);
             ProductVM productVM = new ProductVM(id.Value, product.Name, product.ImageUrl, product.Price, product.PrevPrice,
                 market.Id, market.Name, market.MarketLogoUrl);
+
+            productVM.IsFavorite = favProductRepository.IsFavorite(id.Value, User.Identity.Name);
+
             return View(productVM);
         }
 

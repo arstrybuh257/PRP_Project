@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-@model GainBargain.WEB.Models.ProductVM
+﻿@model GainBargain.WEB.Models.ProductVM
 
 @{
     ViewBag.Title = Model.Name;
@@ -22,7 +21,14 @@
         @if (Request.IsAuthenticated)
         {
             <div class="col-sm-1">
-                <img src="~/Content/img/vision.svg" width="80" height="80" class="eyeLogo" onclick="addToFavoriteProducts(@Model.Id)" />
+                @if (!Model.IsFavorite)
+                {
+                    <img src="~/Content/img/vision1.svg" width="80" height="80" class="eyeLogo" onclick="addRemoveFavoriteProduct(@Model.Id)" />
+                }
+                else
+                {
+                    <img src="~/Content/img/heart.svg" width="80" height="80" class="eyeLogo" onclick="addRemoveFavoriteProduct(@Model.Id)" />
+                }
             </div>
         }
     </div>

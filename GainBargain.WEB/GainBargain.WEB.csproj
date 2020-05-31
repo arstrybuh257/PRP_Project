@@ -193,13 +193,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\addFavCat.png" />
+    <Content Include="Content\img\vision1.svg" />
     <Content Include="Content\img\heart.svg" />
     <Content Include="Content\img\logo.jpg" />
     <Content Include="Content\img\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\img\removeCat.svg" />
-    <Content Include="Content\img\vision.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

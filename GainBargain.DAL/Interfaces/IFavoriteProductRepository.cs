@@ -12,5 +12,6 @@ namespace GainBargain.DAL.Interfaces
         void AddFavoriteProduct(FavoriteProduct category);
         void RemoveFromFavoriteProducts(int productId, string userName);
         IEnumerable<FavoriteProduct> FindByUserName(string userName);
+        bool IsFavorite(int productId, string userName);
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GainBargain.DAL.EF;
 using GainBargain.DAL.Entities;
 using GainBargain.DAL.Interfaces;
@@ -26,6 +24,11 @@ namespace GainBargain.DAL.Repositories
         public IEnumerable<FavoriteProduct> FindByUserName(string userName)
         {
             return db.FavoriteProducts.Where(x=>x.User.Email == userName).Include("Product").ToList();
+        }
+
+        public bool IsFavorite(int productId, string userName)
+        {
+            return db.FavoriteProducts.Any(x => x.ProductId == productId && x.User.Email == userName);
         }
 
         public void RemoveFromFavoriteProducts(int productId, string userName)
