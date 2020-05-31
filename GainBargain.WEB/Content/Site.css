@@ -260,8 +260,8 @@ h4 ul {
 
 /*Carousel*/
 .myCarousel {
-    border-top: 5px solid #575a5c;
-    border-bottom: 5px solid #575a5c;
+    border-top: 5px solid #7a7a7a;
+    border-bottom: 5px solid #7a7a7a;
     padding: 3px 0 3px 0;
 }
 
@@ -330,4 +330,16 @@ ol.carousel-indicators li.active {
 
 hot-product-name {
     min-height: 80px;
+}
+
+/*Register and login panels*/
+.accountBtn {
+    background-color: #F59A23;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px 15px;
+    text-transform: uppercase;
 }
