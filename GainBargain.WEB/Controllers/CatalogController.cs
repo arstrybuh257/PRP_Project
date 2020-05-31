@@ -137,6 +137,10 @@ namespace GainBargain.WEB.Controllers
             if (id == null)
                 return HttpNotFound();
             var product = productRepo.Get(id.Value);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
             var market = marketRepo.Get(product.MarketId);
             ProductVM productVM = new ProductVM(id.Value, product.Name, product.ImageUrl, product.Price, product.PrevPrice,
                 market.Id, market.Name, market.MarketLogoUrl);
