@@ -4,10 +4,15 @@
     padding-right: 15px;
     max-width: 1300px;
     margin-top: 30px;
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
 
-
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: table;
+}
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -18,13 +23,15 @@
 
 footer {
     background-color: #575a5c;
+    display: table-row;
+    height: 0;
 }
 
-footer p{
-    margin: 0;
-    padding: 40px;
-    color: white;
-}
+    footer p {
+        margin: 0;
+        padding: 40px;
+        color: white;
+    }
 
 header {
     background-color: #F59A23;
@@ -121,9 +128,9 @@ h4 ul {
     border: none;
 }
 
-.categoryEditing input:focus {
-    color: blue;
-}
+    .categoryEditing input:focus {
+        color: blue;
+    }
 
 .categoryEditing i {
     font-size: 2em;
@@ -202,7 +209,6 @@ h4 ul {
     }
 
 .eyeIconWelcome {
-    
     margin-top: 40px;
     margin-bottom: 40px;
 }
@@ -213,9 +219,9 @@ h4 ul {
         margin-bottom: 50px;
     }
 
-    .reportTitle {
-        background-color: #f59a23;
-    }
+.reportTitle {
+    background-color: #f59a23;
+}
 
 .favProductCard {
     display: inline-block;
@@ -238,10 +244,10 @@ h4 ul {
     }
 
 
-    .myForm {
-        margin-bottom: 30%;
-        width: 70%;
-    }
+.myForm {
+    margin-bottom: 30%;
+    width: 70%;
+}
 
 .favProductCard button {
     margin-bottom: 20px;
@@ -249,4 +255,79 @@ h4 ul {
 
 .favProductCard a {
     color: black;
+}
+
+
+/*Carousel*/
+.myCarousel {
+    border-top: 5px solid #575a5c;
+    border-bottom: 5px solid #575a5c;
+    padding: 3px 0 3px 0;
+}
+
+    .myCarousel .img_container {
+        position: relative;
+        height: 200px;
+    }
+
+    .myCarousel img {
+        width: 50%;
+        height: 25vh;
+        display: block;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+#carouselControls {
+    padding-bottom: 35px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 100px;
+    width: 50px;
+    background-size: 100%, 100%;
+    background-image: none;
+}
+
+    .carousel-control-next-icon:after {
+        content: '>';
+        font-size: 55px;
+        font-weight: bold;
+        color: #575a5c;
+    }
+
+    .carousel-control-prev-icon:after {
+        content: '<';
+        font-size: 55px;
+        font-weight: bold;
+        color: #575a5c;
+    }
+
+.carousel-control-prev, 
+.carousel-control-next {
+    width:5%;
+}
+
+.carousel-indicators li {
+    width: 20px;
+    height: 1px;
+    border-radius: 100%;
+    background: #a8a8a8;
+}
+
+ol.carousel-indicators li.active {
+    background: #7a7a7a;
+}
+
+.priceRect {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    background-color: white;
+}
+
+hot-product-name {
+    min-height: 80px;
 }
