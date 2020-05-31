@@ -41,5 +41,24 @@ namespace GainBargain.DAL.Repositories
                 db.SaveChanges();
             }
         }
+
+        public List<List<int>> GetAllTransactions()
+        {
+            List<List<int>> result = new List<List<int>>();
+
+            var groups = db.FavoriteProducts.GroupBy(x=>x.UserId);
+
+            foreach (var group in groups)
+            {
+                List<int> list = new List<int>();
+                foreach (var pr in group)
+                {
+                    list.Add(pr.ProductId);
+                }
+                result.Add(list);
+            }
+
+            return result;
+        }
     }
 }
