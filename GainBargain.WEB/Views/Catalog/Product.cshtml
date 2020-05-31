@@ -27,10 +27,18 @@
                     : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")" />
         </div>
         <div class="col-sm-6">
-            <h4 class="mb-1 mb-sm-3">@Model.Name</h4>
+            <h4 class="mb-1 mb-sm-3 border-bottom">@Model.Name</h4>
             <div class="mt-auto">
-                <h5 class="price font-weight-bold">@Model.Price грн</h5>
-                <s>@Model.PrevPrice грн</s>
+                @if (Model.Price == Model.PrevPrice)
+                {
+                    <h5 class="font-weight-bold">@Model.Price грн</h5>
+                }
+                else
+                {
+                    <h5 class="price font-weight-bold">@Model.Price грн</h5>
+                    <s>@Model.PrevPrice грн</s>
+                }
+
             </div>
         </div>
     </div>

@@ -95,8 +95,16 @@
                         <div class="card-body">
                             @Html.ActionLink(p.Name, "Product", new { id = p.Id }, new { @class = "card-title text-decoration-none" })
                             <div class="mt-2 mt-md-4 ml-auto">
-                                <p class="text-break"><s>@p.PrevPrice<span>грн</span></s></p>
-                                <h6 class="price">@p.Price<span>грн</span></h6>
+                                @if (p.PrevPrice == p.Price)
+                                {
+                                    <h6>@p.Price<span>грн</span></h6>
+                                }
+                                else
+                                {
+                                    <p class="text-break"><s>@p.PrevPrice<span>грн</span></s></p>
+                                    <h6 class="price">@p.Price<span>грн</span></h6>
+                                }
+
                             </div>
                         </div>
                     </div>
