@@ -1,10 +1,9 @@
-﻿@model GainBargain.WEB.Models.ProductVM
+﻿@using Microsoft.AspNet.Identity
+@model GainBargain.WEB.Models.ProductVM
 
 @{
     ViewBag.Title = Model.Name;
 }
-
-@* Oh no, I can't find where it is used... *@
 
 <div class="container w-75">
     <div class="row">
@@ -13,13 +12,19 @@
                     ? Model.ImageUrl
                     : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")" />
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-6">
             <h4>@Model.Name</h4>
             <div class="mt-auto">
                 <h6>@Model.Price грн</h6>
                 <s>@Model.PrevPrice грн</s>
             </div>
         </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="col-sm-1">
+                <img src="~/Content/img/vision.svg" width="80" height="80" class="eyeLogo" onclick="addToFavoriteProducts(@Model.Id)" />
+            </div>
+        }
     </div>
     <div class="row mt-2 d-flex flex-row justify-content-start">
         <h6 class="font-weight-light mr-1">Постачальник послуг: </h6>

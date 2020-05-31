@@ -9,7 +9,7 @@
     @* For icons *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @Scripts.Render("~/bundles/modernizr")
-
+    <script type="text/javascript" src="~/Scripts/customScripts/userProfile.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/renderModals.js")
@@ -18,7 +18,7 @@
 <body>
     <header class="d-flex align-items-center justify-content-center">
         <nav class="navbar navbar-expand-md d-flex w-100">
-            <a class="navbar-brand ml-md-3 mr-md-auto" href="~/Home/Index"><img src="~/Content/img/logo.png" alt="logo"/></a>
+            <a class="navbar-brand ml-md-3 mr-md-auto" href="~/Home/Index"><img width="80" height="60" src="~/Content/img/logo.png" alt="logo"/></a>
             <div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -37,10 +37,10 @@
                         @if (!Request.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/LoginPartial" id="loginButton">Увійти</a>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/RegisterPartial" tabindex="-1" aria-disabled="true" id="registerButton">
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Register" tabindex="-1" aria-disabled="true">
                                     Зареєструватися
                                 </a>
                             </li>
@@ -68,7 +68,7 @@
     </div>
 
     <footer>
-        <p class="text-white">&copy;GainBargain @DateTime.Now.Year</p>
+        <p class="">&copy;GainBargain @DateTime.Now.Year</p>
     </footer>
 
     @RenderSection("scripts", required: false)

@@ -27,7 +27,7 @@
 
 <div class="addNewCat">
     <h4>Додати категорію</h4>
-    <input type="text" id="newFavCat"/>
+    @Html.DropDownList("FavCategory", ViewBag.Categories as SelectList, "Оберіть категорію",new{id="newFavCat"})
     <img onclick="addNewFavoriteCategory()" src="/Content/img/addFavCat.png"/>
 </div>
 
