@@ -6,7 +6,7 @@
 
 <div class="container w-75">
     <div class="row">
-        @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated && User.IsInRole("user"))
         {
             <div class="col-3 col-sm-2 col-lg-1 ml-auto">
                 @if (!Model.IsFavorite)

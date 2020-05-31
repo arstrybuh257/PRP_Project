@@ -13,7 +13,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/renderModals.js")
-    @*@Scripts.Render("~/Scripts/modalsValidation.js")*@
 </head>
 <body>
     <header class="d-flex align-items-center justify-content-center">
@@ -32,21 +31,19 @@
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a>
+                        <h5><a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a></h5>
                     </li>
                     @if (!Request.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a>
+                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a></h5>
                         </li>
                         <li class="nav-item">
-<<<<<<< HEAD
-                            <a class="nav-link text-dark font-weight-bolder" href="~/Account/Register" tabindex="-1" aria-disabled="true">
-                                Зареєструватися
-                            </a>
-=======
-                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a></h5>
->>>>>>> bff99ff52307866d1e47c97fd4a90eff58699f2c
+                            <h5>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Register" tabindex="-1" aria-disabled="true">
+                                    Зареєструватися
+                                </a>
+                            </h5>
                         </li>
                     }
                     else
@@ -54,36 +51,18 @@
                         if (User.IsInRole("user"))
                         {
                             <li class="nav-item">
-<<<<<<< HEAD
-                                <a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a>
-=======
-                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a></h5>
-                            </li>
-                            <li class="nav-item">
-                                <h5>
-                                    <a class="nav-link text-dark font-weight-bolder" href="~/Account/Register" tabindex="-1" aria-disabled="true">
-                                        Зареєструватися
-                                    </a>
-                                </h5>
->>>>>>> bff99ff52307866d1e47c97fd4a90eff58699f2c
+                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a></h5>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-<<<<<<< HEAD
-                                <a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Панель адміністратора</a>
-=======
-                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a></h5>
-                            </li>
-                            <li class="nav-item">
-                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a></h5>
->>>>>>> bff99ff52307866d1e47c97fd4a90eff58699f2c
+                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/Admin/AdminPanel">Панель адміністратора</a></h5>
                             </li>
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a>
+                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a></h5>
                         </li>
                     }
                 </ul>

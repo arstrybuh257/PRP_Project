@@ -8,6 +8,7 @@ using GainBargain.WEB.Models;
 
 namespace GainBargain.WEB.Controllers
 {
+    [Authorize(Roles = "user")]
     public class UserController : Controller
     {
         private IFavoriteCategoriesRepository favCatRepository;
