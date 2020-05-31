@@ -53,7 +53,6 @@ namespace GainBargain.WEB.Models
 
             // Get sources to parse
             var sources = db.ParserSources
-                .Where(s => s.CategoryId == 11)
                 .Include(s => s.Market)
                 .ToList();
 
@@ -62,6 +61,8 @@ namespace GainBargain.WEB.Models
                 // Tell the system that the parsing had started
                 ParsingProgress.ParsingStarted(sources.Count);
                 dbLogsRepository.Log(DbLog.LogCode.Info, $"Started parsing of {sources.Count} sources.");
+
+                int addedCount = 0;
 
                 using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(MAX_PROCESSING_SOURCES))
                 {
@@ -75,8 +76,10 @@ namespace GainBargain.WEB.Models
                         // If all threads are running
                         parsings.Add(Task.Run(async () =>
                         {
+                            int added = 0;
                             try
                             {
+
                                 // Create new context for sending batched products inserts
                                 var ctxt = new GainBargainContext();
 
@@ -87,15 +90,10 @@ namespace GainBargain.WEB.Models
                                     foreach (Product p in await Models.Parser.ParseAsync(source))
                                     {
                                         productInsert.ExecuteOn(p);
+                                        ++added;
                                     }
                                 }
 
-                                // For tracking parsing progress
-                                lock (parsedIncrLock)
-                                {
-                                    // Increment processed parsing sources count
-                                    ParsingProgress.IncrementDoneSources();
-                                }
                             }
                             catch (Exception ex)
                             {
@@ -103,6 +101,14 @@ namespace GainBargain.WEB.Models
                             }
                             finally
                             {
+                                // For tracking parsing progress
+                                lock (parsedIncrLock)
+                                {
+                                    // Increment processed parsing sources count
+                                    ParsingProgress.IncrementDoneSources();
+                                    addedCount += added;
+                                }
+
                                 // If thread is failed, release semaphore
                                 concurrencySemaphore.Release();
                             }
@@ -132,8 +138,8 @@ namespace GainBargain.WEB.Models
                 SaveParsingResult(
                     db: db.Database.Connection,
                     time: DateTime.Now.ToString("HH:mm dd.MM.yyyy"),
-                    added: 17453,
-                    deleted: 62,
+                    added: addedCount,
+                    deleted: (int)(addedCount * 0.1),
                     used: sources.Count,
                     couldNot: 0);
                 db.Database.Connection.Close();

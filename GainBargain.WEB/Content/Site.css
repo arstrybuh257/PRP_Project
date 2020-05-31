@@ -129,6 +129,31 @@ h4 ul {
     font-size: 2em;
 }
 
+
+/* Market Editing */
+
+.marketViewing {
+    position: relative;
+}
+
+.addresses {
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.marketViewing img {
+    margin-top: 3em;
+    width: 100%;
+}
+
+.marketEdit {
+    position: absolute;
+    color: #000;
+    font-size: 2em;
+    top: 0px;
+    right: 10px;
+}
 /*Styles for UserProfile page*/
 .favCatCol {
     background-color: #e4e1e1;

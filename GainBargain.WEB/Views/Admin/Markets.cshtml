@@ -11,19 +11,23 @@
 @foreach (var item in Model)
 {
     <div class="container border p-2">
-        <div class="row">
-            <div class="col-6">
+        <div class="row marketViewing">
+            <div class="col-4">
                 <h6>@item.Name</h6>
                 <p>@item.Description</p>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <h6>Адреси</h6>
-                <p>А адресов я не вижу</p>
+                <p class="addresses">@(item.Addresses ?? "Жодна адреса не вказана!")</p>
             </div>
-            <div class="col-3">
-                @Html.ActionLink("Редагувати", "EditMarket", new { id = item.Id })
+            <div class="col-4">
                 <img class="img-fluid" src="@item.MarketLogoUrl" alt="Product image">
             </div>
+
+            <a class="marketEdit"
+               href="@Url.Action("EditMarket", new { id = item.Id })">
+                <i class="fa fa-edit"></i>
+            </a>
         </div>
     </div>
 }
