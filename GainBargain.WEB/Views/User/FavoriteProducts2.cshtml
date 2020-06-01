@@ -1,14 +1,27 @@
 ﻿@model IEnumerable<GainBargain.DAL.Entities.FavoriteProduct>
 
-@foreach (var item in Model)
-{
-    <div class="favProductCard" id="@item.Product.Id">
-        <hr/>
-        <div><img src="@item.Product.ImageUrl"/></div>
-        <hr/>
-        <h3 class="price">@item.Product.Price</h3>
-        <div class="productName">@Html.ActionLink(item.Product.Name, "Product", "Catalog", new { id = item.Product.Id }, null)</div>
-        
-        <button onclick="delFavCat(@item.Product.Id)">Видалити</button>
+<div class="container-fluid">
+    <div class="row d-flex flex-wrap flex-row">
+        @foreach (var item in Model)
+        {
+            <div class="card col-sm-6 col-md-3" id="@item.Product.Id">
+                <div class="card-header favProdImgContainer">
+                    <img src="@item.Product.ImageUrl" />
+                </div>
+                <div class="card-body">
+                    <h3 class="price">@item.Product.Price</h3>
+                    <div class="productName">@Html.ActionLink(item.Product.Name.Length > 25 ? 
+                                            item.Product.Name.Substring(0, 25) + "..." : item.Product.Name, 
+                                            "Product", "Catalog", new { id = item.Product.Id }, null)</div>
+                </div>
+                <div class="card-footer bg-white">
+                    <button class="btn btn-outline-secondary" onclick="delFavCat(@item.Product.Id)">Видалити</button>
+                </div>
+            </div>
+        }
     </div>
-}
+</div>
+
+
+
+

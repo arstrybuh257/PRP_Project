@@ -6,9 +6,9 @@
     <div>
         <div class="img_container">
             <img class="@*card-img-top *@img-fluid" src="@(System.Uri.IsWellFormedUriString(Model.ImageUrl, UriKind.Absolute) &&
-            Model.ImageUrl.StartsWith("http")
-                    ? Model.ImageUrl
-                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")"
+Model.ImageUrl.StartsWith("http")
+? Model.ImageUrl
+: "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")"
                  alt="@Model.Name">
             <div class="p-2 priceRect">
                 <div class="price">
@@ -22,7 +22,7 @@
         
     </div>
     <div class="card-body mb-4">
-            <h6>@Model.Name</h6>
+        <h6>@Model.Name</h6>
     </div>
     <div class="card-footer mb-4 bg-white border-top-0">
         @Html.ActionLink("Детальніше", "Product", "Catalog", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-outline-dark mt-auto p-1", type = "button" })

@@ -93,7 +93,8 @@
 ? p.ImageUrl
 : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")">
                         <div class="card-body">
-                            @Html.ActionLink(p.Name, "Product", new { id = p.Id }, new { @class = "card-title text-decoration-none" })
+                            @Html.ActionLink(p.Name.Length > 25 ? p.Name.Substring(0, 25) + "..." : p.Name, 
+                           "Product", new { id = p.Id }, new { @class = "card-title text-decoration-none" })
                             <div class="mt-2 mt-md-4 ml-auto">
                                 @if (p.PrevPrice == p.Price)
                                 {
