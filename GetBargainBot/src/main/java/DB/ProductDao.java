@@ -166,6 +166,16 @@ public class ProductDao {
         return true;
     }
 
+    public boolean isFavorite(String id) throws SQLException {
+            String query = "select productId from favoriteProducts " +
+                    "where productId=?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, String.valueOf(id));
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+    }
+
 }
 
 

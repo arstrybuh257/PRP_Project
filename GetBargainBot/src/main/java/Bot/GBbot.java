@@ -44,7 +44,7 @@ public class GBbot extends TelegramLongPollingBot {
                 .withIdentity("GBbot").build();
         Trigger trigger = newTrigger()
                 .withIdentity("trigger")
-                .withSchedule(dailyAtHourAndMinute(14, 35))
+                .withSchedule(dailyAtHourAndMinute(9, 24))
                 .build();
         scheduler.start();
         scheduler.scheduleJob(job, trigger);
@@ -61,7 +61,7 @@ public class GBbot extends TelegramLongPollingBot {
             long tel_id = updateMessage.getChatId();
             if (messageText.equals("/start")) {
                 try {
-                    sendMessage("Приветствую", tel_id);
+                    sendMessage("Вас вітає бот GainBargain. Готові економити?", tel_id);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
@@ -80,14 +80,13 @@ public class GBbot extends TelegramLongPollingBot {
             }
             try {
                 if (Status.valueOf(dao.getStatus(dao.getChatIdByEmail(messageText)).toUpperCase()) == Status.SUCCESS && dao.userLoggedIn(messageText)) {
-                    sendMessage("Пользователь уже вошел", tel_id);
+                    sendMessage("Користувач вже авторизований!", tel_id);
                     return;
                 } else {
                     Login(tel_id, messageText);
                 }
                 if (Status.valueOf(dao.getStatus(tel_id).toUpperCase()) == Status.SUCCESS) {
                     if (tryParse(messageText.substring(1))) {
-
                         String[] arr = dao2.getProductById(messageText.substring(1));
                         String caption;
                         if (Double.parseDouble(arr[1]) != Double.parseDouble(arr[2])) {
@@ -96,7 +95,10 @@ public class GBbot extends TelegramLongPollingBot {
                             caption = String.format("%s, ціна - %s грн", arr[0], arr[1]);
                         }
                         InlineKeyboardMarkup builder = InlineKeyboardBuilder.create().row().button("Додати в улюблене!", "addF" + messageText.substring(1)).endRow().getKeyBoard();
-                        SendPhoto mes = new SendPhoto().setParseMode("HTML").setCaption(caption).setReplyMarkup(builder).setPhoto(arr[3]).setChatId(tel_id);
+                        SendPhoto mes = new SendPhoto().setParseMode("HTML").setCaption(caption).setPhoto(arr[3]).setChatId(tel_id);
+                        if(!dao2.isFavorite(messageText.substring(1))){
+                            mes.setReplyMarkup(builder);
+                        }
                         sendPhoto(mes);
                         System.out.println(arr[3]);
                         return;
@@ -105,18 +107,18 @@ public class GBbot extends TelegramLongPollingBot {
                         dao.changeStep(tel_id, null);
                     }
                     if (dao.getCurrentStep(tel_id) == null) {
-                        execute(PlainKeyboardBuilder.create().row().button("\uD83D\uDD0DНайти\uD83D\uDD0D").button("\uD83D\uDCDAКаталог\uD83D\uDCDA").endRow().setChatId(tel_id).setText("Меню:").build());
+                        execute(PlainKeyboardBuilder.create().row().button("\uD83D\uDD0DЗнайти\uD83D\uDD0D").button("\uD83D\uDCDAКаталог\uD83D\uDCDA").endRow().setChatId(tel_id).setText("Меню:").build());
                         dao.changeStep(tel_id, Step.MENU);
                     } else if (dao.getCurrentStep(tel_id) == Step.SEARCH) {
                         if (dao2.searchProducts(messageText).size() == 0)
                             sendMessage("<b>Товарів не знайдено!</b> ", tel_id);
                         else
-                            sendMessage("<b>Зайдені товари:</b> " + "\n" + String.join("\n~~~~~~~~~~~~~\n", dao2.searchProducts(messageText)), tel_id);
-                    } else if (messageText.equals("\uD83D\uDD0DНайти\uD83D\uDD0D")) {
-                        execute(PlainKeyboardBuilder.create().row().button("Назад").endRow().setChatId(tel_id).setText("Введите товар для поиска:").build());
+                            sendMessage("<b>Знайдені товари:</b> " + "\n" + String.join("\n~~~~~~~~~~~~~\n", dao2.searchProducts(messageText)), tel_id);
+                    } else if (messageText.equals("\uD83D\uDD0DЗнайти\uD83D\uDD0D")) {
+                        execute(PlainKeyboardBuilder.create().row().button("Назад").endRow().setChatId(tel_id).setText("Введіть назву товару для пошуку:").build());
                         dao.changeStep(tel_id, Step.SEARCH);
                     } else if (messageText.equals("\uD83D\uDCDAКаталог\uD83D\uDCDA")) {
-                        execute(new SendMessage(tel_id, "Клавиатура скрыта!").setReplyMarkup(new ReplyKeyboardRemove()));
+                        execute(new SendMessage(tel_id, "Меню сховано!").setReplyMarkup(new ReplyKeyboardRemove()));
                         execute(dao3.displaySuperCategories(tel_id, messageText));
                     }
                 }
@@ -136,7 +138,7 @@ public class GBbot extends TelegramLongPollingBot {
             } else if (update.getCallbackQuery().getData().startsWith("s")) {
                 try {
                     if (update.getCallbackQuery().getData().endsWith("Back")) {
-                        execute(PlainKeyboardBuilder.create().row().button("\uD83D\uDD0DНайти\uD83D\uDD0D").button("\uD83D\uDCDAКаталог\uD83D\uDCDA").endRow().setChatId(update.getCallbackQuery().getMessage().getChatId()).setText("Меню:").build());
+                        execute(PlainKeyboardBuilder.create().row().button("\uD83D\uDD0DЗнайти\uD83D\uDD0D").button("\uD83D\uDCDAКаталог\uD83D\uDCDA").endRow().setChatId(update.getCallbackQuery().getMessage().getChatId()).setText("Меню:").build());
                         deleteMessage(new DeleteMessage().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(String.valueOf(update.getCallbackQuery().getMessage().getChatId())));
                     } else
                         editMessageReplyMarkup(new EditMessageReplyMarkup().setMessageId(update.getCallbackQuery().getMessage().getMessageId()).setChatId(update.getCallbackQuery().getMessage().getChatId()).setReplyMarkup(dao3.getCategories(Integer.parseInt(update.getCallbackQuery().getData().substring(1)))));
@@ -228,14 +230,14 @@ public class GBbot extends TelegramLongPollingBot {
     private void Auth(long tel_id) throws SQLException, TelegramApiException {
         Status status = Status.valueOf(dao.getStatus(tel_id).toUpperCase());
         if (!dao.userAuthenificated(tel_id) || status == Status.NONEXISTANCE) {
-            sendMessage("Введите почту!", tel_id);
+            sendMessage("Введіть пошту!", tel_id);
             dao.changeStatus(tel_id, Status.EMAIL);
         } else if (status == Status.EMAIL) {
-            sendMessage("Введите корректную почту!", tel_id);
+            sendMessage("Введить коректну пошту!", tel_id);
         } else if (status == Status.PASSWORD) {
             SendMessage message = InlineKeyboardBuilder.create(tel_id)
-                    .setText("Введите пароль!")
-                    .row().button("Сменить почту!", "chMail").endRow().build();
+                    .setText("Введіть пароль!")
+                    .row().button("Змінити пошту!", "chMail").endRow().build();
             execute(message);
         }
     }
@@ -249,7 +251,7 @@ public class GBbot extends TelegramLongPollingBot {
         } else if (status == Status.PASSWORD) {
             if (dao.Verify(dao.getEmail(tel_id), str)) {
                 dao.changeStatus(tel_id, Status.SUCCESS);
-                sendMessage("Вы успешно вошли!", tel_id);
+                sendMessage("Ви успішно авторизувалися!", tel_id);
                 dao.SignUp(dao.getEmail(tel_id), tel_id);
             }
         }
