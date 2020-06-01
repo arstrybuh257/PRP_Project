@@ -1,12 +1,37 @@
 ﻿@model IEnumerable<GainBargain.DAL.Entities.ProductCache>
 
-@foreach (var item in Model)
+@if (!Model.Any())
 {
-    <div class="favProductCard">
-        <hr/>
-        <div><img src="@item.ImageUrl"/></div>
-        <hr/>
-        <h3 class="price">@item.Price</h3>
-        <div class="productName">@Html.ActionLink(item.Name, "Product", "Catalog", new{id= item.Id}, null)</div>
-    </div>
+    <h4>У данній категорії ще немає товарів</h4>
 }
+
+<div class="container-fluid">
+    <div class="row d-flex flex-wrap flex-row">
+        @foreach (var item in Model)
+        {
+            <div class="card col-sm-6 col-md-3">
+                <div class="card-header favProdImgContainer">
+                    <img src="@(System.Uri.IsWellFormedUriString(item.ImageUrl, UriKind.Absolute) && item.ImageUrl.StartsWith("http")
+                    ? item.ImageUrl
+                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")" />
+                </div>
+                <div class="card-body">
+                    @if (item.Price == item.PrevPrice)
+                    {
+                        <h3 class="price">@item.Price грн</h3>
+                    }
+                    else
+                    {
+                        <h3 class="price">@item.Price грн</h3>
+                        <s>@item.PrevPrice грн</s>
+                    }
+                    <div class="productName">@Html.ActionLink(item.Name.Length > 25 ? 
+                                            item.Name.Substring(0, 25) + "..." : item.Name,
+                                            "Product", "Catalog", new { id = item.Id }, null)</div>
+                </div>
+            </div>
+
+            
+        }
+    </div>
+</div>

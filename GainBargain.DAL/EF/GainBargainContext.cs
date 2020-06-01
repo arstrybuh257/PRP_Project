@@ -1,4 +1,5 @@
-﻿using GainBargain.DAL.Entities;
+﻿using System.Data;
+using GainBargain.DAL.Entities;
 using System.Data.Entity;
 
 namespace GainBargain.DAL.EF
@@ -15,6 +16,7 @@ namespace GainBargain.DAL.EF
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<FavoriteCategory> FavoriteCategories { get; set; }
+        public DbSet<Association> Associations { get; set; }
 
         /// <summary>
         /// Perfect for displaying product entity.

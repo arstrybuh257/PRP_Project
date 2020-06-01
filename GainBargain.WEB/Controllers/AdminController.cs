@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace GainBargain.WEB.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private GainBargainContext db = new GainBargainContext();

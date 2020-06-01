@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using GainBargain.DAL.EF;
+using GainBargain.DAL.Entities;
 using Hangfire;
 using Hangfire.SqlServer;
 
@@ -38,34 +39,34 @@ namespace GainBargain.WEB
             RecurringJob.AddOrUpdate(jobId, () => Models.Parser.Start(), cronStr);
         }
 
-        //protected void Application_AuthenticateRequest()
-        //{
-        //    GainBargainContext db = new GainBargainContext();
+        protected void Application_AuthenticateRequest()
+        {
+            GainBargainContext db = new GainBargainContext();
 
-        //    if (User == null)
-        //    {
-        //        return;
-        //    }
+            if (User == null)
+            {
+                return;
+            }
 
-        //    string userName = Context.User.Identity.Name;
+            string userName = Context.User.Identity.Name;
 
-        //    string[] roles = null;
+            string[] roles = null;
 
-        //    User user = db.Users.FirstOrDefault(x => x.Username == userName);
+            User user = db.Users.FirstOrDefault(x => x.Email == userName);
 
-        //    if (user == null)
-        //    {
-        //        return;
-        //    }
+            if (user == null)
+            {
+                return;
+            }
 
-        //    roles = db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.Role.Name).ToArray();
+            roles = db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.Role.Name).ToArray();
 
-        //    IIdentity userIdentity = new GenericIdentity(userName);
-        //    IPrincipal newUserObj = new GenericPrincipal(userIdentity, roles);
+            IIdentity userIdentity = new GenericIdentity(userName);
+            IPrincipal newUserObj = new GenericPrincipal(userIdentity, roles);
 
-        //    Context.User = newUserObj;
+            Context.User = newUserObj;
 
-        //}
+        }
 
         /// <summary>
         /// This method is used for creating background

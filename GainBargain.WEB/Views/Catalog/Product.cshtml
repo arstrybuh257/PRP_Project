@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-@model GainBargain.WEB.Models.ProductVM
+﻿@model GainBargain.WEB.Models.ProductVM
 
 @{
     ViewBag.Title = Model.Name;
@@ -7,30 +6,79 @@
 
 <div class="container w-75">
     <div class="row">
+        @if (Request.IsAuthenticated && User.IsInRole("user"))
+        {
+            <div class="col-3 col-sm-2 col-lg-1 ml-auto">
+                @if (!Model.IsFavorite)
+                {
+                    <img src="~/Content/img/vision1.svg" width="80" height="80" class="eyeLogo w-50" onclick="addRemoveFavoriteProduct(@Model.Id)" />
+                }
+                else
+                {
+                    <img src="~/Content/img/heart.svg" width="80" height="80" class="eyeLogo w-50" onclick="addRemoveFavoriteProduct(@Model.Id)" />
+                }
+            </div>
+        }
+    </div>
+    <div class="row">
         <div class="col-sm-5">
             <img class="img-fluid" src="@(System.Uri.IsWellFormedUriString(Model.ImageUrl, UriKind.Absolute) && Model.ImageUrl.StartsWith("http")
                     ? Model.ImageUrl
                     : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")" />
         </div>
         <div class="col-sm-6">
-            <h4>@Model.Name</h4>
+            <h4 class="mb-1 mb-sm-3 border-bottom">@Model.Name</h4>
             <div class="mt-auto">
-                <h6>@Model.Price грн</h6>
-                <s>@Model.PrevPrice грн</s>
+                @if (Model.Price == Model.PrevPrice)
+                {
+                    <h5 class="font-weight-bold">@Model.Price грн</h5>
+                }
+                else
+                {
+                    <h5 class="price font-weight-bold">@Model.Price грн</h5>
+                    <s>@Model.PrevPrice грн</s>
+                }
+
             </div>
         </div>
-        @if (Request.IsAuthenticated)
-        {
-            <div class="col-sm-1">
-                <img src="~/Content/img/vision.svg" width="80" height="80" class="eyeLogo" onclick="addToFavoriteProducts(@Model.Id)" />
-            </div>
-        }
     </div>
-    <div class="row mt-2 d-flex flex-row justify-content-start">
+    <div class="row mt-4 d-flex flex-row justify-content-start">
         <h6 class="font-weight-light mr-1">Постачальник послуг: </h6>
         @Html.ActionLink(Model.MarketName, "Market", new { id = Model.MarketId }, new { @class = "font-weight-bold" })
         <div class="col-2 col-sm-1">
             <img src="@Model.MarketImgUrl" class="img-fluid" />
         </div>
     </div>
-</div>
+    <hr>
+    @if (Model.Associations.Count() > 0) { 
+    <h4 class="font-weight-lighter mt-3">З цим товаром також беруть:</h4>
+    <div class="row mt-4 d-flex flex-row flex-wrap">
+        @foreach (var item in Model.Associations)
+        {
+            <div class="card">
+                    <div class="card-header favProdImgContainer">
+                        <img src="@(System.Uri.IsWellFormedUriString(item.ProductCache.ImageUrl, UriKind.Absolute) && item.ProductCache.ImageUrl.StartsWith("http")
+                    ? item.ProductCache.ImageUrl
+                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")" />
+                    </div>
+                    <div class="card-body">
+                        @if (item.ProductCache.Price == item.ProductCache.PrevPrice)
+                        {
+                            <h5 class="price">@item.ProductCache.Price грн</h5>
+                        }
+                        else
+                        {
+                            <h5 class="price">@item.ProductCache.Price грн</h5>
+                            <s>@item.ProductCache.PrevPrice грн</s>
+                        }
+                        <div class="productName">
+                            @Html.ActionLink(item.ProductCache.Name.Length > 25 ?
+                       item.ProductCache.Name.Substring(0, 25) + "..." : item.ProductCache.Name,
+                       "Product", "Catalog", new { id = item.ProductCache.Id }, null)
+                        </div>
+                    </div>
+            </div>
+        }
+    </div>
+    }
+</div>  

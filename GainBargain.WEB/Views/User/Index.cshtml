@@ -6,12 +6,12 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-7 reportCol">
+        <div class="col-md-9 reportCol">
             <h2 class="orangeText">Особистий кабінет (@Model.Name)</h2>
             <div>
                 <h3>Улюблені товари</h3>
                 <div class="eyeIconWelcome">
-                    <h4 class="font-weight-light">Натисніть іконку ока при перегляді продукту, щоб слідкувати за ним тут...</h4>
+                    @*<h4 class="font-weight-light">Натисніть іконку серця при перегляді продукту, щоб слідкувати за ним тут...</h4>*@
                     @Html.Action("FavoriteProducts")
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 }
             </div>
         </div>
-        <div class="col-md-5 favCatCol">
+        <div class="col-md-3 favCatCol">
             @Html.Action("FavoriteCategoriesPartial")
         </div>
     </div>

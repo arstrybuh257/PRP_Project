@@ -2,22 +2,29 @@
 
 @* Carousel item for displaying a hot product *@
 
-<div class="col-sm-4 card hot-product">
+<div class="col-sm-6 col-md-4 card hot-product">
     <div>
-        <img class="card-img-top img-fluid" src="@(System.Uri.IsWellFormedUriString(Model.ImageUrl, UriKind.Absolute) && Model.ImageUrl.StartsWith("http")
-                    ? Model.ImageUrl
-                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")"
-             alt="@Model.Name">
-        <div class="price-rect">
-            <div class="price">
-                <h4><span class="badge badge-danger"> @String.Format("{0:0.00} грн", Model.Price)</span></h4>
-            </div>
-            <div class="prev-price">
-                <s>@String.Format("{0:0.00} грн", Model.PrevPrice)</s>
+        <div class="img_container">
+            <img class="@*card-img-top *@img-fluid" src="@(System.Uri.IsWellFormedUriString(Model.ImageUrl, UriKind.Absolute) &&
+Model.ImageUrl.StartsWith("http")
+? Model.ImageUrl
+: "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")"
+                 alt="@Model.Name">
+            <div class="p-2 priceRect">
+                <div class="price">
+                    <h5><span class="badge badge-danger"> @String.Format("{0:0.00} грн", Model.Price)</span></h5>
+                </div>
+                <div class="prev-price">
+                    <s>@String.Format("{0:0.00} грн", Model.PrevPrice)</s>
+                </div>
             </div>
         </div>
+        
     </div>
-    <div class="card-body">
-        <h4>@Html.ActionLink(Model.Name, "Product", "Catalog", new { id = Model.Id }, new { @class = "card-title text-decoration-none" })</h4>
+    <div class="card-body mb-4">
+        <h6>@Model.Name</h6>
+    </div>
+    <div class="card-footer mb-4 bg-white border-top-0">
+        @Html.ActionLink("Детальніше", "Product", "Catalog", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-outline-dark mt-auto p-1", type = "button" })
     </div>
 </div>

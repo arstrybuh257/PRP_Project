@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using GainBargain.DAL.Entities;
 
 namespace GainBargain.WEB.Models
 {
@@ -15,6 +16,9 @@ namespace GainBargain.WEB.Models
         public int MarketId { get; set; }
         public string MarketName { set; get; }
         public string MarketImgUrl { get; set; }
+        public bool IsFavorite { get; set; }
+        public IEnumerable<Association> Associations { get; set; }
+
 
         public ProductVM(int id, string name, string imgUrl, float price, 
             float prevPrice, int marketId, string marketName, string marketUrl)

@@ -193,12 +193,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\addFavCat.png" />
+    <Content Include="Content\img\telegramLogo.png" />
+    <Content Include="Content\img\telegramLogo.svg" />
+    <Content Include="Content\img\vision1.svg" />
     <Content Include="Content\img\heart.svg" />
     <Content Include="Content\img\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\img\removeCat.svg" />
-    <Content Include="Content\img\vision.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -386,6 +388,10 @@
     <ProjectReference Include="..\GainBargain.DAL\GainBargain.DAL.csproj">
       <Project>{D90B89DB-A0EA-4DDC-83CA-1E29552C0CAA}</Project>
       <Name>GainBargain.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GainBargain.FPG_Algoritm\GainBargain.FPG_Algoritm.csproj">
+      <Project>{a5fbb90a-8ba1-469f-a52d-af8e48ec67d5}</Project>
+      <Name>GainBargain.FPG_Algoritm</Name>
     </ProjectReference>
     <ProjectReference Include="..\GainBargain.Parser\GainBargain.Parser.csproj">
       <Project>{3a3055d2-d55e-4de8-bd82-aa7ab92658a0}</Project>

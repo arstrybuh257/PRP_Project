@@ -13,48 +13,59 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/renderModals.js")
-    @*@Scripts.Render("~/Scripts/modalsValidation.js")*@
 </head>
 <body>
     <header class="d-flex align-items-center justify-content-center">
         <nav class="navbar navbar-expand-md d-flex w-100">
-            <a class="navbar-brand ml-md-3 mr-md-auto" href="~/Home/Index"><img width="80" height="60" src="~/Content/img/logo.png" alt="logo"/></a>
-            <div>
+            <a class="navbar-brand ml-md-5 mr-md-auto" href="~/Home/Index"><img width="130" height="85" src="~/Content/img/logo.png" alt="logo"/></a>
+            <div class="w-75">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse" id="navbarCollapse">
-                    @using (Html.BeginForm("Search", "Catalog", FormMethod.Get, new { @class = "form-inline mt-2 mt-md-0 mr-1" }))
+                    @using (Html.BeginForm("Search", "Catalog", FormMethod.Get, new { @class = "form-inline mt-2 mt-md-0 w-50 ml-auto" }))
                     {
-                        <input class="form-control mr-sm-2" name="text" type="text" placeholder="Пошук" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button> @*temporary*@
+                        <input class="form-control mr-sm-2 w-75" name="text" type="text" placeholder="Пошук" aria-label="Search">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit"> <i class="fa fa-search"></i></button> @*temporary*@
                     }
 
-                    <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5><a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a></h5>
+                    </li>
+                    @if (!Request.IsAuthenticated)
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a>
+                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a></h5>
                         </li>
-                        @if (!Request.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a>
-                            </li>
-                            <li class="nav-item">
+                        <li class="nav-item">
+                            <h5>
                                 <a class="nav-link text-dark font-weight-bolder" href="~/Account/Register" tabindex="-1" aria-disabled="true">
                                     Зареєструватися
                                 </a>
+                            </h5>
+                        </li>
+                    }
+                    else
+                    {
+                        if (User.IsInRole("user"))
+                        {
+                            <li class="nav-item">
+                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a></h5>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a>
+                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/Admin/AdminPanel">Панель адміністратора</a></h5>
                             </li>
                         }
-                    </ul>
+
+                        <li class="nav-item">
+                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a></h5>
+                        </li>
+                    }
+                </ul>
                 </div>
             </div>
         </nav>
