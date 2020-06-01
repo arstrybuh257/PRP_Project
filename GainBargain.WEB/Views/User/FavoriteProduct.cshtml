@@ -25,7 +25,9 @@
                         <h3 class="price">@item.Price грн</h3>
                         <s>@item.PrevPrice грн</s>
                     }
-                    <div class="productName">@Html.ActionLink(item.Name, "Product", "Catalog", new { id = item.Id }, null)</div>
+                    <div class="productName">@Html.ActionLink(item.Name.Length > 25 ? 
+                                            item.Name.Substring(0, 25) + "..." : item.Name,
+                                            "Product", "Catalog", new { id = item.Id }, null)</div>
                 </div>
             </div>
 

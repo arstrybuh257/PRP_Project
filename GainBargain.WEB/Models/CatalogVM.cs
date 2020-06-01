@@ -5,6 +5,7 @@ namespace GainBargain.WEB.Models
 {
     public class CatalogVM
     {
+
         public int SuperCategoryId { get; set; }
         public string SuperCategoryName { get; set; }
         public IEnumerable<ProductCache> Products { get; set; }

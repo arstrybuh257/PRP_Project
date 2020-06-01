@@ -10,7 +10,9 @@
                 </div>
                 <div class="card-body">
                     <h3 class="price">@item.Product.Price</h3>
-                    <div class="productName">@Html.ActionLink(item.Product.Name, "Product", "Catalog", new { id = item.Product.Id }, null)</div>
+                    <div class="productName">@Html.ActionLink(item.Product.Name.Length > 25 ? 
+                                            item.Product.Name.Substring(0, 25) + "..." : item.Product.Name, 
+                                            "Product", "Catalog", new { id = item.Product.Id }, null)</div>
                 </div>
                 <div class="card-footer bg-white">
                     <button class="btn btn-outline-secondary" onclick="delFavCat(@item.Product.Id)">Видалити</button>
