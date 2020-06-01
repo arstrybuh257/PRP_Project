@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Linq;
 using GainBargain.DAL.Interfaces;
 using GainBargain.DAL.Repositories;
+using GainBargain.FPG_Algoritm;
 
 namespace GainBargain.WEB.Controllers
 {
@@ -18,6 +19,10 @@ namespace GainBargain.WEB.Controllers
 
             var productList = rep.GetTopProducts(12)
                 .ToList();
+
+            FavoriteProductRepository repo = new FavoriteProductRepository();
+
+            TreeBuilder.Build(repo.GetAllTransactions());
 
             return View(productList);
         }
