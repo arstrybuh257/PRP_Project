@@ -193,6 +193,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\addFavCat.png" />
+    <Content Include="Content\img\telegramLogo.png" />
+    <Content Include="Content\img\telegramLogo.svg" />
     <Content Include="Content\img\vision1.svg" />
     <Content Include="Content\img\heart.svg" />
     <Content Include="Content\img\logo.jpg" />

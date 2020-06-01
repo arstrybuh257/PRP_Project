@@ -49,4 +49,36 @@
             <img src="@Model.MarketImgUrl" class="img-fluid" />
         </div>
     </div>
-</div>
+    <hr>
+    @if (Model.Associations.Count() > 0) { 
+    <h4 class="font-weight-lighter mt-3">З цим товаром також беруть:</h4>
+    <div class="row mt-4 d-flex flex-row flex-wrap">
+        @foreach (var item in Model.Associations)
+        {
+            <div class="card">
+                    <div class="card-header favProdImgContainer">
+                        <img src="@(System.Uri.IsWellFormedUriString(item.ProductCache.ImageUrl, UriKind.Absolute) && item.ProductCache.ImageUrl.StartsWith("http")
+                    ? item.ProductCache.ImageUrl
+                    : "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")" />
+                    </div>
+                    <div class="card-body">
+                        @if (item.ProductCache.Price == item.ProductCache.PrevPrice)
+                        {
+                            <h5 class="price">@item.ProductCache.Price грн</h5>
+                        }
+                        else
+                        {
+                            <h5 class="price">@item.ProductCache.Price грн</h5>
+                            <s>@item.ProductCache.PrevPrice грн</s>
+                        }
+                        <div class="productName">
+                            @Html.ActionLink(item.ProductCache.Name.Length > 25 ?
+                       item.ProductCache.Name.Substring(0, 25) + "..." : item.ProductCache.Name,
+                       "Product", "Catalog", new { id = item.ProductCache.Id }, null)
+                        </div>
+                    </div>
+            </div>
+        }
+    </div>
+    }
+</div>  
