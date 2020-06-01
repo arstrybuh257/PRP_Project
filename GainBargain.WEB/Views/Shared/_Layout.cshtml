@@ -1,43 +1,87 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @* For icons *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="~/Scripts/customScripts/userProfile.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/renderModals.js")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+    <header class="d-flex align-items-center justify-content-center">
+        <nav class="navbar navbar-expand-md d-flex w-100">
+            <a class="navbar-brand ml-md-5 mr-md-auto" href="~/Home/Index"><img width="130" height="85" src="~/Content/img/logo.png" alt="logo"/></a>
+            <div class="w-75">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Информация", "About", "Home")</li>
-                    <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
+                <div class="navbar-collapse collapse" id="navbarCollapse">
+                    @using (Html.BeginForm("Search", "Catalog", FormMethod.Get, new { @class = "form-inline mt-2 mt-md-0 w-50 ml-auto" }))
+                    {
+                        <input class="form-control mr-sm-2 w-75" name="text" type="text" placeholder="Пошук" aria-label="Search">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit"> <i class="fa fa-search"></i></button> @*temporary*@
+                    }
+
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5><a class="nav-link text-dark font-weight-bolder" href="~/Catalog/Categories">Каталог товарів</a></h5>
+                    </li>
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Login">Увійти</a></h5>
+                        </li>
+                        <li class="nav-item">
+                            <h5>
+                                <a class="nav-link text-dark font-weight-bolder" href="~/Account/Register" tabindex="-1" aria-disabled="true">
+                                    Зареєструватися
+                                </a>
+                            </h5>
+                        </li>
+                    }
+                    else
+                    {
+                        if (User.IsInRole("user"))
+                        {
+                            <li class="nav-item">
+                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/User/Index">Особистий кабінет</a></h5>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <h5><a class="nav-link text-dark font-weight-bolder" href="~/Admin/AdminPanel">Панель адміністратора</a></h5>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <h5><a class="nav-link text-dark font-weight-bolder" href="~/Account/Logout" tabindex="-1" aria-disabled="true">Вийти</a></h5>
+                        </li>
+                    }
                 </ul>
+                </div>
             </div>
-        </div>
-    </div>
+        </nav>
+    </header>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - мое приложение ASP.NET</p>
-        </footer>
+        <div class="modal fade" id="registerModal" role="dialog"></div>
+        <div class="modal fade" id="loginModal" role="dialog"></div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <footer>
+        <p class="">&copy;GainBargain @DateTime.Now.Year</p>
+    </footer>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -22,7 +22,7 @@ namespace GainBargain.Parser.Parsers
         /// <summary>
         /// Regular expression pattern for parsing pieces of prices
         /// </summary>
-        private const string PRICE_REG_EX = @"\d+";
+        private const string PRICE_REG_EX = @"\d+ ?\d*";
 
         /// <summary>
         /// Regular expression patter for deleting from text
@@ -42,7 +42,7 @@ namespace GainBargain.Parser.Parsers
         /// </summary>
         private static readonly Regex textRegex = new Regex(TEXT_REG_EX);
 
-        private static readonly Regex attributeSelectorRegex = new Regex(@"\s+\{(\S)+?\}");
+        private static readonly Regex attributeSelectorRegex = new Regex(@"\s+\{(\S+)?\}");
 
         /// <summary>
         /// Structure of the loaded HTML document
@@ -173,10 +173,15 @@ namespace GainBargain.Parser.Parsers
 
                 // If this is an attribute selector
                 string attr = null;
-                Match attributeSelector = attributeSelectorRegex.Match(selectorPropName);
-                if (attributeSelector.Success)
+                if (selectorProp.PropertyType == typeof(string))
                 {
-                    attr = attributeSelector.Groups[1].Value;
+                    string propertyValue = selectorProp.GetValue(input) as string;
+                    Match attributeSelector = attributeSelectorRegex.Match(propertyValue);
+                    if (attributeSelector.Success)
+                    {
+                        // State that we need an attribute value
+                        attr = attributeSelector.Groups[1].Value;
+                    }
                 }
 
                 bool isPropertyNumeric = IsNumericType(property.PropertyType);
@@ -313,13 +318,13 @@ namespace GainBargain.Parser.Parsers
                 pricePartsCount == 2)   // Found both integer and fraction part
             {
                 // Parsing as int 'cause we don't want it to have any kind of comas and dots
-                float price = Int32.Parse(s: priceParts[0].Value);
+                float price = Int32.Parse(s: priceParts[0].Value.Replace(" ", ""));
 
                 // If there is also fraction part
                 if (pricePartsCount == 2)
                 {
                     // Add fractions to the price
-                    price += (float)Int32.Parse(s: priceParts[1].Value) / 100;
+                    price += (float)Int32.Parse(s: priceParts[1].Value.Replace(" ", "")) / 100;
                 }
 
                 return price;

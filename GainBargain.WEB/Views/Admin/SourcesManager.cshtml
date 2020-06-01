@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GainBargain.WEB.Models.ParserSourceManager>
+
+<h4>Джерела оновлення</h4>
+
+<p>@Html.ActionLink("Додати джерело оновлення", "CreateParserSource")</p>
+
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="row" style="word-break: break-all">
+            <div class="col-3">
+                <p>@item.MarketName</p>
+            </div>
+            <div class="col-3">
+                <p>@item.CategoryName</p>
+            </div>
+            <div class="col-3">
+                <p><a href="@item.Url">@item.Url</a></p>
+            </div>
+            <div class="col-3">
+                @Html.ActionLink("Редагувати", "EditParserSource", new { id = item.Id })
+            </div>
+        </div>
+    </div>
+    <hr />
+}
+

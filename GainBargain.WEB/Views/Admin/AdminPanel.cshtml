@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Панель адміністратора";
+}
+
+<h2 class="orangeText">Панель адміністратора</h2>
+
+<div class="container m-2">
+    <div class="row">
+        <div class="col-md-3">
+            <h5 class="orangeBottom">Налаштування</h5>
+            <ul class="list-group">
+                <li class="list-group-item btn" id="btnUpdate">Оновлення даних</li>
+                <li class="list-group-item btn" id="btnCategories">Категорії товарів</li>
+                <li class="list-group-item btn" id="btnStores">Магазини</li>
+                <li class="list-group-item btn" id="btnSources">Джерела оновлення</li>
+            </ul>
+        </div>
+        <div class="col-md-9" id="panel">
+            @Html.Action("DataUpdate")
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#btnUpdate").click(function () {
+                $("#panel").load("DataUpdate");
+            });
+            $("#btnCategories").click(function () {
+                $("#panel").load("CategoriesManager");
+            });
+            $("#btnStores").click(function () {
+                $("#panel").load("Markets");
+            });
+            $("#btnSources").click(function () {
+                $("#panel").load("SourcesManager");
+            });
+
+
+            // This piece of code updates progress bar of parsing
+            $(document).ready(function () {
+                function getParsingStatus () {
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("ParsingState")',
+                        success: function (resp) {
+                            //console.log(resp);
+
+                            // Set start time
+                            if (resp.IsParsing) {
+                                if (updateConsole) {
+                                    updateConsole(0);
+                                }
+
+                                $(".current-parsing-state").removeClass("hidden-panel");
+
+                                $("#parseStartTime").text(resp.StartTime);
+                                $("#totalSources").text(resp.SourcesTotal);
+                                $("#processedSources").text(resp.SourcesParsed);
+
+                                let parsingStage = resp.Stage;
+                                let msg;
+                                if (parsingStage == 0) {
+                                    msg = "Обробка джерел інформації...";
+                                }
+                                else {
+                                    msg = "Оптимізація даних...";
+                                }
+                                $("#parsingStage").text(msg);
+
+                                // Widen the progress bar
+                                $("#parsingProgrLine").width(
+                                    resp.SourcesParsed / resp.SourcesTotal * 100 + "%");
+                            }
+                            else {
+                                $(".current-parsing-state").addClass("hidden-panel");
+                            }
+                        }
+                    });
+                }
+                getParsingStatus();
+                let updateParsingState = setInterval(getParsingStatus, 2 * 1000); // every 2 seconds
+            });
+        });
+
+        
+
+    </script>
+}
+

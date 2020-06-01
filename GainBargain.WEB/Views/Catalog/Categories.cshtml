@@ -1,0 +1,23 @@
+﻿@model IEnumerable<GainBargain.DAL.Entities.SuperCategory>
+
+@{
+    ViewBag.Title = "Каталог";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex flex-row justify-content-between flex-wrap">
+        @foreach (var sc in Model)
+        {
+            <div class="d-flex flex-column m-2 m-md-4">
+                <h5>@Html.ActionLink(sc.Name, "Catalog", new { superCategoryId = sc.Id }, new { @class="text-dark  font-weight-bold"})</h5>
+                @foreach (var c in sc.Categories)
+                {
+                    @Html.ActionLink(c.Name, "Catalog", new { superCategoryId = sc.Id, categoryId = c.Id }, new { @class="text-dark"})
+                }
+            </div>
+        }
+    </div>
+
+</div>
+

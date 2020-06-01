@@ -1,12 +1,17 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
+﻿/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    max-width: 1300px;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: table;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -16,9 +21,357 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+footer {
+    background-color: #575a5c;
+    display: table-row;
+    height: 0;
 }
+
+    footer p {
+        margin: 0;
+        padding: 40px;
+        color: white;
+    }
+
+header {
+    background-color: #F59A23;
+    /*height: 100px;*/
+}
+
+h4 ul {
+    color: #F59C28;
+}
+
+.price {
+    color: red;
+}
+
+/* For parsing status panel */
+.hidden-panel {
+    display: none;
+}
+
+/*#parsingProgrLine {
+    transition: width 1s ease;
+<<<<<<< HEAD
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left {
+    transform: translateX(0);
+}*/
+
+/* Console like div */
+.console {
+    position: relative;
+    width: 100%;
+    height: 16em;
+    font-family: Consolas;
+    background-color: #000;
+    color: #dddddd;
+    overflow: hidden;
+}
+
+    .console .text {
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    .console .little-btn {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        bottom: 1px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        vertical-align: central;
+        padding: 0;
+        border: 0;
+    }
+
+    .console .up {
+        right: 37px;
+    }
+
+    .console .down {
+        right: 18px;
+    }
+
+    .console .little-btn:focus {
+        outline: none;
+    }
+
+    .console .error {
+        color: #f00;
+    }
+/* For parsing schedule configuration form */
+.parsingScheduleForm select {
+    width: 100%;
+}
+
+/* Categories editing */
+
+.btn.superCategoty {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.addCategoryBtn {
+    background-color: rgb(22, 155, 213);
+    border-radius: 30px;
+    color: #fff;
+    font-size: 1em;
+    padding: 5px 10px 5px 10px;
+}
+
+.categoryEditing input {
+    width: 100%;
+    border: none;
+}
+
+    .categoryEditing input:focus {
+        color: blue;
+    }
+
+.categoryEditing i {
+    font-size: 2em;
+}
+
+
+/* Market Editing */
+
+.marketViewing {
+    position: relative;
+}
+
+.addresses {
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.marketViewing img {
+    margin-top: 3em;
+    width: 100%;
+}
+
+.marketEdit {
+    position: absolute;
+    color: #000;
+    font-size: 2em;
+    top: 0px;
+    right: 10px;
+}
+/*Styles for UserProfile page*/
+.favCatCol {
+    background-color: #e4e1e1;
+}
+
+.favoriteCategories {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.orangeText {
+    color: #f59a23;
+    text-decoration: underline;
+}
+
+.orangeThead {
+    background-color: #f59a23;
+    padding-right: 70%;
+}
+
+.orangeThead th {
+    color:white;
+}
+
+.favCatTable {
+    background-color: white;
+    text-align: left;
+}
+
+    .favCatTable .removeTd {
+        text-align: right;
+    }
+
+    .favCatTable .removeIcon {
+        width: 30px;
+        height: 30px;
+    }
+
+.addNewCat {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 150px;
+    margin-bottom: 100px;
+}
+
+    .addNewCat img {
+        width: 30px;
+        height: 30px;
+    }
+
+.eyeIconWelcome {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+    .eyeIconWelcome h4 {
+        max-width: 300px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+    }
+
+.reportTitle {
+    background-color: #f59a23;
+}
+
+.favProductCard {
+    display: inline-block;
+    border: 1px solid black;
+    width: 160px;
+    /*height: 300px;*/
+    margin-left: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+    .favProductCard img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .favProductCard .productName {
+        display: inline-block;
+        padding-bottom: 15px;
+    }
+
+
+.myForm {
+    margin-bottom: 30%;
+    width: 70%;
+}
+
+.favProductCard button {
+    margin-bottom: 20px;
+}
+
+.favProductCard a {
+    color: black;
+}
+
+
+/*Carousel*/
+.myCarousel {
+    border-top: 5px solid #7a7a7a;
+    border-bottom: 5px solid #7a7a7a;
+    padding: 3px 0 3px 0;
+}
+
+    .myCarousel .img_container {
+        position: relative;
+        height: 200px;
+    }
+
+    .myCarousel img {
+        width: 50%;
+        height: 25vh;
+        display: block;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+#carouselControls {
+    padding-bottom: 35px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 100px;
+    width: 50px;
+    background-size: 100%, 100%;
+    background-image: none;
+}
+
+    .carousel-control-next-icon:after {
+        content: '>';
+        font-size: 55px;
+        font-weight: bold;
+        color: #575a5c;
+    }
+
+    .carousel-control-prev-icon:after {
+        content: '<';
+        font-size: 55px;
+        font-weight: bold;
+        color: #575a5c;
+    }
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+.carousel-indicators li {
+    width: 20px;
+    height: 1px;
+    border-radius: 100%;
+    background: #a8a8a8;
+}
+
+ol.carousel-indicators li.active {
+    background: #7a7a7a;
+}
+
+.priceRect {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    background-color: white;
+}
+
+hot-product-name {
+    min-height: 80px;
+}
+
+/*Register and login panels*/
+.accountBtn {
+    background-color: #F59A23;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px 15px;
+    text-transform: uppercase;
+}
+
+/*Catalog*/
+.catalogCard {
+    height: 320px;
+}
+
+    .catalogCard img {
+        width: 50%;
+        height: 20vh;
+        display: block;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+.favProdImgContainer {
+    height: 160px;
+    background-color: white;
+}
+
+    .favProdImgContainer img {
+        width: 80%;
+        height: 20vh;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }

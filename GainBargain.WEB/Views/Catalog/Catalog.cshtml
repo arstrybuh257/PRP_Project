@@ -1,0 +1,149 @@
+﻿@model GainBargain.WEB.Models.CatalogVM
+@using GainBargain.WEB.Helpers
+
+@{
+    ViewBag.Title = "Товари та послуги";
+}
+
+
+<div class="container">
+    <div class="row p-2">
+        <div>
+            @if (Model.Search == null)
+            {
+                <h2 class="mr-auto orange_text"><u>@Model.SuperCategoryName</u></h2>
+            }
+            else
+            {
+                <h2 class="mr-auto orange_text"><u>@Model.Search</u></h2>
+            }
+            <h4 class="font-weight-light">Знайдено товарів: @Model.CountProducts</h4>
+        </div>
+        @if (Model.CountProducts > 1)
+        {
+            using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post, new { @class = "ml-auto mt-auto " }))
+            {
+                @Html.HiddenFor(m => m.SuperCategoryId)
+                if (Model.SortOrder == null || Model.SortOrder == false)
+                {
+                    @Html.HiddenFor(m => m.SortOrder, new { Value = "true" })
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.SortOrder, new { Value = "false" })
+                }
+                @Html.Hidden("sort", "sort")
+                for (int i = 0; i < Model.SelectedCategories.Count; ++i)
+                {
+                    @Html.HiddenFor(model => Model.SelectedCategories[i])
+                }
+
+                if (Model.Search == null)
+                {
+                    <button type="submit" class="btn btn-light">Сортувати за ціною</button>
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.Search)
+                    <button type="submit" class="btn btn-light" formaction="@Url.Action("Search")" formmethod="post">Сортувати за ціною</button>
+                }
+            }
+        }
+    </div>
+    <div class="row border-top">
+        <div class="col-12 col-md-3 border-left">
+            @*<div class="border-bottom m-0 p-1">
+                    <h6>Постачальники послуг\виробники</h6>
+                    @foreach(var m in Model.Markets)
+                        {
+                            <p>@m.Name</p>
+                        }
+                </div>*@
+            @if (Model.Search == null)
+            {
+                <div class="border-top m-0 p-1">
+                    <h6>Підкатегорії</h6>
+                    @using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => m.SuperCategoryId)
+                        foreach (var item in Model.AvailableCategories)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedCategories"
+                                           value="@item.Id"
+                                           @if (Model.SelectedCategories.Contains(item.Id)) { <text> checked </text> } />
+                                    @item.Name
+                                </label>
+                            </div>
+                        }
+                        <input type="submit" class="btn btn-primary" value="Фільтрувати" />
+                    }
+                </div>
+            }
+        </div>
+        <div class="col-12 col-md-9 border-left">
+            <div class="row d-flex flex-row flex-wrap p-2">
+
+                @foreach (var p in Model.Products)
+                {
+                    <div class="card col-md-6 col-lg-3 catalogCard">
+                        <img class="p-0" src="@(System.Uri.IsWellFormedUriString(p.ImageUrl, UriKind.Absolute) && p.ImageUrl.StartsWith("http")
+? p.ImageUrl
+: "http://zakaz.atbmarket.com//image/none.jpg.pagespeed.ce.0AkQltvKJb.jpg")">
+                        <div class="card-body">
+                            @Html.ActionLink(p.Name.Length > 25 ? p.Name.Substring(0, 25) + "..." : p.Name, 
+                           "Product", new { id = p.Id }, new { @class = "card-title text-decoration-none" })
+                            <div class="mt-2 mt-md-4 ml-auto">
+                                @if (p.PrevPrice == p.Price)
+                                {
+                                    <h6>@p.Price<span>грн</span></h6>
+                                }
+                                else
+                                {
+                                    <p class="text-break"><s>@p.PrevPrice<span>грн</span></s></p>
+                                    <h6 class="price">@p.Price<span>грн</span></h6>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                @if (Model.Search == null)
+                {
+                    using (Html.BeginForm("Catalog", "Catalog", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => m.SuperCategoryId)
+                        @Html.HiddenFor(m => m.SortOrder)
+                        for (int i = 0; i < Model.SelectedCategories.Count; ++i)
+                        {
+                            @Html.HiddenFor(model => Model.SelectedCategories[i])
+                        }
+                        <div class="btn-group">
+                            @Html.PageButtons(Model.Pager)
+                        </div>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("Search", "Catalog", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => m.Search)
+                        @Html.HiddenFor(m => m.SortOrder)
+                        <div class="btn-group">
+                            @Html.PageButtons(Model.Pager)
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+</script>
+

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<GainBargain.DAL.Entities.Market>
+
+<div class="d-flex flex-row">
+    <h4>Магазини</h4>
+    @*<button class="btn"><span class="badge badge-info p-2" id="createMarket">+ Додати магазин</span></button>*@
+    <button class="btn">@Html.ActionLink("+ Додати магазин", "CreateMarket", new { @class = "badge badge-info p-2" })</button>
+</div>
+@*<div class="modal fade" id="createMarketModal" role="dialog" data-url="@Url.Action("CreateMarketPartial")"></div>
+*@
+
+@foreach (var item in Model)
+{
+    <div class="container border p-2">
+        <div class="row marketViewing">
+            <div class="col-4">
+                <h6>@item.Name</h6>
+                <p>@item.Description</p>
+            </div>
+            <div class="col-4">
+                <h6>Адреси</h6>
+                <p class="addresses">@(item.Addresses ?? "Жодна адреса не вказана!")</p>
+            </div>
+            <div class="col-4">
+                <img class="img-fluid" src="@item.MarketLogoUrl" alt="Product image">
+            </div>
+
+            <a class="marketEdit"
+               href="@Url.Action("EditMarket", new { id = item.Id })">
+                <i class="fa fa-edit"></i>
+            </a>
+        </div>
+    </div>
+}
+
+<script>
+    $("#createMarket").click(function (e) {
+        e.preventDefault();
+
+        $.get($("#createMarketModal").data("url"), function (data) {
+            $("#createMarketModal").html(data);
+            $("#createMarketModal").modal('show');
+        });
+    });
+</script>

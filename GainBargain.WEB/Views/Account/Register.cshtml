@@ -1,0 +1,43 @@
+﻿@model GainBargain.WEB.Models.RegisterViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-9 col-md-6 col-lg-4 m-auto shadow-lg">
+            <div class="modal-header">
+                <h4 class="m-auto text-dark">Зареєструватися</h4>
+            </div>
+            @using (Html.BeginForm())
+            {
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-11 m-auto">
+                            <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Введіть свій email">
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-11 m-auto">
+                            <input type="password" class="form-control" name="Password" placeholder="Введіть пароль">
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-11 m-auto">
+                            <input type="password" class="form-control" name="ConfirmPassword" placeholder="Підтвердіть пароль">
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group m-auto">
+                        <div class="col-md-offset-2 col-md-11">
+                            <input type="submit" id="register" value="Зареєструватися" class="accountBtn" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

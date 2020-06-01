@@ -1,0 +1,34 @@
+﻿@model IEnumerable<GainBargain.DAL.Entities.SuperCategory>
+
+<h4>Категорії товарів</h4>
+
+<div class="border-bottom">
+
+    @foreach (var sc in Model)
+    {
+        <div>
+            <button class="btn superCategoty" 
+                    onclick="showSubCategories('@sc.Id', 'createBut-@sc.Id')">
+                <span id="marker-@sc.Id"><i class="fa fa-caret-down"></i></span>
+                @sc.Name
+            </button>
+
+            <button class="btn" id="createBut-@sc.Id" style="visibility:hidden" onclick="showCategoryForm('newCatForm-@sc.Id')">
+                <span class="addCategoryBtn">+ Додати підкатегорію</span>
+            </button>
+
+            <div id="newCatForm-@sc.Id" style="visibility:hidden" class="container">
+                <input type="hidden" value="@sc.Id" name="id" />
+                <input type="text" id="newCat-@sc.Id" name="newCat" />
+                <button type="button" class="btn" onclick="refreshCategories('@sc.Id', 'newCat-@sc.Id', 'newCatForm-@sc.Id')">Додати</button>
+            </div>
+
+        </div>
+        <div style="display:none" id="@sc.Id">
+            @Html.Action("SubCategoriesPartial", new { id = sc.Id })
+        </div>
+    }
+
+</div>
+
+@Scripts.Render("~/Scripts/categoryManagerScripts.js")

@@ -67,7 +67,7 @@ namespace GainBargain.Parser.Parsers
                 // Apply them
                 foreach (var postProcess in methodsOfPostProcess)
                 {
-                    postProcess.Invoke(null, new object[] { obj });
+                    postProcess.Invoke(obj, new object[] { obj, input });
                 }
 
                 // And after that return an object

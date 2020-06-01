@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB3D585B-A3EE-487D-9C3E-077E92F93A07}</ProjectGuid>
+    <ProjectGuid>{A5FBB90A-8BA1-469F-A52D-AF8E48EC67D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GainBargain.BLL</RootNamespace>
-    <AssemblyName>GainBargain.BLL</AssemblyName>
+    <RootNamespace>GainBargain.FPG_Algoritm</RootNamespace>
+    <AssemblyName>GainBargain.FPG_Algoritm</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,12 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GainBargain.DAL\GainBargain.DAL.csproj">
-      <Project>{d90b89db-a0ea-4ddc-83ca-1e29552c0caa}</Project>
-      <Name>GainBargain.DAL</Name>
-    </ProjectReference>
+    <Compile Include="Tree.cs" />
+    <Compile Include="TreeBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
