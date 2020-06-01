@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GainBargain.FPG_Algoritm
 {
     public class TreeBuilder
     {
+        public static Tree<int> Tree;
         public static void Build(List<List<int>> list)
         {
-            var a = 3;
+            Tree = new Tree<int>(list, 2);
         }
     }
 }

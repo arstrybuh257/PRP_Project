@@ -17,6 +17,7 @@ namespace GainBargain.WEB.Controllers
         IProductCacheRepository productRepo;
         IMarketRepository marketRepo;
         private IFavoriteProductRepository favProductRepository;
+        AssociationRepository associationRepository = new AssociationRepository();
 
         const int pageSize = 32;
         public CatalogController()
@@ -146,6 +147,7 @@ namespace GainBargain.WEB.Controllers
                 market.Id, market.Name, market.MarketLogoUrl);
 
             productVM.IsFavorite = favProductRepository.IsFavorite(id.Value, User.Identity.Name);
+            productVM.Associations = associationRepository.GetAssociations(id.Value);
 
             return View(productVM);
         }
