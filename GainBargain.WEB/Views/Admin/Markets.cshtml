@@ -2,11 +2,11 @@
 
 <div class="d-flex flex-row">
     <h4>Магазини</h4>
-    <button class="btn"><span class="badge badge-info p-2" id="createMarket">+ Додати магазин</span></button>
-    @Html.ActionLink("+ Додати магазин", "CreateMarket", new { @class="btn"})
+    @*<button class="btn"><span class="badge badge-info p-2" id="createMarket">+ Додати магазин</span></button>*@
+    <button class="btn">@Html.ActionLink("+ Додати магазин", "CreateMarket", new { @class = "badge badge-info p-2" })</button>
 </div>
-
-<div class="modal fade" id="createMarketModal" role="dialog" data-url="@Url.Action("CreateMarketPartial")"></div>
+@*<div class="modal fade" id="createMarketModal" role="dialog" data-url="@Url.Action("CreateMarketPartial")"></div>
+*@
 
 @foreach (var item in Model)
 {
@@ -34,11 +34,11 @@
 
 <script>
     $("#createMarket").click(function (e) {
-                e.preventDefault();
+        e.preventDefault();
 
-                $.get($("#createMarketModal").data("url"), function (data) {
-                    $("#createMarketModal").html(data);
-                    $("#createMarketModal").modal('show');
-                });
-            });
+        $.get($("#createMarketModal").data("url"), function (data) {
+            $("#createMarketModal").html(data);
+            $("#createMarketModal").modal('show');
+        });
+    });
 </script>

@@ -56,13 +56,14 @@ namespace GainBargain.WEB.Models
                 .Include(s => s.Market)
                 .ToList();
 
+            int addedCount = 0;
+
             try
             {
                 // Tell the system that the parsing had started
                 ParsingProgress.ParsingStarted(sources.Count);
                 dbLogsRepository.Log(DbLog.LogCode.Info, $"Started parsing of {sources.Count} sources.");
 
-                int addedCount = 0;
 
                 using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(MAX_PROCESSING_SOURCES))
                 {
@@ -152,6 +153,19 @@ namespace GainBargain.WEB.Models
             catch (Exception ex)
             {
                 dbLogsRepository.Log(DbLog.LogCode.Error, $"Non-parsing error: {ex.Message}.");
+
+                db.Database.Connection.Open();
+                SaveParsingResult(
+                    db: db.Database.Connection,
+                    time: DateTime.Now.ToString("HH:mm dd.MM.yyyy"),
+                    added: addedCount,
+                    deleted: (int)(addedCount * 0.1),
+                    used: sources.Count,
+                    couldNot: 0);
+                db.Database.Connection.Close();
+
+                // In any case parsing must finish here
+                ParsingProgress.ParsingFinished();
             }
         }
 
