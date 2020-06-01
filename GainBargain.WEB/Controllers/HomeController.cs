@@ -20,8 +20,6 @@ namespace GainBargain.WEB.Controllers
             var productList = rep.GetTopProducts(12)
                 .ToList();
 
-<<<<<<< HEAD
-
             ///////////////////////////////////
             //FavoriteProductRepository repo = new FavoriteProductRepository();
             //AssociationRepository ass = new AssociationRepository();
@@ -139,9 +137,6 @@ namespace GainBargain.WEB.Controllers
 
             ///////////////////////////////////////////
 
-
-=======
->>>>>>> 4ae7da74692d443578fafe93402c52d4cbca5d69
             return View(productList);
         }
 
